@@ -5,11 +5,13 @@ using DomainModel.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.EntityFrameworkCore;
+using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDbContext<VCDDbContext>(option => option.UseSqlServer("name=ConnectionStrings:VDCConnection"));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
