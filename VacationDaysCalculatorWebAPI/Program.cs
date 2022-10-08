@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore;
-using DataAccess.Database_Context;
+using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
