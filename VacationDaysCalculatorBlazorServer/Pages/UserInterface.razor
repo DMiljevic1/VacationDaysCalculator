@@ -1,26 +1,115 @@
-﻿@page "/login"
-
+﻿@page "/userinterface"
 @*Zaglavlje interfacea*@
-<div>
-	<div class="card">
-		<div class="rounded float-sm-start img-thumbnail">
-		</div>
-		<div class="mb-3">
-			 <label for="formFile" class="form-label"></label>
-			 <input class="form-control" type="file" id="formFile"/>
-
-		</div>
-		<div class="card-body">
-			<h5>Ime i prezime</h5>
-			<p>Pozicija u firmi</p>
-			<p class="card-text">Preostalih dana prošle godine</p>
-			<p class="card-text">Preostalih dana ove godine</p>
-			<a href="" class="btn btn-primary disabled placeholder-glow col-1"></a>
-		</div>
+<div class="row">
+	@*Slika profila i podaci o danima*@
+	<div class="col-sm-6 justify-content-between">
+		<div class="card text-bg-primary mb-3">
+			<div class="card w-25 ratio ratio-1x1  d-flex justify-content-between">
+				<div>
+					<img src="" class="card-img-top h-50" alt="Slika profila" />
+				</div>
+			
 		
-	</div>
+			</div>
+			<div class="col-sm-6">
+				<label for="formFile" class="form-label"></label>
+				<input class="form-control" type="file" id="formFile"/>
 
+			</div>
+			<div class="card-title">
+				 <h5>Josip Nincevic</h5>
+			</div>
+			<div class="card-body">
+				<p>Lead of everything</p>
+				<p>Email: jnince01@vacationday.com</p>
+				<p class="card-text">Preostalih dana prošle godine: 365</p>
+				<p class="card-text">Preostalih dana ove godine: 0</p>
+				<a href="" class="btn btn-primary disabled placeholder-glow col-1"></a>
+			
+			</div>
+		
+		</div>
+
+	</div>
 	
+</div>
+
+@*Tablica sa poslanim zahtjevima, kalendar*@
+<div class="card w-100">
+	<div class="card-body">
+		<div>
+			<table class="table table-hover table-responsive table-light table-borderless">
+				<thead>Vacation Days Table</thead>
+				<tbody>
+					<tr>
+						<td>Ime</td>
+						<td>Prezime</td>
+						<td>Position</td>
+						<td>Datum početka godišnjeg odmora</td>
+						<td>Datum kraja godišnjeg odmora</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Zeljko</td>
+						<td>Kerum</td>
+						<td>Mid Software Developer</td>
+						<td>25.5.1955</td>
+						<td>25.5.2055</td>
+						<td>
+							<button class="btn btn-info">Edit</button>
+						</td>
+						<td>
+							<button class="btn btn-danger">Delete</button>
+						</td>
+					</tr>
+					<tr>
+						<td>Zeljko</td>
+						<td>Kerum</td>
+						<td>Mid Software Developer</td>
+						<td>25.5.1955</td>
+						<td>25.5.2055</td>
+						<td>
+							<button class="btn btn-info">Edit</button>
+						</td>
+						<td>
+							<button class="btn btn-danger">Delete</button>
+						</td>
+					</tr>
+					<tr>
+						<td>Zeljko</td>
+						<td>Kerum</td>
+						<td>Mid Software Developer</td>
+						<td>25.5.1955</td>
+						<td>25.5.2055</td>
+						<td>
+							<button class="btn btn-info">Edit</button>
+						</td>
+						<td>
+							<button class="btn btn-danger">Delete</button>
+						</td>
+					<tr>
+						<td>Zeljko</td>
+						<td>Kerum</td>
+						<td>Mid Software Developer</td>
+						<td>25.5.1955</td>
+						<td>25.5.2055</td>
+						<td>
+							<button class="btn btn-info">Edit</button>
+						</td>
+						<td>
+							<button class="btn btn-danger">Delete</button>
+						</td>
+					</tr>
+					</tr>
+				</tbody>
+
+			</table>
+
+		</div>
+		<button class="btn btn-primary">Add</button>
+		<button class="btn btn-primary">Calendar</button>
+	</div>
 </div>
 
 
