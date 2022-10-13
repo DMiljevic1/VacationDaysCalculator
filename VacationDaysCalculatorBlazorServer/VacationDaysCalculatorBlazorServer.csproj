@@ -23,4 +23,8 @@
     <None Include="wwwroot\css\TestImages\ikona.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
+  </ItemGroup>
+
 </Project>
