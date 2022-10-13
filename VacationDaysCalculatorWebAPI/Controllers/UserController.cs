@@ -16,7 +16,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         public IActionResult EmployeeEndPoint()
         {
             var currentUser = GetCurrentUser();
-            return Ok($"Hi {currentUser.UserName}, you are an {currentUser.Role}");
+            return Ok(currentUser);
         }
 
         private User GetCurrentUser()

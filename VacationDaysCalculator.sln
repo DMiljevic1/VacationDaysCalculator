@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationDaysCalculatorWebAP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainModel", "DomainModel\DomainModel.csproj", "{67F93A57-8C0D-4366-8074-973904F7E588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationDaysCalculatorBlazorServer", "VacationDaysCalculatorBlazorServer\VacationDaysCalculatorBlazorServer.csproj", "{5E7D4076-AB79-49F2-8B9E-48CE2F110834}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationDaysCalculatorBlazorServer", "VacationDaysCalculatorBlazorServer\VacationDaysCalculatorBlazorServer.csproj", "{5E7D4076-AB79-49F2-8B9E-48CE2F110834}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
