@@ -1,0 +1,34 @@
+﻿@page "/LoginPage"
+@using System.Text;
+@inherits RazorPageBases.LoginPageBase;
+
+<h3>Login to your account</h3>
+if(Users==null)
+{
+<p>Loading...</p>
+}
+else
+{
+<div class="center">
+
+    <p>Username</p>
+    <p>
+        <input @bind-value="username" />
+    </p>
+
+    <p>Password</p>
+    <p>
+        <input @bind-value="password" />
+    </p>
+
+    <button type="button" class="btn btn-success" @onclick="AuthorizeLogin">
+        <span class="oi-pencil"></span>
+        Login
+    </button>
+
+    <button type="button" class="btn btn-secondary" @onclick="Close">
+        <span class="oi oi-media-skip-backward"></span>
+        Close
+    </button>
+</div>
+}
