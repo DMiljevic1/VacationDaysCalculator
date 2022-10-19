@@ -16,10 +16,5 @@ namespace VacationDaysCalculatorBlazorServer.Service
         {
             return await _httpClient.GetFromJsonAsync<List<User>>(BaseApiUrl);
         }
-
-        public async Task<User> getUserByUserData(string username, string password)
-        {
-
-        }
     }
 }

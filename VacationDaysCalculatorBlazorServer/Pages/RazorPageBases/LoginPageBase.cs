@@ -18,18 +18,15 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
 
+        protected override async Task OnInitializedAsync()
+        {
+            userLogin = new UserLogin();
+        }
+
         protected async void AuthorizeLogin()
         {
-            //if (userLogin.UserName || userLogin.Password.Equals(null))
-            //{
-            //    Console.WriteLine("krivi podaci");
-            //    //ne ulazi, trebalo bi neki notification dialog da je kriva lozinka
-            //}
-            //else
-            //{
-                await LogInService.SendUserAsync(userLogin);
+                await _logInService.SendUserAsync(userLogin);
                 _navigationManager.NavigateTo("/");
-            //}
         }
     }
 }

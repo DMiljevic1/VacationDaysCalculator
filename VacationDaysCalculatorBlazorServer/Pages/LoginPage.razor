@@ -2,13 +2,6 @@
 @using System.Text;
 @inherits RazorPageBases.LoginPageBase;
 
-<h3>Login to your account</h3>
-if(Users==null)
-{
-<p>Loading...</p>
-}
-else
-{
 <div class="center">
 
     <p>Username</p>
@@ -18,7 +11,7 @@ else
 
     <p>Password</p>
     <p>
-        <input @bind-value="userLogin.Password" />
+        <input @bind-value="userLogin.Password" type="password"/>
     </p>
 
     <button type="button" class="btn btn-success" @onclick="AuthorizeLogin">
@@ -31,4 +24,3 @@ else
         Close
     </button>
 </div>
-}
