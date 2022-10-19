@@ -1,40 +1,35 @@
 ﻿using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
-using VacationDaysCalculatorBlazorServer.Service;
 using System;
 using System.Threading.Tasks;
-
+using VacationDaysCalculatorBlazorServer.Services;
 
 namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
     public class LoginPageBase : ComponentBase
     {
-        public string username, password;
+        public UserLogin userLogin { get; set; }
 
         protected List<User> Users { get; set; }
 
         [Inject]
-        protected UserService _userService { get; set; }
+        protected LogInService _logInService { get; set; }
 
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
 
-        protected override async Task OnInitializedAsync()
-        {
-            Users = await _userService.GetUsers();
-        }
-
         protected async void AuthorizeLogin()
         {
-            var user = await _userService.GetUserByUserName(username, password);
-            if (user == null)
-            {
-
-            }
-            else
-            {
-                //implementirat token nekako jos
+            //if (userLogin.UserName || userLogin.Password.Equals(null))
+            //{
+            //    Console.WriteLine("krivi podaci");
+            //    //ne ulazi, trebalo bi neki notification dialog da je kriva lozinka
+            //}
+            //else
+            //{
+                await LogInService.SendUserAsync(userLogin);
                 _navigationManager.NavigateTo("/");
-            }
+            //}
+        }
     }
 }

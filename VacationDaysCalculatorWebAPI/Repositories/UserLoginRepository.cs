@@ -12,9 +12,9 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             _vCDDbContext = vCDDbContext;
         }
 
-        public UserLogin getCurrentUser(UserLogin userLogin)
-        {
+        //public UserLogin getCurrentUser(UserLogin userLogin)
+        //{
 
-        }
+        //}
     }
 }
