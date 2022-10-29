@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
 
@@ -11,9 +12,10 @@ using VacationDaysCalculatorWebAPI.DatabaseContext;
 namespace VacationDaysCalculatorWebAPI.Migrations
 {
     [DbContext(typeof(VCDDbContext))]
-    partial class VCDDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221029165723_creatingDatabaseWithAllModels")]
+    partial class creatingDatabaseWithAllModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,8 +65,6 @@ namespace VacationDaysCalculatorWebAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("RemainingVacationDays");
                 });
@@ -131,8 +131,6 @@ namespace VacationDaysCalculatorWebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("VacationDays");
                 });
 
@@ -153,28 +151,6 @@ namespace VacationDaysCalculatorWebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Weekends");
-                });
-
-            modelBuilder.Entity("DomainModel.Models.RemainingVacationDays", b =>
-                {
-                    b.HasOne("DomainModel.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DomainModel.Models.VacationDays", b =>
-                {
-                    b.HasOne("DomainModel.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
