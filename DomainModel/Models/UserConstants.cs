@@ -10,9 +10,8 @@ namespace DomainModel.Models
     {
         public static List<User> Users = new List<User>()
         {
-            new User() { UserName = "dmiljevic", Password = "password", Role = "Employee"},
-            new User() {UserName = "jnincevic", Password = "losPassword", Role = "Employee"},
-            new User() {UserName = "apelivan", Password = "pass", Role="Employee"}
+            new User() { UserName = "dmiljevic", Password = "password", Role = "Employee", Email="duje.miljevic", FirstName="duje", LastName="miljevic"},
+            new User() {UserName = "jnincevic", Password = "losPassword", Role = "Employee", Email="duje.miljevic", FirstName="duje", LastName="miljevic"},
         };
     }
 }

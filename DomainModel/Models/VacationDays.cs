@@ -9,11 +9,17 @@ namespace DomainModel.Models
     public class VacationDays
     {
         public int Id { get; set; }
-        public int CurrentYear { get; set; }
-        public int LastYear { get; set; }
-        public int RemainingDaysOffCurrentYear { get; set; }
-        public int RemainingDaysOffLastYear { get; set; }
-        public int SpentDaysOffCurrentYear { get; set; }
-        public int SpentDaysOffLastYear { get; set; }
+        public DateTime VacationFrom { get; set; }
+        public DateTime VacationTo { get; set; }
+        public int Year { get; set; }
+        public VacationStatus Status { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
+
+    }
+
+    public enum VacationStatus
+    {
+        Pending, Cancelled, Approved, OnVacation, Arhived
     }
 }
