@@ -13,12 +13,17 @@ namespace VacationDaysCalculatorBlazorServer.Services
             _httpClient = httpClient;
         }
 
-        public async Task SendUserAsync(UserLogin userLogin)
+        public async Task<String> SendUserAsync(UserLogin userLogin)
         {
-            var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
-            httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(userLogin), Encoding.UTF8, "application/json");
-            await _httpClient.SendAsync(httpPostRequest);
+            var httpGetRequest = new HttpRequestMessage(HttpMethod.Get, BaseApiUrl);
+            httpGetRequest.Content = new StringContent(JsonSerializer.Serialize(userLogin), Encoding.UTF8, "application/json");
+            var response = await _httpClient.SendAsync(httpGetRequest);
+            if(response.IsSuccessStatusCode)
+            {
+                String token = await response.Content.ReadAsStringAsync();
+                return token;
+            }
+            return null;
         }
-
     }
 }

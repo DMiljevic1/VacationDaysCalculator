@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 using VacationDaysCalculatorBlazorServer.Services;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
@@ -18,6 +19,9 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
 
+        [Inject]
+        ProtectedLocalStorage _browserStorage { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             userLogin = new UserLogin();
@@ -25,7 +29,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 
         protected async void AuthorizeLogin()
         {
-                await _logInService.SendUserAsync(userLogin);
+               var token = await _logInService.SendUserAsync(userLogin);
+                await _browserStorage.SetAsync("name", token);
                 _navigationManager.NavigateTo("/");
         }
     }
