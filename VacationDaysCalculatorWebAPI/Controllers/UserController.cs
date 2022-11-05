@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Text;
 
 namespace VacationDaysCalculatorWebAPI.Controllers
 {
@@ -28,7 +29,9 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return new User
                 {
                     UserName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
-                    Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value
+                    Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
+                    Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
+                    FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Name)?.Value
                 };
             }
             return null;
