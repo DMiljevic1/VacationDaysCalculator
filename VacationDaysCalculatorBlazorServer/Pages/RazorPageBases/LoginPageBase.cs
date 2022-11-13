@@ -45,7 +45,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 await _browserStorage.SetAsync("name", token);
             if (token != null)
             {
-                var authState = await ((CustomAuthenticationStateProvider)_authState).ChangeUser("dmiljevic", "1", "Employee");
+                var authState = await ((CustomAuthenticationStateProvider)_authState).ChangeUser("token");
                 this.user = authState.User;
             }
             else

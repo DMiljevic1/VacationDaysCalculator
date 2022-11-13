@@ -5,11 +5,14 @@ using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System;
+using VacationDaysCalculatorBlazorServer.AutentificationProvider;
+using Blazored.LocalStorage;
 
 namespace VacationDaysCalculatorBlazorServer.Services
 {
     public class LogInService
     {
+        private readonly ISyncLocalStorageService _syncLocalStorageService;
         private readonly HttpClient _httpClient;
         private readonly string BaseApiUrl = "https://localhost:7058/api/Login";
         public LogInService(HttpClient httpClient)
@@ -25,9 +28,12 @@ namespace VacationDaysCalculatorBlazorServer.Services
             if (response.IsSuccessStatusCode)
             {
                 string token = await response.Content.ReadAsStringAsync();
+                _syncLocalStorageService.SetItem("token", token);
                 return token;
             }
             return null;
         }
+
+
     }
 }

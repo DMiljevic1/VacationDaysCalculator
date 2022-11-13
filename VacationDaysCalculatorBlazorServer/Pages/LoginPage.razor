@@ -7,14 +7,7 @@
  <AuthorizeView>
      <Authorized>
         <div class="m-1 p-1 text-white">
-                @if (user.Identity != null)
-                {
-                    <p>Welcome, @user.Identity.Name</p>
-                }
-                else
-                {
-                    <p>Welcome nemna usera</p>
-                }
+                    <p>Welcome</p>
         </div>
     </Authorized>
     <NotAuthorized>
