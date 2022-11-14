@@ -15,12 +15,14 @@ namespace VacationDaysCalculatorBlazorServer.Services
         private readonly ISyncLocalStorageService _syncLocalStorageService;
         private readonly HttpClient _httpClient;
         private readonly string BaseApiUrl = "https://localhost:7058/api/Login";
-        public LogInService(HttpClient httpClient)
+        private readonly CustomAuthenticationStateProvider _customAuthenticationStateProvider;
+        public LogInService(HttpClient httpClient, CustomAuthenticationStateProvider customAuthenticationStateProvider)
         {
             _httpClient = httpClient;
+            _customAuthenticationStateProvider = customAuthenticationStateProvider; 
         }
 
-        public async Task<string> SendUserAsync(UserLogin userLogin)
+        public async Task SendUserAsync(UserLogin userLogin)
         {
             var httpGetRequest = new HttpRequestMessage(HttpMethod.Get, BaseApiUrl);
             httpGetRequest.Content = new StringContent(JsonSerializer.Serialize(userLogin), Encoding.UTF8, "application/json");
@@ -28,10 +30,8 @@ namespace VacationDaysCalculatorBlazorServer.Services
             if (response.IsSuccessStatusCode)
             {
                 string token = await response.Content.ReadAsStringAsync();
-                _syncLocalStorageService.SetItem("token", token);
-                return token;
+                await _customAuthenticationStateProvider.SetTokenAsync(token);
             }
-            return null;
         }
 
 

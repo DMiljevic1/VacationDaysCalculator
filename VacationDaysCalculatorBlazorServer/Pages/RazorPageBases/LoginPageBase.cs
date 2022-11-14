@@ -12,10 +12,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
     public class LoginPageBase : ComponentBase
     {
-        protected String message {get;set;}
         public UserLogin userLogin { get; set; }
-
-        public System.Security.Claims.ClaimsPrincipal user { get; set; }
 
         [Inject]
         protected LogInService _logInService { get; set; }
@@ -23,36 +20,25 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
 
-        [Inject]
-        ProtectedLocalStorage _browserStorage { get; set; }
-
-        [CascadingParameter] 
-        public Task<AuthenticationState> _authTask { get; set; }
-
-        [Inject] 
-        private AuthenticationStateProvider _authState { get; set; }
-
         protected override async Task OnInitializedAsync()
         {
             userLogin = new UserLogin();
-            user = new System.Security.Claims.ClaimsPrincipal();
-            message = "";
         }
 
         protected async void AuthorizeLogin()
         {
-               var token = await _logInService.SendUserAsync(userLogin);
-                await _browserStorage.SetAsync("name", token);
-            if (token != null)
-            {
-                var authState = await ((CustomAuthenticationStateProvider)_authState).ChangeUser("token");
-                this.user = authState.User;
-            }
-            else
-            {
-                _navigationManager.NavigateTo("/LoginPage");
-                message = "Invalid password or username";
-            }
+                await _logInService.SendUserAsync(userLogin);
+            //    await _browserStorage.SetAsync("name", token);
+            //if (token != null)
+            //{
+            //    var authState = await ((CustomAuthenticationStateProvider)_authState).ChangeUser("token");
+            //    this.user = authState.User;
+            //}
+            //else
+            //{
+            //    _navigationManager.NavigateTo("/LoginPage");
+            //    message = "Invalid password or username";
+            //}
         }
     }
 }

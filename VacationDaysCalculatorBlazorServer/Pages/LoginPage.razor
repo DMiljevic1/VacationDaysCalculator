@@ -3,14 +3,9 @@
 @inherits RazorPageBases.LoginPageBase;
 
 
-<CascadingAuthenticationState>
- <AuthorizeView>
-     <Authorized>
         <div class="m-1 p-1 text-white">
                     <p>Welcome</p>
         </div>
-    </Authorized>
-    <NotAuthorized>
 <div class="center">
 
     <p>Username</p>
@@ -32,8 +27,4 @@
         <span class="oi oi-media-skip-backward"></span>
         Close
     </button>
-    @message
 </div>
-</NotAuthorized>
-    </AuthorizeView>
-</CascadingAuthenticationState>
