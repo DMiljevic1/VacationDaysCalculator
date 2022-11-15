@@ -34,8 +34,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 
         protected async void LogOut()
         {
-            string token = await _customAuthenticationStateProvider.GetTokenAsync();
-            await _customAuthenticationStateProvider.RemoveItem(token);
+            await _customAuthenticationStateProvider.RemoveItem("authToken");
             _navigationManager.NavigateTo("/LoginPage");
         }
     }

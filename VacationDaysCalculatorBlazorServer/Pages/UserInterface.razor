@@ -1,5 +1,6 @@
 ﻿@page "/userinterface"
-@*Zaglavlje interfacea*@
+@inherits RazorPageBases.LoginPageBase;
+
 <div class="row">
 	@*Slika profila i podaci o danima*@
 	<div class="col-sm-6 justify-content-between">
@@ -114,6 +115,10 @@
 		<button type="button" class="btn btn-secondary">
 			<span class="btn btn-check"></span>
 			History
+		</button>
+		<button type="button" class="btn btn-secondary" @onclick="LogOut">
+			<span class="btn btn-check"></span>
+			LogOut
 		</button>
 	</div>
 </div>
