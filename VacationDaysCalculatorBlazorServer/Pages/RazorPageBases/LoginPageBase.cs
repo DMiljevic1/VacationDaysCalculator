@@ -18,6 +18,9 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
 
+        [Inject]
+        protected CustomAuthenticationStateProvider _customAuthenticationStateProvider { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             userLogin = new UserLogin();
@@ -27,6 +30,13 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
                 await _logInService.SendUserAsync(userLogin);
                 _navigationManager.NavigateTo("/");
+        }
+
+        protected async void LogOut()
+        {
+            string token = await _customAuthenticationStateProvider.GetTokenAsync();
+            await _customAuthenticationStateProvider.RemoveItem(token);
+            _navigationManager.NavigateTo("/LoginPage");
         }
     }
 }

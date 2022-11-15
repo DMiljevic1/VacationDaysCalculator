@@ -22,7 +22,8 @@ namespace VacationDaysCalculatorBlazorServer.Services
             var httpResponseMessage = await _httpClient.SendAsync(httpPostRequest);
 
             var jwtToken = httpResponseMessage.Content.ReadAsStringAsync();
-            await _customAuthenticationStateProvider.SetTokenAsync(jwtToken.Result);
+            if(jwtToken != null)
+                await _customAuthenticationStateProvider.SetTokenAsync(jwtToken.Result);
         }
 
     }

@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
 using System.Text.Json;
 
-namespace VacationDaysCalculatorBlazorServer
+namespace VacationDaysCalculatorBlazorServer.ServerAuth
 {
-    public static class ServiceExtensions
+    public static class ServiceExtension
     {
         public static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
@@ -12,7 +12,6 @@ namespace VacationDaysCalculatorBlazorServer
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
             return keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()));
         }
-
         private static byte[] ParseBase64WithoutPadding(string base64)
         {
             switch (base64.Length % 4)
