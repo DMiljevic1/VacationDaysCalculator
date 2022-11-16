@@ -22,7 +22,7 @@ namespace VacationDaysCalculatorBlazorServer.Services
             var httpResponseMessage = await _httpClient.SendAsync(httpPostRequest);
 
             var jwtToken = httpResponseMessage.Content.ReadAsStringAsync();
-            if(jwtToken != null)
+            if(jwtToken.Result != "User not found")
                 await _customAuthenticationStateProvider.SetTokenAsync(jwtToken.Result);
         }
 
