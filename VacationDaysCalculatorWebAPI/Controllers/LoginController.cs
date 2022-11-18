@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
+using VacationDaysCalculatorWebAPI.Repositories;
 
 namespace VacationDaysCalculatorWebAPI.Controllers
 {
@@ -17,11 +18,13 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     {
         private IConfiguration _config;
         private readonly VCDDbContext _VCDDbContext;
+        private readonly UserRepository _userRepository;
 
-        public LoginController(IConfiguration config, VCDDbContext vCDDbContext)
+        public LoginController(IConfiguration config, VCDDbContext vCDDbContext, UserRepository userRepository)
         {
             _config = config;
             _VCDDbContext = vCDDbContext;
+            _userRepository = userRepository;
         }
 
         [AllowAnonymous]
@@ -55,7 +58,8 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 
         private User Authenticate(UserLogin userLogin)
         {
-            var currentUser = UserConstants.Users.FirstOrDefault(u => u.UserName == userLogin.UserName && u.Password == userLogin.Password);
+            var users = _userRepository.GetUsers();
+            var currentUser = users.FirstOrDefault(u => u.UserName == userLogin.UserName && u.Password == userLogin.Password);
             if (currentUser != null)
                 return currentUser;
             return null;
