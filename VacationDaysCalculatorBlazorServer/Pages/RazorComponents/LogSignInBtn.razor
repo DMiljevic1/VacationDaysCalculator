@@ -1,11 +1,22 @@
-﻿
+﻿@inject NavigationManager _navigationManager;
+@inherits RazorPageBases.LoginPageBase;
+
 <div class="row-container m-2">
-	<button class="btn btn-info">Log In</button>
-	<button class="btn btn-info">Sign in</button>
+	<AuthorizeView>
+		<Authorized>
+			<button class="btn btn-info" @onclick="LogOut">Log Out</button>
+		</Authorized>
+		<NotAuthorized>
+			<button class="btn btn-info" @onclick="NavigateToLoginPage">Log In</button>
+		</NotAuthorized>
+	</AuthorizeView>
 </div>
 
 
 
 @code {
-
+	private void NavigateToLoginPage()
+	{
+		_navigationManager.NavigateTo("/LoginPage");
+	}
 }
