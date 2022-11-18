@@ -26,7 +26,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             userLogin = new UserLogin();
         }
 
-        protected async void AuthorizeLogin()
+        protected async void Login()
         {
                 await _logInService.SendUserAsync(userLogin);
                 _navigationManager.NavigateTo("/");
