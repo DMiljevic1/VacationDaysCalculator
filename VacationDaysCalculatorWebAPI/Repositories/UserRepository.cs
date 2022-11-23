@@ -17,13 +17,13 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             return _vCDDbContext.Users.ToList();
         }
 
-        public void insertUser(User user)
+        public void InsertUser(User user)
         {
             _vCDDbContext.Users.Add(user);
             _vCDDbContext.SaveChanges();
         }
 
-        public User getUser(int userId)
+        public User GetUser(int userId)
         {
             return _vCDDbContext.Users.FirstOrDefault(user => user.Id == userId);
         }

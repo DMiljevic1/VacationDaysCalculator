@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Security.Claims;
 using System.Security.Principal;
+using VacationDaysCalculatorWebAPI.Repositories;
 
 namespace VacationDaysCalculatorWebAPI.Controllers
 {
@@ -11,27 +13,24 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        [HttpGet("Employees")]
-        [Authorize(Roles = "Employee")]
-        public IActionResult EmployeeEndPoint()
+        private readonly UserRepository _userRepository;
+        public UserController(UserRepository userRepository)
         {
-            var currentUser = GetCurrentUser();
-            return Ok(currentUser);
+            _userRepository = userRepository;
         }
 
-        private User GetCurrentUser()
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetPassengerById([FromBody] int userId)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
+            try
             {
-                var userClaims = identity.Claims;
-                return new User
-                {
-                    UserName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
-                    Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value
-                };
+                return Ok(_userRepository.GetUser(userId));
             }
-            return null;
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

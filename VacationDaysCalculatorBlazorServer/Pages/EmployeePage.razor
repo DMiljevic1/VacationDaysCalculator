@@ -1,6 +1,15 @@
 ﻿@page "/Employee"
-@inherits RazorPageBases.LoginPageBase;
+@inherits RazorPageBases.EmployeePageBase;
+@attribute [Authorize(Roles = "Employee")]
 
+<AuthorizeView>
+	<Authorized>
+@if(currentUser == null)
+{
+	<p>Loading...</p>
+}
+else
+{
 <div class="row">
 	@*Slika profila i podaci o danima*@
 	<div class="col-sm-6 justify-content-between">
@@ -18,11 +27,11 @@
 
 			</div>
 			<div class="card-title">
-				 <h5>Josip Nincevic</h5>
+				 <h5>@currentUser.LastName @currentUser.FirstName</h5>
 			</div>
 			<div class="card-body">
 				<p>Lead of everything</p>
-				<p>Email: jnince01@vacationday.com</p>
+				<p>@currentUser.Email</p>
 				<p class="card-text">Preostalih dana prošle godine: 365</p>
 				<p class="card-text">Preostalih dana ove godine: 0</p>
 				<a href="" class="btn btn-primary disabled placeholder-glow col-1"></a>
@@ -118,9 +127,9 @@
 		</button>
 	</div>
 </div>
-
-
-@code {
-
-
 }
+	</Authorized>
+	<NotAuthorized>
+		<p>You are not autorized to view this page</p>
+	</NotAuthorized>
+</AuthorizeView>
