@@ -1,6 +1,15 @@
-﻿@page "/Employee"
-@inherits RazorPageBases.LoginPageBase;
+﻿@page "/Employee/{userId}"
+@inherits RazorPageBases.EmployeePageBase;
 
+
+<AuthorizeView>
+	<Authorized>
+		@if (currentEmployee == null)
+{
+	<p>Loading...</p>
+}
+else
+{
 <div class="row">
 	@*Slika profila i podaci o danima*@
 	<div class="col-sm-6 justify-content-between">
@@ -18,13 +27,12 @@
 
 			</div>
 			<div class="card-title">
-				 <h5>Josip Nincevic</h5>
+							<h5>@currentEmployee.FullName</h5>
 			</div>
 			<div class="card-body">
-				<p>Lead of everything</p>
-				<p>Email: jnince01@vacationday.com</p>
-				<p class="card-text">Preostalih dana prošle godine: 365</p>
-				<p class="card-text">Preostalih dana ove godine: 0</p>
+							<p>E-mail: @currentEmployee.Email</p>
+							<p class="card-text">Remaining vacation days for last year: @currentEmployee.RemainingDaysOffLastYear</p>
+				<p class="card-text">Remaining vacation days for current year: @currentEmployee.RemainingDaysOffCurrentYear</p>
 				<a href="" class="btn btn-primary disabled placeholder-glow col-1"></a>
 			
 			</div>
@@ -118,9 +126,9 @@
 		</button>
 	</div>
 </div>
-
-
-@code {
-
-
 }
+	</Authorized>
+	<NotAuthorized>
+		<p>You are not autorized to view this page</p>
+	</NotAuthorized>
+</AuthorizeView>
