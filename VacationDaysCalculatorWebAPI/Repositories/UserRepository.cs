@@ -23,9 +23,16 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             _vCDDbContext.SaveChanges();
         }
 
-        public User GetUser(int userId)
+        public EmployeeDetails GetEmployeeDetails(int userId)
         {
-            return _vCDDbContext.Users.FirstOrDefault(user => user.Id == userId);
+            var employeeVacationDays = _vCDDbContext.RemainingVacationDays.FirstOrDefault(vd => vd.UserId == userId);
+            var employee = _vCDDbContext.Users.FirstOrDefault(u => u.Id == userId);
+            var employeeDetails = new EmployeeDetails();
+            employeeDetails.FullName = employee.FirstName + " " + employee.LastName;
+            employeeDetails.Email = employee.Email;
+            employeeDetails.RemainingDaysOffLastYear = employeeVacationDays.RemainingDaysOffLastYear;
+            employeeDetails.RemainingDaysOffCurrentYear = employeeVacationDays.RemainingDaysOffCurrentYear;
+            return employeeDetails;
         }
 
     }

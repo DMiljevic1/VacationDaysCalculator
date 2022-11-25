@@ -1,10 +1,10 @@
-﻿@page "/Employee"
+﻿@page "/Employee/{userId}"
 @inherits RazorPageBases.EmployeePageBase;
-@attribute [Authorize(Roles = "Employee")]
+
 
 <AuthorizeView>
 	<Authorized>
-@if(currentUser == null)
+		@if (currentEmployee == null)
 {
 	<p>Loading...</p>
 }
@@ -27,13 +27,12 @@ else
 
 			</div>
 			<div class="card-title">
-				 <h5>@currentUser.LastName @currentUser.FirstName</h5>
+							<h5>@currentEmployee.FullName</h5>
 			</div>
 			<div class="card-body">
-				<p>Lead of everything</p>
-				<p>@currentUser.Email</p>
-				<p class="card-text">Preostalih dana prošle godine: 365</p>
-				<p class="card-text">Preostalih dana ove godine: 0</p>
+							<p>E-mail: @currentEmployee.Email</p>
+							<p class="card-text">Remaining vacation days for last year: @currentEmployee.RemainingDaysOffLastYear</p>
+				<p class="card-text">Remaining vacation days for current year: @currentEmployee.RemainingDaysOffCurrentYear</p>
 				<a href="" class="btn btn-primary disabled placeholder-glow col-1"></a>
 			
 			</div>

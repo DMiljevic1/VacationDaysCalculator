@@ -9,7 +9,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
     public class LoginPageBase : ComponentBase
     {
         public UserLogin userLogin { get; set; }
-        protected string message { get; set; }
+        public static string message { get; set; }
 
         protected List<User> Users { get; set; }
 
@@ -31,14 +31,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected async void Login()
         {
             await _logInService.SendUserAsync(userLogin);
-            var token = await _customAuthenticationStateProvider.GetTokenAsync();
-            if (token != null)
-                _navigationManager.NavigateTo("/");
-            else
-            {
-                message = "Incorect username or password";
-                _navigationManager.NavigateTo("/LoginPage");
-            }
         }
 
         protected async void LogOut()

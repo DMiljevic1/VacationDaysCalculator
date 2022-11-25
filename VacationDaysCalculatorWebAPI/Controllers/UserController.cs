@@ -19,13 +19,13 @@ namespace VacationDaysCalculatorWebAPI.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
-        [Authorize]
-        public IActionResult GetPassengerById([FromBody] int userId)
+        [HttpGet("{userId:int}")]
+        [AllowAnonymous]
+        public IActionResult GetPassengerById(int userId)
         {
             try
             {
-                return Ok(_userRepository.GetUser(userId));
+                return Ok(_userRepository.GetEmployeeDetails(userId));
             }
             catch (System.Exception)
             {

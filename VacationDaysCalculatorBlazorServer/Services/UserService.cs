@@ -18,15 +18,19 @@ namespace VacationDaysCalculatorBlazorServer.Service
             _customAuthenticationStateProvider = customAuthenticationStateProvider;
         }
 
-        public async Task<User> GetUserAsync(int userId)
+        //public async Task<User> GetUserAsync(int userId)
+        //{
+        //    var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
+        //    httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(userId), Encoding.UTF8, "application/json");
+        //    //httpPostRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+        //    var httpResponseMessage = await _httpClient.SendAsync(httpPostRequest);
+        //    var userAsString = await httpResponseMessage.Content.ReadAsStringAsync();
+        //    var user = JsonSerializer.Deserialize<User>(userAsString);
+        //    return user;
+        //}
+        public async Task<EmployeeDetails> GetEmployeeDetailsAsync(int userId)
         {
-            var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
-            httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(userId), Encoding.UTF8, "application/json");
-            //httpPostRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            var httpResponseMessage = await _httpClient.SendAsync(httpPostRequest);
-            var userAsString = await httpResponseMessage.Content.ReadAsStringAsync();
-            var user = JsonSerializer.Deserialize<User>(userAsString);
-            return user;
+            return await _httpClient.GetFromJsonAsync<EmployeeDetails>($"{BaseApiUrl}/{userId}");
         }
     }
 }
