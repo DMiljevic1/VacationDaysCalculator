@@ -30,6 +30,7 @@ namespace VacationDaysCalculatorBlazorServer.Service
         //}
         public async Task<EmployeeDetails> GetEmployeeDetailsAsync(int userId)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             return await _httpClient.GetFromJsonAsync<EmployeeDetails>($"{BaseApiUrl}/{userId}");
         }
     }
