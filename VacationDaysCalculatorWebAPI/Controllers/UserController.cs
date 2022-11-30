@@ -20,7 +20,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         }
 
         [HttpGet("{userId:int}")]
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult GetPassengerById(int userId)
         {
             try
