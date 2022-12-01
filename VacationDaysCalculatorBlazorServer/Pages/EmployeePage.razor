@@ -1,4 +1,4 @@
-﻿@page "/Employee/{userId}"
+﻿@page "/Employee/{employeeId}"
 @inherits RazorPageBases.EmployeePageBase;
 
 
@@ -120,7 +120,7 @@ else
 			<span class="btn btn-check"></span>
 			Add vacation
 		</button>
-		<button type="button" class="btn btn-secondary">
+					<button type="button" class="btn btn-secondary" @onclick="OpenEmployeeHistoryPage">
 			<span class="btn btn-check"></span>
 			History
 		</button>

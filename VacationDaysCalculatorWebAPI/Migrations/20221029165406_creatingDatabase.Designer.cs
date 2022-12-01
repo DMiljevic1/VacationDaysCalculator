@@ -10,7 +10,7 @@ using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 namespace VacationDaysCalculatorWebAPI.Migrations
 {
-    [DbContext(typeof(VCDDbContext))]
+    [DbContext(typeof(DatabaseContext.VCDDbContext))]
     [Migration("20221029165406_creatingDatabase")]
     partial class creatingDatabase
     {

@@ -11,7 +11,7 @@ using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 namespace VacationDaysCalculatorWebAPI.Migrations
 {
-    [DbContext(typeof(VCDDbContext))]
+    [DbContext(typeof(DatabaseContext.VCDDbContext))]
     [Migration("20221029170251_AddedForeignKeyUser")]
     partial class AddedForeignKeyUser
     {

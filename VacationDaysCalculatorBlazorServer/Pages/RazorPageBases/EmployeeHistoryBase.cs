@@ -4,7 +4,7 @@ using VacationDaysCalculatorBlazorServer.Service;
 
 namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
-    public class EmployeePageBase : ComponentBase
+    public class EmployeeHistoryBase : ComponentBase
     {
         [Parameter]
         public string employeeId { get; set; }
@@ -12,14 +12,14 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected UserService _userService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
-        protected EmployeeDetails currentEmployee { get; set; }
+        protected List<EmployeeHistory> employeeHistory { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            currentEmployee = await _userService.GetEmployeeDetailsAsync(int.Parse(employeeId));
+            employeeHistory = await _userService.GetEmployeeHistoryAsync(int.Parse(employeeId));
         }
-        protected void OpenEmployeeHistoryPage()
+        protected void CloseEmployeeHistoryPage()
         {
-            _navigationManager.NavigateTo("/EmployeeHistory/" + employeeId);
+            _navigationManager.NavigateTo("/Employee/" + employeeId);
         }
     }
 }
