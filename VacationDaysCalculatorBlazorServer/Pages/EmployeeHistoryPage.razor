@@ -15,28 +15,27 @@ else
 	<div class="card-body">
 		<div>
 			<table class="table table-hover table-responsive table-light table-borderless">
-				<thead>Employee History</thead>
+				<thead>
+				    <tr>
+                       <th>Last Name</th>
+                       <th>First Name</th>
+					   <th>Vacation Year</th>
+					   <th>Vacation From</th>
+					   <th>Vacation To</th>
+                     </tr>
+				</thead>
 				<tbody>
-					<tr>
-						<td>Name</td>
-						<td>Position</td>
-						<td>Vacation From</td>
-						<td>Vacation To</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						@foreach(var history in employeeHistory)
-						{
-						<td>@history.FirstName</td>
-						<td>@history.LastName</td>
-						<td>@history.Year</td>
-						<td>@history.VacationFrom</td>
-						<td>@history.VacationTo</td>
-						}
-					</tr>
+				    @foreach(var history in employeeHistory)
+				    {
+						 <tr>
+                             <td>@history.LastName</td>
+                             <td>@history.FirstName</td>
+                             <td>@history.Year</td>
+							 <td>@history.VacationFrom.ToString("dd.MM.")</td>
+							 <td>@history.VacationTo.ToString("dd.MM.")</td>
+						 </tr>
+				    }
 				</tbody>
-
 			</table>
 
 		</div>
