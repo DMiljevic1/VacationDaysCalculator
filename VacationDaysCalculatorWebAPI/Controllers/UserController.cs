@@ -21,11 +21,25 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 
         [HttpGet("{userId:int}")]
         [Authorize]
-        public IActionResult GetPassengerById(int userId)
+        public IActionResult GetEmployeeDetails(int userId)
         {
             try
             {
                 return Ok(_userRepository.GetEmployeeDetails(userId));
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("employeeHistory/{employeeId:int}")]
+        [Authorize]
+        public IActionResult GetEmployeeHistory(int employeeId)
+        {
+            try
+            {
+                return Ok(_userRepository.GetEmployeeHistory(employeeId));
             }
             catch (System.Exception)
             {

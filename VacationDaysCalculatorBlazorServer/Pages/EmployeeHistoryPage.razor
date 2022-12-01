@@ -1,0 +1,54 @@
+﻿@page "/EmployeeHistory/{employeeId}"
+@inherits RazorPageBases.EmployeeHistoryBase;
+<h3>Employee History</h3>
+
+<AuthorizeView>
+	<Authorized>
+		@if (employeeHistory == null)
+{
+	<p>There is no records of vacation history.</p>
+}
+else
+{
+@*Tablica sa poslanim zahtjevima, kalendar*@
+<div class="card w-100">
+	<div class="card-body">
+		<div>
+			<table class="table table-hover table-responsive table-light table-borderless">
+				<thead>Employee History</thead>
+				<tbody>
+					<tr>
+						<td>Name</td>
+						<td>Position</td>
+						<td>Vacation From</td>
+						<td>Vacation To</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						@foreach(var history in employeeHistory)
+						{
+						<td>@history.FirstName</td>
+						<td>@history.LastName</td>
+						<td>@history.Year</td>
+						<td>@history.VacationFrom</td>
+						<td>@history.VacationTo</td>
+						}
+					</tr>
+				</tbody>
+
+			</table>
+
+		</div>
+			<button type="button" class="btn btn-secondary" @onclick="CloseEmployeeHistoryPage">
+			<span class="btn btn-close"></span>
+			Close
+		</button>
+	</div>
+</div>
+}
+	</Authorized>
+	<NotAuthorized>
+		<p>You are not autorized to view this page</p>
+	</NotAuthorized>
+</AuthorizeView>
