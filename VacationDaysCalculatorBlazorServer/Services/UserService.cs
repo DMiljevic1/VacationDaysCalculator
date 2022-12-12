@@ -17,17 +17,6 @@ namespace VacationDaysCalculatorBlazorServer.Service
             _httpClient = httpClient;
             _customAuthenticationStateProvider = customAuthenticationStateProvider;
         }
-
-        //public async Task<User> GetUserAsync(int userId)
-        //{
-        //    var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
-        //    httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(userId), Encoding.UTF8, "application/json");
-        //    //httpPostRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-        //    var httpResponseMessage = await _httpClient.SendAsync(httpPostRequest);
-        //    var userAsString = await httpResponseMessage.Content.ReadAsStringAsync();
-        //    var user = JsonSerializer.Deserialize<User>(userAsString);
-        //    return user;
-        //}
         public async Task<EmployeeDetails> GetEmployeeDetailsAsync(int userId)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
@@ -38,6 +27,13 @@ namespace VacationDaysCalculatorBlazorServer.Service
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             return await _httpClient.GetFromJsonAsync<List<EmployeeHistory>>($"{BaseApiUrl}/employeeHistory/{userId}");
+        }
+        public async Task AddVacationAsync(VacationDays vacation)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+            var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
+            httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
+            await _httpClient.SendAsync(httpPostRequest);
         }
     }
 }

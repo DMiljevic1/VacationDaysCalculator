@@ -1,0 +1,24 @@
+﻿@page "/AddVacation/{userId}"
+@inherits RazorPageBases.AddVacationBase;
+
+@*<AuthorizeView>*@
+    @*<Authorized>*@
+         <h3>Add Vacation</h3>
+
+        <EditForm Model="@vacation" OnValidSubmit="@AddVacation">
+            <VacationFields vacationDays="@vacation"></VacationFields>
+            <button type="submit" class="btn btn-success">
+                <span class="oi oi-pencil"></span>
+                Add Vacation
+            </button>
+            <button type="button" class="btn btn-secondary" @onclick="Close">
+                <span class="oi oi-media-skip-backward"></span>
+                Close
+            </button>
+        </EditForm>
+@*    </Authorized>
+    <NotAuthorized>
+        <p>You have no access to this page</p>
+    </NotAuthorized>
+</AuthorizeView>*@
+

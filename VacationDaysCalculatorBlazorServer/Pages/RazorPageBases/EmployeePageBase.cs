@@ -21,5 +21,9 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
             _navigationManager.NavigateTo("/EmployeeHistory/" + employeeId);
         }
+        protected void OpenAddVacationPage()
+        {
+            _navigationManager.NavigateTo("/AddVacation/" + employeeId);
+        }
     }
 }
