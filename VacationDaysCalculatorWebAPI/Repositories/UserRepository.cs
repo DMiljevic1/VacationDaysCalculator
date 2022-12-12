@@ -56,5 +56,11 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             return employeeHistory;
         }
 
+        public void InsertVacation(VacationDays vacation)
+        {
+            _vCDDbContext.VacationDays.Add(vacation);
+            _vCDDbContext.SaveChanges();
+        }
+
     }
 }
