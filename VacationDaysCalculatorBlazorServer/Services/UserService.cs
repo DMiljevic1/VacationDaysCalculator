@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text;
 using System.Net.Http.Headers;
 using VacationDaysCalculatorBlazorServer.Services;
+using DomainModel.DtoModels;
 
 namespace VacationDaysCalculatorBlazorServer.Service
 {

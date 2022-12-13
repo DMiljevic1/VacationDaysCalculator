@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
 using System.Text;
-using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
 using VacationDaysCalculatorBlazorServer.Pages.RazorPageBases;
+using DomainModel.DtoModels;
 
 namespace VacationDaysCalculatorBlazorServer.Services
 {

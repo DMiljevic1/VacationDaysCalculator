@@ -1,4 +1,5 @@
-﻿using DomainModel.Models;
+﻿using DomainModel.DtoModels;
+using DomainModel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
