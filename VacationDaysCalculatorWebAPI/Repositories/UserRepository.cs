@@ -54,7 +54,39 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             employeeHistory.Year = vacationDay.Year;
             employeeHistory.FirstName = vacationDay.User.FirstName;
             employeeHistory.LastName = vacationDay.User.LastName;
+            employeeHistory.TotalVacationSpent = CalculateTotalVacationSpentForGivenPeriod(employeeHistory.VacationFrom, employeeHistory.VacationTo);
             return employeeHistory;
+        }
+
+        private int CalculateTotalVacationSpentForGivenPeriod(DateTime vacationFrom, DateTime vacationTo)
+        {
+            var dayNow = DateTime.Now;
+            var holidays = _vCDDbContext.Holidays.ToList();
+            int totalVacationDaysSpent = 0;
+            var oneDay = TimeSpan.FromDays(1);
+
+            for (DateTime currentDay = vacationFrom; currentDay <= vacationTo; currentDay += oneDay)
+            {
+                if (isCurrentDayWeekend(currentDay.Date))
+                    continue;
+                int numberOfDaysThatAreNotOnHolidays = 0;
+                foreach(var holiday in holidays)
+                {
+                    if (!holiday.HolidayDate.Equals(currentDay.Date))
+                        numberOfDaysThatAreNotOnHolidays++;
+                }
+                if(numberOfDaysThatAreNotOnHolidays == holidays.Count)
+                    totalVacationDaysSpent++;
+            }
+            return totalVacationDaysSpent;
+        }
+
+        private bool isCurrentDayWeekend(DateTime currentDay)
+        {
+            DayOfWeek day = currentDay.DayOfWeek;
+            if(day.Equals(DayOfWeek.Sunday) || day.Equals(DayOfWeek.Saturday))
+                return true;
+            return false;
         }
 
         public void InsertVacation(VacationDays vacation)
