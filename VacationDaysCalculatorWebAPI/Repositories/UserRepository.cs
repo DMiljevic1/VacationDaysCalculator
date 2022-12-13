@@ -1,4 +1,5 @@
-﻿using DomainModel.Models;
+﻿using DomainModel.DtoModels;
+using DomainModel.Models;
 using Microsoft.EntityFrameworkCore;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
 
