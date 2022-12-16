@@ -41,7 +41,49 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         public List<VacationDays> GetEmployeeVacation(int userId)
         {
             var employeeVacation = _vCDDbContext.VacationDays.Include(vd => vd.User).Where(vd => vd.UserId.Equals(userId) && (vd.Status.Equals(VacationStatus.Approved) || vd.Status.Equals(VacationStatus.OnVacation) || vd.Status.Equals(VacationStatus.Pending))).ToList();
+            if(employeeVacation != null)
+                setVacationStatus(employeeVacation);
+            employeeVacation = _vCDDbContext.VacationDays.Include(vd => vd.User).Where(vd => vd.UserId.Equals(userId) && (vd.Status.Equals(VacationStatus.Approved) || vd.Status.Equals(VacationStatus.OnVacation) || vd.Status.Equals(VacationStatus.Pending))).ToList();
             return employeeVacation;
+        }
+
+        private void setVacationStatus(List<VacationDays> vacationDays)
+        {
+            var currentDate = DateTime.Today;
+            var yesterday = DateTime.Today.AddDays(-1);
+            foreach (var vacation in vacationDays)
+            {
+                if (vacation.VacationFrom.Equals(currentDate) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.Approved)
+                {
+                    vacation.Status = VacationStatus.OnVacation;
+                    UpdateVacationDayStatus(vacation);
+                }
+                else if (vacation.VacationTo.Equals(yesterday.Date) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.OnVacation)
+                {
+                    vacation.Status = VacationStatus.Arhived;
+                    UpdateVacationDayStatus(vacation);
+                }
+                else if (vacation.VacationFrom.Equals(currentDate) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.Pending)
+                {
+                    vacation.Status = VacationStatus.Cancelled;
+                    UpdateVacationDayStatus(vacation);
+                }
+            }
+        }
+        public void UpdateVacationDayStatus(VacationDays vacationDays)
+        {
+            var vacationForUpdate = GetVacationDaysByVacationId(vacationDays.Id);
+            if (vacationForUpdate != null)
+            {
+                vacationForUpdate.Status = vacationDays.Status;
+
+                _vCDDbContext.SaveChanges();
+            }
+
+        }
+        public VacationDays GetVacationDaysByVacationId(int vacationId)
+        {
+            return _vCDDbContext.VacationDays.FirstOrDefault(vd => vd.Id == vacationId);
         }
         public List<EmployeeHistory> GetEmployeeHistory(int userId)
         {
