@@ -1,6 +1,7 @@
 ﻿using DomainModel.DtoModels;
 using Microsoft.AspNetCore.Components;
 using VacationDaysCalculatorBlazorServer.Service;
+using DomainModel.Models;
 
 namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {

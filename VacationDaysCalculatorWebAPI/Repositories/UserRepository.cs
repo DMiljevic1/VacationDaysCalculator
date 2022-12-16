@@ -25,16 +25,65 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             _vCDDbContext.SaveChanges();
         }
 
-        public EmployeeDetails GetEmployeeDetails(int employeeId)
+        public EmployeeDetails GetEmployeeDetails(int userId)
         {
-            var employeeVacationDays = _vCDDbContext.RemainingVacationDays.FirstOrDefault(vd => vd.UserId == employeeId);
-            var employee = _vCDDbContext.Users.FirstOrDefault(u => u.Id == employeeId);
+            var employeeVacationDays = _vCDDbContext.RemainingVacationDays.FirstOrDefault(vd => vd.UserId == userId);
+            var employee = _vCDDbContext.Users.FirstOrDefault(u => u.Id == userId);
             var employeeDetails = new EmployeeDetails();
-            employeeDetails.FullName = employee.FirstName + " " + employee.LastName;
+            employeeDetails.FirstName = employee.FirstName;
+            employeeDetails.LastName = employee.LastName;
             employeeDetails.Email = employee.Email;
             employeeDetails.RemainingDaysOffLastYear = employeeVacationDays.RemainingDaysOffLastYear;
             employeeDetails.RemainingDaysOffCurrentYear = employeeVacationDays.RemainingDaysOffCurrentYear;
+            employeeDetails.VacationDays = GetEmployeeVacation(userId);
             return employeeDetails;
+        }
+        public List<VacationDays> GetEmployeeVacation(int userId)
+        {
+            var employeeVacation = _vCDDbContext.VacationDays.Include(vd => vd.User).Where(vd => vd.UserId.Equals(userId) && (vd.Status.Equals(VacationStatus.Approved) || vd.Status.Equals(VacationStatus.OnVacation) || vd.Status.Equals(VacationStatus.Pending))).ToList();
+            if(employeeVacation != null)
+                setVacationStatus(employeeVacation);
+            employeeVacation = _vCDDbContext.VacationDays.Include(vd => vd.User).Where(vd => vd.UserId.Equals(userId) && (vd.Status.Equals(VacationStatus.Approved) || vd.Status.Equals(VacationStatus.OnVacation) || vd.Status.Equals(VacationStatus.Pending))).ToList();
+            return employeeVacation;
+        }
+
+        private void setVacationStatus(List<VacationDays> vacationDays)
+        {
+            var currentDate = DateTime.Today;
+            var yesterday = DateTime.Today.AddDays(-1);
+            foreach (var vacation in vacationDays)
+            {
+                if (vacation.VacationFrom.Equals(currentDate) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.Approved)
+                {
+                    vacation.Status = VacationStatus.OnVacation;
+                    UpdateVacationDayStatus(vacation);
+                }
+                else if (vacation.VacationTo.Equals(yesterday.Date) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.OnVacation)
+                {
+                    vacation.Status = VacationStatus.Arhived;
+                    UpdateVacationDayStatus(vacation);
+                }
+                else if (vacation.VacationFrom.Equals(currentDate) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.Pending)
+                {
+                    vacation.Status = VacationStatus.Cancelled;
+                    UpdateVacationDayStatus(vacation);
+                }
+            }
+        }
+        public void UpdateVacationDayStatus(VacationDays vacationDays)
+        {
+            var vacationForUpdate = GetVacationDaysByVacationId(vacationDays.Id);
+            if (vacationForUpdate != null)
+            {
+                vacationForUpdate.Status = vacationDays.Status;
+
+                _vCDDbContext.SaveChanges();
+            }
+
+        }
+        public VacationDays GetVacationDaysByVacationId(int vacationId)
+        {
+            return _vCDDbContext.VacationDays.FirstOrDefault(vd => vd.Id == vacationId);
         }
         public List<EmployeeHistory> GetEmployeeHistory(int userId)
         {
@@ -94,6 +143,5 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             _vCDDbContext.VacationDays.Add(vacation);
             _vCDDbContext.SaveChanges();
         }
-
     }
 }
