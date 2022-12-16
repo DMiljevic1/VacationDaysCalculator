@@ -25,16 +25,23 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             _vCDDbContext.SaveChanges();
         }
 
-        public EmployeeDetails GetEmployeeDetails(int employeeId)
+        public EmployeeDetails GetEmployeeDetails(int userId)
         {
-            var employeeVacationDays = _vCDDbContext.RemainingVacationDays.FirstOrDefault(vd => vd.UserId == employeeId);
-            var employee = _vCDDbContext.Users.FirstOrDefault(u => u.Id == employeeId);
+            var employeeVacationDays = _vCDDbContext.RemainingVacationDays.FirstOrDefault(vd => vd.UserId == userId);
+            var employee = _vCDDbContext.Users.FirstOrDefault(u => u.Id == userId);
             var employeeDetails = new EmployeeDetails();
-            employeeDetails.FullName = employee.FirstName + " " + employee.LastName;
+            employeeDetails.FirstName = employee.FirstName;
+            employeeDetails.LastName = employee.LastName;
             employeeDetails.Email = employee.Email;
             employeeDetails.RemainingDaysOffLastYear = employeeVacationDays.RemainingDaysOffLastYear;
             employeeDetails.RemainingDaysOffCurrentYear = employeeVacationDays.RemainingDaysOffCurrentYear;
+            employeeDetails.VacationDays = GetEmployeeVacation(userId);
             return employeeDetails;
+        }
+        public List<VacationDays> GetEmployeeVacation(int userId)
+        {
+            var employeeVacation = _vCDDbContext.VacationDays.Include(vd => vd.User).Where(vd => vd.UserId.Equals(userId) && (vd.Status.Equals(VacationStatus.Approved) || vd.Status.Equals(VacationStatus.OnVacation) || vd.Status.Equals(VacationStatus.Pending))).ToList();
+            return employeeVacation;
         }
         public List<EmployeeHistory> GetEmployeeHistory(int userId)
         {
@@ -94,6 +101,5 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             _vCDDbContext.VacationDays.Add(vacation);
             _vCDDbContext.SaveChanges();
         }
-
     }
 }

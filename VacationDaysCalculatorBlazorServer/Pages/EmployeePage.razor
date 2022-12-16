@@ -27,14 +27,12 @@ else
 
 			</div>
 			<div class="card-title">
-							<h5>@currentEmployee.FullName</h5>
+							<h5>@currentEmployee.LastName @currentEmployee.FirstName</h5>
 			</div>
 			<div class="card-body">
 							<p>E-mail: @currentEmployee.Email</p>
 							<p class="card-text">Remaining vacation days for last year: @currentEmployee.RemainingDaysOffLastYear</p>
-				<p class="card-text">Remaining vacation days for current year: @currentEmployee.RemainingDaysOffCurrentYear</p>
-				<a href="" class="btn btn-primary disabled placeholder-glow col-1"></a>
-			
+							<p class="card-text">Remaining vacation days for current year: @currentEmployee.RemainingDaysOffCurrentYear</p>
 			</div>
 		
 		</div>
@@ -46,76 +44,41 @@ else
 @*Tablica sa poslanim zahtjevima, kalendar*@
 <div class="card w-100">
 	<div class="card-body">
-		<div>
-			<table class="table table-hover table-responsive table-light table-borderless">
-				<thead>Vacation Days Table</thead>
-				<tbody>
-					<tr>
-						<td>Ime</td>
-						<td>Prezime</td>
-						<td>Position</td>
-						<td>Datum početka godišnjeg odmora</td>
-						<td>Datum kraja godišnjeg odmora</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Zeljko</td>
-						<td>Kerum</td>
-						<td>Mid Software Developer</td>
-						<td>25.5.1955</td>
-						<td>25.5.2055</td>
-						<td>
-							<button class="btn btn-info">Edit</button>
-						</td>
-						<td>
-							<button class="btn btn-danger">Delete</button>
-						</td>
-					</tr>
-					<tr>
-						<td>Zeljko</td>
-						<td>Kerum</td>
-						<td>Mid Software Developer</td>
-						<td>25.5.1955</td>
-						<td>25.5.2055</td>
-						<td>
-							<button class="btn btn-info">Edit</button>
-						</td>
-						<td>
-							<button class="btn btn-danger">Delete</button>
-						</td>
-					</tr>
-					<tr>
-						<td>Zeljko</td>
-						<td>Kerum</td>
-						<td>Mid Software Developer</td>
-						<td>25.5.1955</td>
-						<td>25.5.2055</td>
-						<td>
-							<button class="btn btn-info">Edit</button>
-						</td>
-						<td>
-							<button class="btn btn-danger">Delete</button>
-						</td>
-					<tr>
-						<td>Zeljko</td>
-						<td>Kerum</td>
-						<td>Mid Software Developer</td>
-						<td>25.5.1955</td>
-						<td>25.5.2055</td>
-						<td>
-							<button class="btn btn-info">Edit</button>
-						</td>
-						<td>
-							<button class="btn btn-danger">Delete</button>
-						</td>
-					</tr>
-					</tr>
-				</tbody>
+					<div>
+						<table class="table table-hover table-responsive table-light table-borderless">
+							<thead>
+								<tr>
+									<th>Last Name</th>
+									<th>First Name</th>
+									<th>Vacation Year</th>
+									<th>Vacation From</th>
+									<th>Vacation To</th>
+									<th>Vacation Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if(currentEmployee.VacationDays == null || currentEmployee.VacationDays.Count.Equals(0))
+								{
+									<tr>No records found</tr>
+								}
+								else
+								{
+									@foreach (var vacation in currentEmployee.VacationDays)
+									{
+										<tr>
+											<td>@currentEmployee.LastName</td>
+											<td>@currentEmployee.FirstName</td>
+											<td>@vacation.Year</td>
+											<td>@vacation.VacationFrom.ToString("dd.MM.")</td>
+											<td>@vacation.VacationTo.ToString("dd.MM.")</td>
+											<td>@vacation.Status</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
 
-			</table>
-
-		</div>
+					</div>
 		<button type="button" class="btn btn-primary" @onclick="OpenAddVacationPage">
 			<span class="btn btn-check"></span>
 			Add vacation
