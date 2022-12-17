@@ -1,8 +1,9 @@
 ﻿@page "/EmployeeHistory/{employeeId}"
 @inherits RazorPageBases.EmployeeHistoryBase;
+@attribute [Authorize(Roles = "Employee")]
 <h3>Employee History</h3>
 
-<AuthorizeView>
+<AuthorizeView Roles="Employee">
 	<Authorized>
 		@if (employeeHistory == null)
 {

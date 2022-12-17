@@ -1,8 +1,9 @@
 ﻿@page "/Employee/{userId}"
 @inherits RazorPageBases.EmployeePageBase;
+@attribute [Authorize(Roles = "Employee")]
 
 
-<AuthorizeView>
+<AuthorizeView Roles="Employee">
 	<Authorized>
 		@if (currentEmployee == null)
 {
@@ -92,6 +93,6 @@ else
 }
 	</Authorized>
 	<NotAuthorized>
-		<p>You are not autorized to view this page</p>
+		<p>You are not authorized to view this page</p>
 	</NotAuthorized>
 </AuthorizeView>
