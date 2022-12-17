@@ -29,7 +29,7 @@ namespace VacationDaysCalculatorBlazorServer.Services
             if(jwtToken.Result != "User not found")
             {
                 await _customAuthenticationStateProvider.SetTokenAsync(jwtToken.Result);
-                _navigationManager.NavigateTo("/Admin/" + 6);
+                _navigationManager.NavigateTo("/Employee/" + 1);
             }
             else
             {

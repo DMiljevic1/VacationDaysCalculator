@@ -9,7 +9,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Parameter]
         public string employeeId { get; set; }
         [Inject]
-        protected UserService _userService { get; set; }
+        protected EmployeeService _userService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
         protected List<EmployeeHistory> employeeHistory { get; set; }

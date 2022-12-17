@@ -5,11 +5,11 @@ using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 namespace VacationDaysCalculatorWebAPI.Repositories
 {
-    public class UserRepository
+    public class EmployeeRepository
     {
         private readonly VCDDbContext _vCDDbContext;
 
-        public UserRepository(VCDDbContext vCDDbContext)
+        public EmployeeRepository(VCDDbContext vCDDbContext)
         {
             _vCDDbContext = vCDDbContext;
         }

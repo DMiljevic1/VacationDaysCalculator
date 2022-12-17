@@ -12,7 +12,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Inject]
         public NavigationManager _navigationManager { get; set; }
         [Inject]
-        public UserService _userService { get; set; }
+        public EmployeeService _userService { get; set; }
         protected override async Task OnInitializedAsync()
         {
             vacation = new VacationDays();

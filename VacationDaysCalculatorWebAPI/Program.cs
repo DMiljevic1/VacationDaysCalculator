@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<VCDDbContext>(option => option.UseSqlServer("name=ConnectionStrings:VDCConnection"));
 builder.Services.AddControllers();
-builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<EmployeeRepository>();
 builder.Services.AddScoped<AdminRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

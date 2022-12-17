@@ -11,10 +11,10 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
-        private readonly UserRepository _userRepository;
-        public UserController(UserRepository userRepository)
+        private readonly EmployeeRepository _userRepository;
+        public EmployeeController(EmployeeRepository userRepository)
         {
             _userRepository = userRepository;
         }
