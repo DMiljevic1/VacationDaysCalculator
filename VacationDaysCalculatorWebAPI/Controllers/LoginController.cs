@@ -19,9 +19,9 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     {
         private IConfiguration _config;
         private readonly VCDDbContext _VCDDbContext;
-        private readonly UserRepository _userRepository;
+        private readonly EmployeeRepository _userRepository;
 
-        public LoginController(IConfiguration config, VCDDbContext vCDDbContext, UserRepository userRepository)
+        public LoginController(IConfiguration config, VCDDbContext vCDDbContext, EmployeeRepository userRepository)
         {
             _config = config;
             _VCDDbContext = vCDDbContext;

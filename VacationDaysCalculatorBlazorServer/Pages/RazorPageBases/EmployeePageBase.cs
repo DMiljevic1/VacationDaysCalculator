@@ -8,23 +8,23 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
     public class EmployeePageBase : ComponentBase
     {
         [Parameter]
-        public string employeeId { get; set; }
+        public string userId { get; set; }
         [Inject]
-        protected UserService _userService { get; set; }
+        protected EmployeeService _userService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
         protected EmployeeDetails currentEmployee { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            currentEmployee = await _userService.GetEmployeeDetailsAsync(int.Parse(employeeId));
+            currentEmployee = await _userService.GetEmployeeDetailsAsync(int.Parse(userId));
         }
         protected void OpenEmployeeHistoryPage()
         {
-            _navigationManager.NavigateTo("/EmployeeHistory/" + employeeId);
+            _navigationManager.NavigateTo("/EmployeeHistory/" + userId);
         }
         protected void OpenAddVacationPage()
         {
-            _navigationManager.NavigateTo("/AddVacation/" + employeeId);
+            _navigationManager.NavigateTo("/AddVacation/" + userId);
         }
     }
 }

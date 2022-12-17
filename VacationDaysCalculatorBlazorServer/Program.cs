@@ -12,7 +12,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<LogInService>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<AdminService>();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<CustomAuthenticationStateProvider>();
