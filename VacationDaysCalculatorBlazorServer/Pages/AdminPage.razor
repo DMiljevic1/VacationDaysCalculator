@@ -1,0 +1,87 @@
+﻿@page "/Admin/{userId}"
+@inherits RazorPageBases.AdminPageBase;
+
+<AuthorizeView>
+	<Authorized>
+		@if (adminDetails == null)
+{
+	<p>Loading...</p>
+}
+else
+{
+<div class="row">
+	@*Slika profila i podaci o danima*@
+	<div class="col-sm-6 justify-content-between">
+		<div class="card text-bg-primary mb-3">
+			<div class="card w-25 ratio ratio-1x1  d-flex justify-content-between">
+				<div>
+					<img src="" class="card-img-top h-50" alt="Slika profila" />
+				</div>
+			
+		
+			</div>
+			<div class="col-sm-6">
+				<label for="formFile" class="form-label"></label>
+				<input class="form-control" type="file" id="formFile"/>
+
+			</div>
+			<div class="card-title">
+							<h5>@adminDetails.LastName @adminDetails.FirstName</h5>
+			</div>
+			<div class="card-body">
+							<p>E-mail: @adminDetails.Email</p>
+			</div>
+		
+		</div>
+
+	</div>
+	
+</div>
+
+@*Tablica sa poslanim zahtjevima, kalendar*@
+<div class="card w-100">
+	<div class="card-body">
+			<div>
+					<table class="table table-hover table-responsive table-light table-borderless">
+							<thead>
+								<tr>
+									<th>Last Name</th>
+									<th>First Name</th>
+									<th>Vacation Year</th>
+									<th>Vacation From</th>
+									<th>Vacation To</th>
+									<th>Vacation Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if (adminDetails.EmployeeVacationDays == null || adminDetails.EmployeeVacationDays.Count.Equals(0))
+								{
+									<tr>No records found</tr>
+								}
+								else
+								{
+									@foreach (var vacation in adminDetails.EmployeeVacationDays)
+									{
+										<tr>
+											<td>@vacation.User.LastName</td>
+											<td>@vacation.User.FirstName</td>
+											<td>@vacation.Year</td>
+											<td>@vacation.VacationFrom.ToString("dd.MM.")</td>
+											<td>@vacation.VacationTo.ToString("dd.MM.")</td>
+											<td>@vacation.Status</td>
+										</tr>
+									}
+								}
+							</tbody>
+					</table>
+
+			</div>
+	</div>
+</div>
+}
+	</Authorized>
+	<NotAuthorized>
+		<p>You are not autorized to view this page</p>
+	</NotAuthorized>
+</AuthorizeView>
+
