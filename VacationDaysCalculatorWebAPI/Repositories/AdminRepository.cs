@@ -31,5 +31,15 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             var employeeVacation = _vCDDbContext.VacationDays.Include(vd => vd.User).Where(vd => vd.Status.Equals(VacationStatus.Pending)).ToList();
             return employeeVacation;
         }
+        public void UpdateEmployeeVacationStatus(int vacationId, VacationStatus status)
+        {
+            var vacationForUpdate = _vCDDbContext.VacationDays.FirstOrDefault(vd => vd.Id == vacationId);
+            if (vacationForUpdate != null)
+            {
+                vacationForUpdate.Status = status;
+
+                _vCDDbContext.SaveChanges();
+            }
+        }
     }
 }
