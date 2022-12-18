@@ -32,11 +32,11 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 
         [HttpPut]
         [Authorize]
-        public IActionResult UpdateEmployeeVacationStatus([FromBody] int vacationId, VacationStatus status)
+        public IActionResult UpdateEmployeeVacationStatus([FromBody] VacationDays vacationDays)
         {
             try
             {
-                _adminRepository.UpdateEmployeeVacationStatus(vacationId, status);
+                _adminRepository.UpdateEmployeeVacationStatus(vacationDays);
                 return Ok();
             }
             catch (System.Exception)

@@ -19,14 +19,16 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
             adminDetails = await _adminService.GetAdminDetailsAsync(int.Parse(userId));
         }
-        protected async Task ApproveEmployeeVacation(int vacationId)
+        protected async Task ApproveEmployeeVacation(VacationDays vacationDays)
         {
-            await _adminService.UpdateEmployeeVacationStatusAsync(vacationId, VacationStatus.Approved);
+            vacationDays.Status = VacationStatus.Approved;
+            await _adminService.UpdateEmployeeVacationStatusAsync(vacationDays);
             adminDetails = await _adminService.GetAdminDetailsAsync(int.Parse(userId));
         }
-        protected async Task CancelEmployeeVacation(int vacationId)
+        protected async Task CancelEmployeeVacation(VacationDays vacationDays)
         {
-            await _adminService.UpdateEmployeeVacationStatusAsync(vacationId, VacationStatus.Cancelled);
+            vacationDays.Status = VacationStatus.Cancelled;
+            await _adminService.UpdateEmployeeVacationStatusAsync(vacationDays);
             adminDetails = await _adminService.GetAdminDetailsAsync(int.Parse(userId));
         }
     }
