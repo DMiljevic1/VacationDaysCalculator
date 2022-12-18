@@ -1,7 +1,8 @@
 ﻿@page "/Admin/{userId}"
 @inherits RazorPageBases.AdminPageBase;
+@attribute [Authorize(Roles = "Admin")]
 
-<AuthorizeView>
+<AuthorizeView Roles="Admin">
 	<Authorized>
 		@if (adminDetails == null)
 {
