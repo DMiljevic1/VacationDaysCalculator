@@ -79,7 +79,6 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 
                 _vCDDbContext.SaveChanges();
             }
-
         }
         public VacationDays GetVacationDaysByVacationId(int vacationId)
         {

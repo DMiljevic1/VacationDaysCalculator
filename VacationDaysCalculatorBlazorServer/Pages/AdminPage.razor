@@ -70,6 +70,18 @@ else
 											<td>@vacation.VacationFrom.ToString("dd.MM.")</td>
 											<td>@vacation.VacationTo.ToString("dd.MM.")</td>
 											<td>@vacation.Status</td>
+											<td>
+												<button type="button" class="btn btn-success" @onclick="() => ApproveEmployeeVacation(vacation)">
+													<span class="btn btn-check"></span>
+														Approve
+												</button>
+											</td>
+											<td>
+												<button type="button" class="btn btn-danger" @onclick="() => CancelEmployeeVacation(vacation)">
+													<span class="btn btn-close"></span>
+														Cancel
+												</button>
+											</td>
 										</tr>
 									}
 								}

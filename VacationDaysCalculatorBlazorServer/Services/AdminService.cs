@@ -1,5 +1,8 @@
 ﻿using DomainModel.DtoModels;
+using DomainModel.Models;
 using System.Net.Http.Headers;
+using System.Text.Json;
+using System.Text;
 
 namespace VacationDaysCalculatorBlazorServer.Services
 {
@@ -17,6 +20,14 @@ namespace VacationDaysCalculatorBlazorServer.Services
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             return await _httpClient.GetFromJsonAsync<AdminDetails>($"{BaseApiUrl}/{userId}");
+        }
+
+        public async Task UpdateEmployeeVacationStatusAsync(VacationDays vacationDays)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl);
+            httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(vacationDays), Encoding.UTF8, "application/json");
+            await _httpClient.SendAsync(httpPutRequest);
         }
     }
 }
