@@ -1,4 +1,5 @@
 ﻿using DomainModel.DtoModels;
+using DomainModel.Enums;
 using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
 using VacationDaysCalculatorBlazorServer.Service;

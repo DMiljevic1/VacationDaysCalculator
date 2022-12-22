@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DomainModel.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,5 @@ namespace DomainModel.Models
         public int UserId { get; set; }
         public User? User { get; set; }
 
-    }
-
-    public enum VacationStatus
-    {
-        Pending, Cancelled, Approved, OnVacation, Arhived
     }
 }
