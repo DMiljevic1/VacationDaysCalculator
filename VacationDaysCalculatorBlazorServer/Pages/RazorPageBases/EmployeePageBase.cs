@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Components;
 using VacationDaysCalculatorBlazorServer.Service;
 using DomainModel.Models;
+using VacationDaysCalculatorBlazorServer.Services;
+using DomainModel.Enums;
 
 namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
@@ -10,13 +12,13 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Parameter]
         public string userId { get; set; }
         [Inject]
-        protected EmployeeService _userService { get; set; }
+        protected EmployeeService _employeeService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
         protected EmployeeDetails currentEmployee { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            currentEmployee = await _userService.GetEmployeeDetailsAsync(int.Parse(userId));
+            currentEmployee = await _employeeService.GetEmployeeDetailsAsync(int.Parse(userId));
         }
         protected void OpenEmployeeHistoryPage()
         {
@@ -25,6 +27,11 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected void OpenAddVacationPage()
         {
             _navigationManager.NavigateTo("/AddVacation/" + userId);
+        }
+        protected async Task DeleteVacationRequest(int vacationId)
+        {
+            await _employeeService.DeleteVacationRequestAndReturnVacationDaysAsync(vacationId);
+            currentEmployee = await _employeeService.GetEmployeeDetailsAsync(int.Parse(userId));
         }
     }
 }
