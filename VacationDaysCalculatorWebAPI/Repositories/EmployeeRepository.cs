@@ -2,6 +2,7 @@
 using DomainModel.Enums;
 using DomainModel.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 namespace VacationDaysCalculatorWebAPI.Repositories
@@ -42,9 +43,6 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         public List<VacationDays> GetEmployeeVacation(int userId)
         {
             var employeeVacation = _vCDDbContext.VacationDays.Include(vd => vd.User).Where(vd => vd.UserId.Equals(userId) && (vd.Status.Equals(VacationStatus.Approved) || vd.Status.Equals(VacationStatus.OnVacation) || vd.Status.Equals(VacationStatus.Pending))).ToList();
-            if(employeeVacation != null)
-                setVacationStatus(employeeVacation);
-            employeeVacation = _vCDDbContext.VacationDays.Include(vd => vd.User).Where(vd => vd.UserId.Equals(userId) && (vd.Status.Equals(VacationStatus.Approved) || vd.Status.Equals(VacationStatus.OnVacation) || vd.Status.Equals(VacationStatus.Pending))).ToList();
             return employeeVacation;
         }
 
@@ -140,7 +138,36 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 
         public void InsertVacation(VacationDays vacation)
         {
+            CalculateRemainingVacation(vacation);
             _vCDDbContext.VacationDays.Add(vacation);
+            _vCDDbContext.SaveChanges();
+        }
+        private void CalculateRemainingVacation(VacationDays vacation)
+        {
+            int currentYear = DateTime.Now.Year;
+            int vacationDaysSpent = CalculateTotalVacationSpentForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
+            var employeeRemainingVacation = _vCDDbContext.RemainingVacationDays.FirstOrDefault(rv => rv.UserId.Equals(vacation.UserId) && rv.CurrentYear.Equals(currentYear));
+            int remainingVacationLastYear = employeeRemainingVacation.RemainingDaysOffLastYear;
+            int remainingVacationCurrentYear = employeeRemainingVacation.RemainingDaysOffCurrentYear;
+            if (remainingVacationLastYear > vacationDaysSpent)
+            {
+                employeeRemainingVacation.RemainingDaysOffLastYear = remainingVacationLastYear - vacationDaysSpent;
+                UpdateEmployeeRemainingVacation(employeeRemainingVacation);
+            }
+            else if(remainingVacationLastYear <= vacationDaysSpent && (remainingVacationCurrentYear + remainingVacationLastYear) >= vacationDaysSpent)
+            {
+                employeeRemainingVacation.RemainingDaysOffLastYear = 0;
+                employeeRemainingVacation.RemainingDaysOffCurrentYear = remainingVacationCurrentYear + remainingVacationLastYear - vacationDaysSpent;
+                UpdateEmployeeRemainingVacation(employeeRemainingVacation);
+            }
+
+        }
+        private void UpdateEmployeeRemainingVacation(RemainingVacationDays remainingVacation)
+        {
+            var remainingVacationForUpdate = _vCDDbContext.RemainingVacationDays.FirstOrDefault(rm => rm.Id == remainingVacation.Id);
+            remainingVacationForUpdate.RemainingDaysOffLastYear = remainingVacation.RemainingDaysOffLastYear;
+            remainingVacationForUpdate.RemainingDaysOffCurrentYear = remainingVacation.RemainingDaysOffCurrentYear;
+
             _vCDDbContext.SaveChanges();
         }
     }
