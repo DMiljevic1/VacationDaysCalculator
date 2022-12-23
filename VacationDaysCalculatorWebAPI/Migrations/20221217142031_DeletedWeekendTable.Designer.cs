@@ -11,7 +11,7 @@ using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 namespace VacationDaysCalculatorWebAPI.Migrations
 {
-    [DbContext(typeof(VCDDbContext))]
+    [DbContext(typeof(VacationDbContext))]
     [Migration("20221217142031_DeletedWeekendTable")]
     partial class DeletedWeekendTable
     {

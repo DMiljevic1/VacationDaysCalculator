@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VacationDaysCalculatorWebAPI.DatabaseContext
 {
-    public class VCDDbContext : DbContext
+    public class VacationDbContext : DbContext
     {
-        public VCDDbContext(DbContextOptions<VCDDbContext> options) : base(options) { }
+        public VacationDbContext(DbContextOptions<VacationDbContext> options) : base(options) { }
 
-        public DbSet<VacationDays> VacationDays { get; set; }
+        public DbSet<Vacation> Vacation { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
-        public DbSet<RemainingVacationDays> RemainingVacationDays { get; set; }
+        public DbSet<RemainingVacation> RemainingVacation { get; set; }
         public DbSet<User> Users { get; set; }
     }
 }

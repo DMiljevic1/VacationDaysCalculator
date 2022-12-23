@@ -15,6 +15,6 @@ namespace DomainModel.DtoModels
         public string Email { get; set; }
         public int RemainingDaysOffLastYear { get; set; }
         public int RemainingDaysOffCurrentYear { get; set; }
-        public List<VacationDays>? VacationDays { get; set; }
+        public List<Vacation>? VacationDays { get; set; }
     }
 }

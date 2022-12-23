@@ -8,16 +8,16 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 {
     public class AdminRepository
     {
-        private readonly VCDDbContext _vCDDbContext;
+        private readonly VacationDbContext _vacationDbContext;
 
-        public AdminRepository(VCDDbContext vCDDbContext)
+        public AdminRepository(VacationDbContext vacationDbContext)
         {
-            _vCDDbContext = vCDDbContext;
+            _vacationDbContext = vacationDbContext;
         }
 
         public AdminDetails GetAdminDetails(int userId)
         {
-            var user = _vCDDbContext.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _vacationDbContext.Users.FirstOrDefault(u => u.Id == userId);
             if (user == null)
                 return null;
             var adminDetails = new AdminDetails();
@@ -27,19 +27,19 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             adminDetails.EmployeeVacationDays = GetEmployeeVacation();
             return adminDetails;
         }
-        public List<VacationDays> GetEmployeeVacation()
+        public List<Vacation> GetEmployeeVacation()
         {
-            var employeeVacation = _vCDDbContext.VacationDays.Include(vd => vd.User).Where(vd => vd.Status.Equals(VacationStatus.Pending)).ToList();
+            var employeeVacation = _vacationDbContext.Vacation.Include(vd => vd.User).Where(vd => vd.Status.Equals(VacationStatus.Pending)).ToList();
             return employeeVacation;
         }
-        public void UpdateEmployeeVacationStatus(VacationDays vacationDays)
+        public void UpdateEmployeeVacationStatus(Vacation vacationDays)
         {
-            var vacationForUpdate = _vCDDbContext.VacationDays.FirstOrDefault(vd => vd.Id == vacationDays.Id);
+            var vacationForUpdate = _vacationDbContext.Vacation.FirstOrDefault(vd => vd.Id == vacationDays.Id);
             if (vacationForUpdate != null)
             {
                 vacationForUpdate.Status = vacationDays.Status;
 
-                _vCDDbContext.SaveChanges();
+                _vacationDbContext.SaveChanges();
             }
         }
     }

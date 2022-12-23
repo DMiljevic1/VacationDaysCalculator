@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DomainModel.Models
 {
-    public class RemainingVacationDays
+    public class RemainingVacation
     {
         public int Id { get; set; }
         public int CurrentYear { get; set; }

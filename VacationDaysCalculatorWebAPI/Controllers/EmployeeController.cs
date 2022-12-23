@@ -48,7 +48,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         }
         [HttpPost]
         [Authorize]
-        public IActionResult AddVacation([FromBody] VacationDays vacation)
+        public IActionResult AddVacation([FromBody] Vacation vacation)
         {
             if (vacation == null)
                 return BadRequest();
@@ -65,11 +65,11 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 
         [HttpDelete("{vacationId:int}")]
         [Authorize]
-        public IActionResult DeleteVacationRequest(int vacationId)
+        public IActionResult DeleteVacationRequestAndRestoreRemainingVacation(int vacationId)
         {
             try
             {
-                _employeeRepository.DeleteVacationRequestAndReturnVacationDays(vacationId);
+                _employeeRepository.DeleteVacationRequestAndRestoreRemainingVacation(vacationId);
                 return Ok();
             }
             catch (System.Exception)

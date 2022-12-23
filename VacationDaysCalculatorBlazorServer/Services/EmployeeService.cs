@@ -29,14 +29,14 @@ namespace VacationDaysCalculatorBlazorServer.Service
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             return await _httpClient.GetFromJsonAsync<List<EmployeeHistory>>($"{BaseApiUrl}/employeeHistory/{userId}");
         }
-        public async Task AddVacationAsync(VacationDays vacation)
+        public async Task AddVacationAsync(Vacation vacation)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
             httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
             await _httpClient.SendAsync(httpPostRequest);
         }
-        public async Task DeleteVacationRequestAndReturnVacationDaysAsync(int vacationId)
+        public async Task DeleteVacationRequestAndRestoreVacationAsync(int vacationId)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             var httpDeleteRequest = new HttpRequestMessage(HttpMethod.Delete, $"{BaseApiUrl}/{vacationId}");
