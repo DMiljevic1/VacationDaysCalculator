@@ -9,6 +9,7 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 {
     public class EmployeeRepository
     {
+        private readonly int TOTAL_YEARLY_VACATION_DAYS = 20;
         private readonly VCDDbContext _vCDDbContext;
 
         public EmployeeRepository(VCDDbContext vCDDbContext)
@@ -101,11 +102,11 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             employeeHistory.Year = vacationDay.Year;
             employeeHistory.FirstName = vacationDay.User.FirstName;
             employeeHistory.LastName = vacationDay.User.LastName;
-            employeeHistory.TotalVacationSpent = CalculateTotalVacationSpentForGivenPeriod(employeeHistory.VacationFrom, employeeHistory.VacationTo);
+            employeeHistory.TotalVacationSpent = CalculateTotalVacationForGivenPeriod(employeeHistory.VacationFrom, employeeHistory.VacationTo);
             return employeeHistory;
         }
 
-        private int CalculateTotalVacationSpentForGivenPeriod(DateTime vacationFrom, DateTime vacationTo)
+        private int CalculateTotalVacationForGivenPeriod(DateTime vacationFrom, DateTime vacationTo)
         {
             var dayNow = DateTime.Now;
             var holidays = _vCDDbContext.Holidays.ToList();
@@ -145,7 +146,7 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         private void CalculateRemainingVacation(VacationDays vacation)
         {
             int currentYear = DateTime.Now.Year;
-            int vacationDaysSpent = CalculateTotalVacationSpentForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
+            int vacationDaysSpent = CalculateTotalVacationForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
             var employeeRemainingVacation = _vCDDbContext.RemainingVacationDays.FirstOrDefault(rv => rv.UserId.Equals(vacation.UserId) && rv.CurrentYear.Equals(currentYear));
             int remainingVacationLastYear = employeeRemainingVacation.RemainingDaysOffLastYear;
             int remainingVacationCurrentYear = employeeRemainingVacation.RemainingDaysOffCurrentYear;
@@ -169,6 +170,36 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             remainingVacationForUpdate.RemainingDaysOffCurrentYear = remainingVacation.RemainingDaysOffCurrentYear;
 
             _vCDDbContext.SaveChanges();
+        }
+
+        public void DeleteVacationRequestAndReturnVacationDays(int vacationId)
+        {
+            var vacationForDelete = GetVacationDaysByVacationId(vacationId);
+            if(vacationForDelete != null)
+            {
+                int numberOfVacationDays = CalculateTotalVacationForGivenPeriod(vacationForDelete.VacationFrom, vacationForDelete.VacationTo);
+                ReturnVacationDays(vacationForDelete.UserId, numberOfVacationDays);
+                _vCDDbContext.VacationDays.Remove(vacationForDelete);
+                _vCDDbContext.SaveChanges();
+            }
+        }
+        private void ReturnVacationDays(int userId, int vacationDaysToReturn)
+        {
+            var currentYear = DateTime.Now.Year;
+            var employeeRemainingVacation = _vCDDbContext.RemainingVacationDays.FirstOrDefault(rv => rv.UserId.Equals(userId) && rv.CurrentYear.Equals(currentYear));
+            int remainingVacationLastYear = employeeRemainingVacation.RemainingDaysOffLastYear;
+            int remainingVacationCurrentYear = employeeRemainingVacation.RemainingDaysOffCurrentYear;
+            if(remainingVacationCurrentYear + vacationDaysToReturn <= TOTAL_YEARLY_VACATION_DAYS)
+            {
+                employeeRemainingVacation.RemainingDaysOffCurrentYear = remainingVacationCurrentYear + vacationDaysToReturn;
+                UpdateEmployeeRemainingVacation(employeeRemainingVacation);
+            }
+            else
+            {
+                employeeRemainingVacation.RemainingDaysOffCurrentYear = TOTAL_YEARLY_VACATION_DAYS;
+                employeeRemainingVacation.RemainingDaysOffLastYear = vacationDaysToReturn - (TOTAL_YEARLY_VACATION_DAYS - remainingVacationCurrentYear);
+                UpdateEmployeeRemainingVacation(employeeRemainingVacation);
+            }
         }
     }
 }

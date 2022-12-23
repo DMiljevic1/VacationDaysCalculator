@@ -13,10 +13,10 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeRepository _userRepository;
-        public EmployeeController(EmployeeRepository userRepository)
+        private readonly EmployeeRepository _employeeRepository;
+        public EmployeeController(EmployeeRepository employeeRepository)
         {
-            _userRepository = userRepository;
+            _employeeRepository = employeeRepository;
         }
 
         [HttpGet("{userId:int}")]
@@ -25,7 +25,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                return Ok(_userRepository.GetEmployeeDetails(userId));
+                return Ok(_employeeRepository.GetEmployeeDetails(userId));
             }
             catch (System.Exception)
             {
@@ -39,7 +39,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                return Ok(_userRepository.GetEmployeeHistory(employeeId));
+                return Ok(_employeeRepository.GetEmployeeHistory(employeeId));
             }
             catch (System.Exception)
             {
@@ -54,7 +54,22 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return BadRequest();
             try
             {
-                _userRepository.InsertVacation(vacation);
+                _employeeRepository.InsertVacation(vacation);
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpDelete("{vacationId:int}")]
+        [Authorize]
+        public IActionResult DeleteVacationRequest(int vacationId)
+        {
+            try
+            {
+                _employeeRepository.DeleteVacationRequestAndReturnVacationDays(vacationId);
                 return Ok();
             }
             catch (System.Exception)

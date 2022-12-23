@@ -55,6 +55,7 @@ else
 									<th>Vacation From</th>
 									<th>Vacation To</th>
 									<th>Vacation Status</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -73,6 +74,9 @@ else
 											<td>@vacation.VacationFrom.ToString("dd.MM.")</td>
 											<td>@vacation.VacationTo.ToString("dd.MM.")</td>
 											<td>@vacation.Status</td>
+											<td>
+												<button type="button" class="btn-close" aria-label="Close" @onclick="() => DeleteVacationRequest(vacation.Id)"></button>
+											</td>
 										</tr>
 									}
 								}
@@ -84,7 +88,7 @@ else
 			<span class="btn btn-check"></span>
 			Add vacation
 		</button>
-					<button type="button" class="btn btn-secondary" @onclick="OpenEmployeeHistoryPage">
+		<button type="button" class="btn btn-secondary" @onclick="OpenEmployeeHistoryPage">
 			<span class="btn btn-check"></span>
 			History
 		</button>
