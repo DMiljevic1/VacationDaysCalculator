@@ -27,17 +27,24 @@ else
                      </tr>
 				</thead>
 				<tbody>
-				    @foreach(var history in employeeHistory)
-				    {
-						 <tr>
-                             <td>@history.LastName</td>
-                             <td>@history.FirstName</td>
-                             <td>@history.Year</td>
-							 <td>@history.VacationFrom.ToString("dd.MM.")</td>
-							 <td>@history.VacationTo.ToString("dd.MM.")</td>
-							 <td>@history.TotalVacationSpent</td>
-						 </tr>
-				    }
+					@if (employeeHistory == null || employeeHistory.Count.Equals(0))
+					{
+						<tr>No records found</tr>
+					}
+					else
+					{
+						@foreach(var history in employeeHistory)
+						{
+							<tr>
+								<td>@history.LastName</td>
+								<td>@history.FirstName</td>
+								<td>@history.Year</td>
+								<td>@history.VacationFrom.ToString("dd.MM.")</td>
+								<td>@history.VacationTo.ToString("dd.MM.")</td>
+								<td>@history.TotalVacationSpent</td>
+							 </tr>
+						}
+					}
 				</tbody>
 			</table>
 

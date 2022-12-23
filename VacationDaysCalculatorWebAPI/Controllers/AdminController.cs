@@ -32,7 +32,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 
         [HttpPut]
         [Authorize]
-        public IActionResult UpdateEmployeeVacationStatus([FromBody] VacationDays vacationDays)
+        public IActionResult UpdateEmployeeVacationStatus([FromBody] Vacation vacationDays)
         {
             try
             {

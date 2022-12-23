@@ -18,10 +18,10 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     public class LoginController : ControllerBase
     {
         private IConfiguration _config;
-        private readonly VCDDbContext _VCDDbContext;
+        private readonly VacationDbContext _VCDDbContext;
         private readonly EmployeeRepository _userRepository;
 
-        public LoginController(IConfiguration config, VCDDbContext vCDDbContext, EmployeeRepository userRepository)
+        public LoginController(IConfiguration config, VacationDbContext vCDDbContext, EmployeeRepository userRepository)
         {
             _config = config;
             _VCDDbContext = vCDDbContext;

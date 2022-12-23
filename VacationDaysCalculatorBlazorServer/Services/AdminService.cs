@@ -22,7 +22,7 @@ namespace VacationDaysCalculatorBlazorServer.Services
             return await _httpClient.GetFromJsonAsync<AdminDetails>($"{BaseApiUrl}/{userId}");
         }
 
-        public async Task UpdateEmployeeVacationStatusAsync(VacationDays vacationDays)
+        public async Task UpdateEmployeeVacationStatusAsync(Vacation vacationDays)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl);

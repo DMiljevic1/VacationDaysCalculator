@@ -11,9 +11,9 @@ using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 namespace VacationDaysCalculatorWebAPI.Migrations
 {
-    [DbContext(typeof(DatabaseContext.VacationDbContext))]
-    [Migration("20221029170251_AddedForeignKeyUser")]
-    partial class AddedForeignKeyUser
+    [DbContext(typeof(VacationDbContext))]
+    [Migration("20221223150446_ChangedNamesOfTableVacationAndRemainingVacation")]
+    partial class ChangedNamesOfTableVacationAndRemainingVacation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,7 @@ namespace VacationDaysCalculatorWebAPI.Migrations
                     b.ToTable("Holidays");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.RemainingVacationDays", b =>
+            modelBuilder.Entity("DomainModel.Models.RemainingVacation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace VacationDaysCalculatorWebAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RemainingVacationDays");
+                    b.ToTable("RemainingVacation");
                 });
 
             modelBuilder.Entity("DomainModel.Models.User", b =>
@@ -108,7 +108,7 @@ namespace VacationDaysCalculatorWebAPI.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.VacationDays", b =>
+            modelBuilder.Entity("DomainModel.Models.Vacation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,29 +135,10 @@ namespace VacationDaysCalculatorWebAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("VacationDays");
+                    b.ToTable("Vacation");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.Weekend", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("WeekendDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Weekends");
-                });
-
-            modelBuilder.Entity("DomainModel.Models.RemainingVacationDays", b =>
+            modelBuilder.Entity("DomainModel.Models.RemainingVacation", b =>
                 {
                     b.HasOne("DomainModel.Models.User", "User")
                         .WithMany()
@@ -168,7 +149,7 @@ namespace VacationDaysCalculatorWebAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.VacationDays", b =>
+            modelBuilder.Entity("DomainModel.Models.Vacation", b =>
                 {
                     b.HasOne("DomainModel.Models.User", "User")
                         .WithMany()

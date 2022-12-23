@@ -9,14 +9,14 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
     {
         [Parameter]
         public string userId { get; set; }
-        public VacationDays vacation { get; set; }
+        public Vacation vacation { get; set; }
         [Inject]
         public NavigationManager _navigationManager { get; set; }
         [Inject]
         public EmployeeService _userService { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            vacation = new VacationDays();
+            vacation = new Vacation();
         }
         protected void Close()
         {

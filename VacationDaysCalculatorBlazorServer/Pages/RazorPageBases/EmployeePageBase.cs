@@ -30,7 +30,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         }
         protected async Task DeleteVacationRequest(int vacationId)
         {
-            await _employeeService.DeleteVacationRequestAndReturnVacationDaysAsync(vacationId);
+            await _employeeService.DeleteVacationRequestAndRestoreVacationAsync(vacationId);
             currentEmployee = await _employeeService.GetEmployeeDetailsAsync(int.Parse(userId));
         }
     }

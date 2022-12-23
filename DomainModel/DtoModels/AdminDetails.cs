@@ -13,6 +13,6 @@ namespace DomainModel.DtoModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public List<VacationDays> EmployeeVacationDays { get; set; }
+        public List<Vacation> EmployeeVacationDays { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DomainModel.Models
 {
-    public class VacationDays
+    public class Vacation
     {
         public int Id { get; set; }
         public DateTime VacationFrom { get; set; }

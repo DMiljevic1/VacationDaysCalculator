@@ -10,7 +10,7 @@ using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 namespace VacationDaysCalculatorWebAPI.Migrations
 {
-    [DbContext(typeof(VCDDbContext))]
+    [DbContext(typeof(VacationDbContext))]
     partial class VCDDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -42,7 +42,7 @@ namespace VacationDaysCalculatorWebAPI.Migrations
                     b.ToTable("Holidays");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.RemainingVacationDays", b =>
+            modelBuilder.Entity("DomainModel.Models.RemainingVacation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace VacationDaysCalculatorWebAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RemainingVacationDays");
+                    b.ToTable("RemainingVacation");
                 });
 
             modelBuilder.Entity("DomainModel.Models.User", b =>
@@ -106,7 +106,7 @@ namespace VacationDaysCalculatorWebAPI.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.VacationDays", b =>
+            modelBuilder.Entity("DomainModel.Models.Vacation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,10 +133,10 @@ namespace VacationDaysCalculatorWebAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("VacationDays");
+                    b.ToTable("Vacation");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.RemainingVacationDays", b =>
+            modelBuilder.Entity("DomainModel.Models.RemainingVacation", b =>
                 {
                     b.HasOne("DomainModel.Models.User", "User")
                         .WithMany()
@@ -147,7 +147,7 @@ namespace VacationDaysCalculatorWebAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DomainModel.Models.VacationDays", b =>
+            modelBuilder.Entity("DomainModel.Models.Vacation", b =>
                 {
                     b.HasOne("DomainModel.Models.User", "User")
                         .WithMany()
