@@ -7,8 +7,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
     public class AddVacationBase : ComponentBase
     {
-        [Parameter]
-        public string userId { get; set; }
         public Vacation vacation { get; set; }
         [Inject]
         public NavigationManager _navigationManager { get; set; }
@@ -20,11 +18,10 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         }
         protected void Close()
         {
-            _navigationManager.NavigateTo("/Employee/" + userId);
+            _navigationManager.NavigateTo("/Employee");
         }
         protected async Task AddVacation()
         {
-            vacation.UserId = int.Parse(userId);
             var dateFrom = vacation.VacationFrom;
             vacation.Year = dateFrom.Year;
             vacation.Status = VacationStatus.Pending;

@@ -47,6 +47,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
+                new Claim(ClaimTypes.Rsa, user.Id.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.UserName),
                 new Claim(ClaimTypes.Role, user.Role)
             };

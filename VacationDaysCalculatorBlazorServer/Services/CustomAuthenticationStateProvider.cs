@@ -49,5 +49,12 @@ namespace VacationDaysCalculatorBlazorServer.Services
                 : new ClaimsIdentity(ServiceExtensions.ParseClaimsFromJwt(token), "jwt");
             return new AuthenticationState(new ClaimsPrincipal(identity));
         }
+
+        public async Task<int> GetUserId()
+        {
+            var identity = await GetAuthenticationStateAsync();
+            var claims = identity.User.Identities.First().Claims.ToList();
+            return int.Parse(claims[0].Value);
+        }
     }
 }

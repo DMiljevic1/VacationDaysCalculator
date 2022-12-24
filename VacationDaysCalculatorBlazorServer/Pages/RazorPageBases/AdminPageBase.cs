@@ -9,8 +9,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
     public class AdminPageBase : ComponentBase
     {
-        [Parameter]
-        public string userId { get; set; }
         [Inject]
         protected AdminService _adminService { get; set; }
         [Inject]
@@ -18,19 +16,19 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected AdminDetails adminDetails { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            adminDetails = await _adminService.GetAdminDetailsAsync(int.Parse(userId));
+            adminDetails = await _adminService.GetAdminDetailsAsync();
         }
         protected async Task ApproveEmployeeVacation(Vacation vacationDays)
         {
             vacationDays.Status = VacationStatus.Approved;
             await _adminService.UpdateEmployeeVacationStatusAsync(vacationDays);
-            adminDetails = await _adminService.GetAdminDetailsAsync(int.Parse(userId));
+            adminDetails = await _adminService.GetAdminDetailsAsync();
         }
         protected async Task CancelEmployeeVacation(Vacation vacationDays)
         {
             vacationDays.Status = VacationStatus.Cancelled;
             await _adminService.UpdateEmployeeVacationStatusAsync(vacationDays);
-            adminDetails = await _adminService.GetAdminDetailsAsync(int.Parse(userId));
+            adminDetails = await _adminService.GetAdminDetailsAsync();
         }
     }
 }
