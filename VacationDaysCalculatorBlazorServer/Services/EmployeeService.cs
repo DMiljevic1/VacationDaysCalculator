@@ -18,20 +18,23 @@ namespace VacationDaysCalculatorBlazorServer.Service
             _httpClient = httpClient;
             _customAuthenticationStateProvider = customAuthenticationStateProvider;
         }
-        public async Task<EmployeeDetails> GetEmployeeDetailsAsync(int userId)
+        public async Task<EmployeeDetails> GetEmployeeDetailsAsync()
         {
+            int userId = await _customAuthenticationStateProvider.GetUserId();
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             return await _httpClient.GetFromJsonAsync<EmployeeDetails>($"{BaseApiUrl}/{userId}");
         }
 
-        public async Task<List<EmployeeHistory>> GetEmployeeHistoryAsync(int userId)
+        public async Task<List<EmployeeHistory>> GetEmployeeHistoryAsync()
         {
+            int userId = await _customAuthenticationStateProvider.GetUserId();
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             return await _httpClient.GetFromJsonAsync<List<EmployeeHistory>>($"{BaseApiUrl}/employeeHistory/{userId}");
         }
         public async Task AddVacationAsync(Vacation vacation)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+            vacation.UserId = await _customAuthenticationStateProvider.GetUserId();
             var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
             httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
             await _httpClient.SendAsync(httpPostRequest);

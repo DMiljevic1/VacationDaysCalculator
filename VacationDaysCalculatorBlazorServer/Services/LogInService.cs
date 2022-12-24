@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Components;
 using VacationDaysCalculatorBlazorServer.Pages.RazorPageBases;
 using DomainModel.DtoModels;
+using System.Security.Claims;
 
 namespace VacationDaysCalculatorBlazorServer.Services
 {
@@ -29,7 +30,12 @@ namespace VacationDaysCalculatorBlazorServer.Services
             if(jwtToken.Result != "User not found")
             {
                 await _customAuthenticationStateProvider.SetTokenAsync(jwtToken.Result);
-                _navigationManager.NavigateTo("/Employee/" + 1);
+                var identity = await _customAuthenticationStateProvider.GetAuthenticationStateAsync();
+                var claims = identity.User.Identities.First().Claims.ToList();
+                if (claims[2].Value == "Employee")
+                    _navigationManager.NavigateTo("/Employee");
+                else
+                    _navigationManager.NavigateTo("/Admin");
             }
             else
             {
@@ -37,6 +43,5 @@ namespace VacationDaysCalculatorBlazorServer.Services
                 _navigationManager.NavigateTo("LoginPage");
             }
         }
-
     }
 }
