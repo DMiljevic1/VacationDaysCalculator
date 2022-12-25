@@ -1,5 +1,6 @@
 ﻿@page "/AddVacation"
 @inherits RazorPageBases.AddVacationBase;
+@attribute [Authorize(Roles = "Employee")]
 
 @*<AuthorizeView>*@
     @*<Authorized>*@

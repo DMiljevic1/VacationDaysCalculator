@@ -13,7 +13,7 @@ else
 {
 <div class="row">
 	@*Slika profila i podaci o danima*@
-	<div class="col-sm-6 justify-content-between">
+	<div class="col justify-content-between">
 		<div class="card text-bg-primary mb-3">
 			<div class="card w-25 ratio ratio-1x1  d-flex justify-content-between">
 				<div>
@@ -28,18 +28,27 @@ else
 
 			</div>
 			<div class="card-title">
-							<h5>@currentEmployee.LastName @currentEmployee.FirstName</h5>
+							<h5 style="margin-top:2%; margin-left:2%;">@currentEmployee.LastName @currentEmployee.FirstName</h5>
 			</div>
 			<div class="card-body">
 							<p>E-mail: @currentEmployee.Email</p>
-							<p class="card-text">Remaining vacation days for last year: @currentEmployee.RemainingDaysOffLastYear</p>
-							<p class="card-text">Remaining vacation days for current year: @currentEmployee.RemainingDaysOffCurrentYear</p>
+							<p class="card-text">Remaining vacation from last year: @currentEmployee.RemainingDaysOffLastYear</p>
+							<p class="card-text">Remaining vacation from current year: @currentEmployee.RemainingDaysOffCurrentYear</p>
 			</div>
 		
 		</div>
 
 	</div>
-	
+		<div class="col">
+					<button type="button" class="btn btn-primary" style="margin-left:70%;" @onclick="OpenAddVacationPage">
+				<span class="btn btn-check"></span>
+				Add vacation
+			</button>
+					<button type="button" class="btn btn-secondary" @onclick="OpenEmployeeHistoryPage">
+				<span class="btn btn-check"></span>
+				History
+			</button>
+		</div>
 </div>
 
 @*Tablica sa poslanim zahtjevima, kalendar*@
@@ -51,9 +60,10 @@ else
 								<tr>
 									<th>Last Name</th>
 									<th>First Name</th>
-									<th>Vacation Year</th>
+									@*<th>Vacation Year</th>*@
 									<th>Vacation From</th>
 									<th>Vacation To</th>
+									<th>Vacation Spent</th>
 									<th>Vacation Status</th>
 									<th></th>
 								</tr>
@@ -70,9 +80,10 @@ else
 										<tr>
 											<td>@currentEmployee.LastName</td>
 											<td>@currentEmployee.FirstName</td>
-											<td>@vacation.Year</td>
-											<td>@vacation.VacationFrom.ToString("dd.MM.")</td>
-											<td>@vacation.VacationTo.ToString("dd.MM.")</td>
+											@*<td>@vacation.Year</td>*@
+											<td>@vacation.VacationFrom.ToString("dd.MM.yyyy")</td>
+											<td>@vacation.VacationTo.ToString("dd.MM.yyyy")</td>
+											<td>@vacation.VacationSpent</td>
 											<td>@vacation.Status</td>
 											<td>
 												<button type="button" class="btn-close" aria-label="Close" @onclick="() => DeleteVacationRequest(vacation.Id)"></button>
@@ -84,14 +95,6 @@ else
 						</table>
 
 					</div>
-		<button type="button" class="btn btn-primary" @onclick="OpenAddVacationPage">
-			<span class="btn btn-check"></span>
-			Add vacation
-		</button>
-		<button type="button" class="btn btn-secondary" @onclick="OpenEmployeeHistoryPage">
-			<span class="btn btn-check"></span>
-			History
-		</button>
 	</div>
 </div>
 }

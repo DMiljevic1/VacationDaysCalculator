@@ -27,7 +27,7 @@ else
 
 			</div>
 			<div class="card-title">
-							<h5>@adminDetails.LastName @adminDetails.FirstName</h5>
+							<h5 style="margin-top:2%; margin-left:2%;">@adminDetails.LastName @adminDetails.FirstName</h5>
 			</div>
 			<div class="card-body">
 							<p>E-mail: @adminDetails.Email</p>
@@ -48,10 +48,12 @@ else
 								<tr>
 									<th>Last Name</th>
 									<th>First Name</th>
-									<th>Vacation Year</th>
+									@*<th>Vacation Year</th>*@
 									<th>Vacation From</th>
 									<th>Vacation To</th>
 									<th>Vacation Status</th>
+									<th></th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -66,19 +68,18 @@ else
 										<tr>
 											<td>@vacation.User.LastName</td>
 											<td>@vacation.User.FirstName</td>
-											<td>@vacation.Year</td>
-											<td>@vacation.VacationFrom.ToString("dd.MM.")</td>
-											<td>@vacation.VacationTo.ToString("dd.MM.")</td>
+											@*<td>@vacation.Year</td>*@
+											<td>@vacation.VacationFrom.ToString("dd.MM.yyyy")</td>
+											<td>@vacation.VacationTo.ToString("dd.MM.yyyy")</td>
 											<td>@vacation.Status</td>
 											<td>
 												<button type="button" class="btn btn-success" @onclick="() => ApproveEmployeeVacation(vacation)">
-													<span class="btn btn-check"></span>
+													<span class="fa fa-check"></span>
 														Approve
 												</button>
 											</td>
 											<td>
-												<button type="button" class="btn btn-danger" @onclick="() => CancelEmployeeVacation(vacation)">
-													<span class="btn btn-close"></span>
+												<button type="button" class="btn btn-warning" @onclick="() => CancelEmployeeVacation(vacation)">
 														Cancel
 												</button>
 											</td>
