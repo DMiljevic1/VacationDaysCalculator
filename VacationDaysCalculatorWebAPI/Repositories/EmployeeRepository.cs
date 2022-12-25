@@ -47,7 +47,7 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             return employeeVacation;
         }
 
-        private void setVacationStatus(List<Vacation> vacationDays)
+        private void SetVacationStatus(List<Vacation> vacationDays)
         {
             var currentDate = DateTime.Today;
             var yesterday = DateTime.Today.AddDays(-1);
@@ -94,15 +94,15 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             }
             return employeeHistoryList;
         }
-        public EmployeeHistory ConvertVacationDaysToEmployeeHistory(Vacation vacationDay)
+        public EmployeeHistory ConvertVacationDaysToEmployeeHistory(Vacation vacation)
         {
             var employeeHistory = new EmployeeHistory();
-            employeeHistory.VacationFrom = vacationDay.VacationFrom;
-            employeeHistory.VacationTo = vacationDay.VacationTo;
-            employeeHistory.Year = vacationDay.Year;
-            employeeHistory.FirstName = vacationDay.User.FirstName;
-            employeeHistory.LastName = vacationDay.User.LastName;
-            employeeHistory.TotalVacationSpent = CalculateTotalVacationForGivenPeriod(employeeHistory.VacationFrom, employeeHistory.VacationTo);
+            employeeHistory.VacationFrom = vacation.VacationFrom;
+            employeeHistory.VacationTo = vacation.VacationTo;
+            employeeHistory.Year = vacation.Year;
+            employeeHistory.FirstName = vacation.User.FirstName;
+            employeeHistory.LastName = vacation.User.LastName;
+            employeeHistory.TotalVacationSpent = vacation.VacationSpent;
             return employeeHistory;
         }
 
@@ -140,6 +140,7 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         public void InsertVacation(Vacation vacation)
         {
             CalculateRemainingVacation(vacation);
+            vacation.VacationSpent = CalculateTotalVacationForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
             _vacationDbContext.Vacation.Add(vacation);
             _vacationDbContext.SaveChanges();
         }

@@ -14,6 +14,7 @@ namespace DomainModel.Models
         public DateTime VacationTo { get; set; }
         public int Year { get; set; }
         public VacationStatus Status { get; set; }
+        public int VacationSpent { get; set; }
         public int UserId { get; set; }
         public User? User { get; set; }
 
