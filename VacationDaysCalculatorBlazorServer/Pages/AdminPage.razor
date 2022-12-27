@@ -79,13 +79,13 @@ else
 											<td>@vacation.VacationTo.ToString("dd.MM.yyyy")</td>
 											<td>@vacation.Status</td>
 											<td>
-												<button type="button" class="btn btn-success" @onclick="() => ApproveEmployeeVacation(vacation)">
+												<button type="button" class="btn btn-success" @onclick="() => UpdateEmployeeVacationStatus(vacation, VacationStatus.Approved)">
 													<span class="fa fa-check"></span>
 														Approve
 												</button>
 											</td>
 											<td>
-												<button type="button" class="btn btn-warning" @onclick="() => CancelEmployeeVacation(vacation)">
+												<button type="button" class="btn btn-warning" @onclick="() => UpdateEmployeeVacationStatus(vacation, VacationStatus.Cancelled)">
 														Cancel
 												</button>
 											</td>

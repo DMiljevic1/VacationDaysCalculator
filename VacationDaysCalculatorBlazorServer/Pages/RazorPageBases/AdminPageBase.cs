@@ -12,22 +12,18 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Inject]
         protected AdminService _adminService { get; set; }
         [Inject]
+        protected EmployeeService _employeeService { get; set; }
+        [Inject]
         protected NavigationManager _navigationManager { get; set; }
         protected AdminDetails adminDetails { get; set; }
         protected override async Task OnInitializedAsync()
         {
             adminDetails = await _adminService.GetAdminDetailsAsync();
         }
-        protected async Task ApproveEmployeeVacation(Vacation vacationDays)
+        protected async Task UpdateEmployeeVacationStatus(Vacation vacation, VacationStatus vacationStatus)
         {
-            vacationDays.Status = VacationStatus.Approved;
-            await _adminService.UpdateEmployeeVacationStatusAsync(vacationDays);
-            adminDetails = await _adminService.GetAdminDetailsAsync();
-        }
-        protected async Task CancelEmployeeVacation(Vacation vacationDays)
-        {
-            vacationDays.Status = VacationStatus.Cancelled;
-            await _adminService.UpdateEmployeeVacationStatusAsync(vacationDays);
+            vacation.Status = vacationStatus;
+            await _employeeService.UpdateEmployeeVacationStatusAsync(vacation);
             adminDetails = await _adminService.GetAdminDetailsAsync();
         }
         protected async Task OpenAddUserPage()

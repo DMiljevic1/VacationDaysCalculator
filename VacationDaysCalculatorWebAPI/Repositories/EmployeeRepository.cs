@@ -48,26 +48,31 @@ namespace VacationDaysCalculatorWebAPI.Repositories
                 if (vacation.VacationFrom.Equals(currentDate) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.Approved)
                 {
                     vacation.Status = VacationStatus.OnVacation;
-                    UpdateVacationDayStatus(vacation);
+                    UpdateEmployeeVacationStatus(vacation);
                 }
                 else if (vacation.VacationTo.Equals(yesterday.Date) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.OnVacation)
                 {
                     vacation.Status = VacationStatus.Arhived;
-                    UpdateVacationDayStatus(vacation);
+                    UpdateEmployeeVacationStatus(vacation);
                 }
                 else if (vacation.VacationFrom.Equals(currentDate) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.Pending)
                 {
                     vacation.Status = VacationStatus.Cancelled;
-                    UpdateVacationDayStatus(vacation);
+                    UpdateEmployeeVacationStatus(vacation);
                 }
             }
         }
-        public void UpdateVacationDayStatus(Vacation vacationDays)
+        public void UpdateEmployeeVacationStatus(Vacation vacation)
         {
-            var vacationForUpdate = GetVacationDaysByVacationId(vacationDays.Id);
+            var vacationForUpdate = GetVacationDaysByVacationId(vacation.Id);
             if (vacationForUpdate != null)
             {
-                vacationForUpdate.Status = vacationDays.Status;
+                vacationForUpdate.Status = vacation.Status;
+                if (vacationForUpdate.Status == VacationStatus.Cancelled)
+                {
+                    int vacationDaysToRestore = CalculateTotalVacationForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
+                    RestoreRemainingVacation(vacation.UserId, vacationDaysToRestore);
+                }
 
                 _vacationDbContext.SaveChanges();
             }

@@ -31,20 +31,6 @@ namespace VacationDaysCalculatorWebAPI.Controllers
             }
         }
 
-        [HttpPut]
-        [Authorize]
-        public IActionResult UpdateEmployeeVacationStatus([FromBody] Vacation vacationDays)
-        {
-            try
-            {
-                _adminRepository.UpdateEmployeeVacationStatus(vacationDays);
-                return Ok();
-            }
-            catch (System.Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
         [HttpPost]
         [Authorize]
         public IActionResult AddUser([FromBody] UserDetails userDetails)

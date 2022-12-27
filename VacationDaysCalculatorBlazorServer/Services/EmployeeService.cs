@@ -45,5 +45,12 @@ namespace VacationDaysCalculatorBlazorServer.Service
             var httpDeleteRequest = new HttpRequestMessage(HttpMethod.Delete, $"{BaseApiUrl}/{vacationId}");
             await _httpClient.SendAsync(httpDeleteRequest);
         }
+        public async Task UpdateEmployeeVacationStatusAsync(Vacation vacation)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl);
+            httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
+            await _httpClient.SendAsync(httpPutRequest);
+        }
     }
 }

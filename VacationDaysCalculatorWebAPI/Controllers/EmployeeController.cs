@@ -77,5 +77,20 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPut]
+        [Authorize]
+        public IActionResult UpdateEmployeeVacationStatus([FromBody] Vacation vacation)
+        {
+            try
+            {
+                _employeeRepository.UpdateEmployeeVacationStatus(vacation);
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
