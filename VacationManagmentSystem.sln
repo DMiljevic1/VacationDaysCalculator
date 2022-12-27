@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainModel", "DomainModel\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationDaysCalculatorBlazorServer", "VacationDaysCalculatorBlazorServer\VacationDaysCalculatorBlazorServer.csproj", "{5E7D4076-AB79-49F2-8B9E-48CE2F110834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationScheduler", "VacationScheduler\VacationScheduler.csproj", "{02FFD0E3-4A08-47F1-9823-6CC5E82939CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationScheduler", "VacationScheduler\VacationScheduler.csproj", "{02FFD0E3-4A08-47F1-9823-6CC5E82939CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

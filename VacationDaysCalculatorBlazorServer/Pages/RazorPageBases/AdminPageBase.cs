@@ -30,5 +30,9 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             await _adminService.UpdateEmployeeVacationStatusAsync(vacationDays);
             adminDetails = await _adminService.GetAdminDetailsAsync();
         }
+        protected async Task OpenAddUserPage()
+        {
+            _navigationManager.NavigateTo("/AddUser");
+        }
     }
 }

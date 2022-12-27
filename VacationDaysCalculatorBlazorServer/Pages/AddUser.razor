@@ -1,18 +1,17 @@
-﻿@page "/AddVacation"
-@inherits RazorPageBases.AddVacationBase;
-@attribute [Authorize(Roles = "Employee")]
+﻿@page "/AddUser"
+@inherits RazorPageBases.AddUserBase;
+@attribute [Authorize(Roles = "Admin")]
 
-<h3>Add Vacation</h3>
+<h3>Add User</h3>
 
-<EditForm Model="@vacation" OnValidSubmit="@AddVacation">
-    <VacationFields vacationDays="@vacation"></VacationFields>
+<EditForm Model="@userDetails" OnValidSubmit="@AddUserAsync">
+    <UserFields userDetails="@userDetails"></UserFields>
     <button type="submit" class="btn btn-success">
         <span class="oi oi-pencil"></span>
-        Add Vacation
+        Add User
     </button>
     <button type="button" class="btn btn-secondary" @onclick="Close">
         <span class="oi oi-media-skip-backward"></span>
         Close
     </button>
 </EditForm>
-

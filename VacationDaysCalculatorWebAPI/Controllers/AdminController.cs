@@ -1,4 +1,5 @@
-﻿using DomainModel.Models;
+﻿using DomainModel.DtoModels;
+using DomainModel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,22 @@ namespace VacationDaysCalculatorWebAPI.Controllers
             try
             {
                 _adminRepository.UpdateEmployeeVacationStatus(vacationDays);
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+        [HttpPost]
+        [Authorize]
+        public IActionResult AddUser([FromBody] UserDetails userDetails)
+        {
+            if (userDetails == null)
+                return BadRequest();
+            try
+            {
+                _adminRepository.AddUser(userDetails);
                 return Ok();
             }
             catch (System.Exception)
