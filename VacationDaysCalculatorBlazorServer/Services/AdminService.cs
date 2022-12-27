@@ -22,14 +22,6 @@ namespace VacationDaysCalculatorBlazorServer.Services
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
             return await _httpClient.GetFromJsonAsync<AdminDetails>($"{BaseApiUrl}/{userId}");
         }
-
-        public async Task UpdateEmployeeVacationStatusAsync(Vacation vacationDays)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl);
-            httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(vacationDays), Encoding.UTF8, "application/json");
-            await _httpClient.SendAsync(httpPutRequest);
-        }
         public async Task AddUserAsync(UserDetails userDetails)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
