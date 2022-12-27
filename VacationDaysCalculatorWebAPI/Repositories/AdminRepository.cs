@@ -42,5 +42,21 @@ namespace VacationDaysCalculatorWebAPI.Repositories
                 _vacationDbContext.SaveChanges();
             }
         }
+        public void AddUser(UserDetails userDetails)
+        {
+            var user = new User();
+            var currentYear = DateTime.Today.Year;
+            user.UserName = userDetails.Username;
+            user.Password = userDetails.Password;
+            user.Email = userDetails.Email;
+            user.FirstName = userDetails.FirstName;
+            user.LastName = userDetails.LastName;
+            user.CurrentYear = currentYear;
+            user.RemainingDaysOffCurrentYear = userDetails.RemainingDaysOffCurrentYear;
+            user.RemainingDaysOffLastYear = userDetails.RemainingDaysOffLastYear;
+            user.Role = userDetails.Role;
+            _vacationDbContext.Users.Add(user);
+            _vacationDbContext.SaveChanges();
+        }
     }
 }

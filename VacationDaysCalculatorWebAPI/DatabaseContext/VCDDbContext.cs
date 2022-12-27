@@ -9,7 +9,6 @@ namespace VacationDaysCalculatorWebAPI.DatabaseContext
 
         public DbSet<Vacation> Vacation { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
-        public DbSet<RemainingVacation> RemainingVacation { get; set; }
         public DbSet<User> Users { get; set; }
     }
 }
