@@ -92,5 +92,20 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPut("updateVacationStatus")]
+        [AllowAnonymous]
+        public IActionResult UpdateEmployeeVacationStatus([FromBody] DateTime currentDate)
+        {
+            try
+            {
+                _employeeRepository.SetVacationStatus(currentDate);
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

@@ -39,11 +39,11 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             return employeeVacation;
         }
 
-        private void SetVacationStatus(List<Vacation> vacationDays)
+        public void SetVacationStatus(DateTime currentDate)
         {
-            var currentDate = DateTime.Today;
-            var yesterday = DateTime.Today.AddDays(-1);
-            foreach (var vacation in vacationDays)
+            var vacations = _vacationDbContext.Vacation.ToList();
+            var yesterday = currentDate.AddDays(-1);
+            foreach (var vacation in vacations)
             {
                 if (vacation.VacationFrom.Equals(currentDate) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.Approved)
                 {
