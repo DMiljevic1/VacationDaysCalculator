@@ -107,5 +107,21 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult CalculateTotalVacationForGivenPeriodAsync([FromBody] List<DateTime> vacation)
+        {
+            try
+            {
+                var vacationFrom = vacation[0];
+                var vacationTo = vacation[1];
+                return Ok(_employeeRepository.CalculateTotalVacationForGivenPeriod(vacationFrom, vacationTo));
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

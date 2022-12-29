@@ -103,7 +103,7 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             return employeeHistory;
         }
 
-        private int CalculateTotalVacationForGivenPeriod(DateTime vacationFrom, DateTime vacationTo)
+        public int CalculateTotalVacationForGivenPeriod(DateTime vacationFrom, DateTime vacationTo)
         {
             var dayNow = DateTime.Now;
             var holidays = _vacationDbContext.Holidays.ToList();

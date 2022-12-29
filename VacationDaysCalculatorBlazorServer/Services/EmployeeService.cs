@@ -4,6 +4,7 @@ using System.Text;
 using System.Net.Http.Headers;
 using VacationDaysCalculatorBlazorServer.Services;
 using DomainModel.DtoModels;
+using System;
 
 namespace VacationDaysCalculatorBlazorServer.Service
 {
@@ -51,6 +52,14 @@ namespace VacationDaysCalculatorBlazorServer.Service
             var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl);
             httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
             await _httpClient.SendAsync(httpPutRequest);
+        }
+        public async Task<int> CalculateTotalVacationForGivenPeriodAsync (List<DateTime> vacation)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+            var httpGetRequest = new HttpRequestMessage(HttpMethod.Get, BaseApiUrl);
+            httpGetRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
+            var response = await _httpClient.SendAsync(httpGetRequest);
+            return int.Parse(response.Content.ReadAsStringAsync().Result);
         }
     }
 }
