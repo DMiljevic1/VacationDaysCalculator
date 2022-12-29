@@ -24,15 +24,17 @@
         <option value="Employee">Employee</option>
     </InputSelect>
 
+    @if(userDetails.Role == "Employee")
+    {
     <label for="remainingVacationForCurrentYear">Remaining Vacation For Current Year</label>
     <InputNumber id="remainingVacationForCurrentYear" @bind-Value="@userDetails.RemainingDaysOffCurrentYear" class="form-control"></InputNumber>
 
     <label for="remainingVacationForLastYear">Remaining Vacation For Last Year</label>
     <InputNumber id="remainingVacationForLastYear" @bind-Value="@userDetails.RemainingDaysOffLastYear" class="form-control"></InputNumber>
+    }
 </div>
 
 @code {
     [Parameter]
     public UserDetails userDetails { get; set; }
-
 }
