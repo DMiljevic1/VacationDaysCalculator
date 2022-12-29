@@ -3,10 +3,10 @@
     <InputText id="username" @bind-Value="@userDetails.Username" class="form-control"></InputText>
 
     <label for="password">Password</label>
-    <InputText id="password" typeof="password" @bind-Value="@userDetails.Password" class="form-control"></InputText>
+    <InputText id="password" type="password" @bind-Value="@userDetails.Password" class="form-control"></InputText>
 
     <label for="confirmPassword">Confirm Password</label>
-    <InputText id="confirmPassword" typeof="password" @bind-Value="@userDetails.ConfirmPassword" class="form-control"></InputText>
+    <InputText id="confirmPassword" type="password" @bind-Value="@userDetails.ConfirmPassword" class="form-control"></InputText>
 
     <label for="firstName">First Name</label>
     <InputText id="firstName" @bind-Value="@userDetails.FirstName" class="form-control"></InputText>
@@ -32,6 +32,7 @@
     <label for="remainingVacationForLastYear">Remaining Vacation For Last Year</label>
     <InputNumber id="remainingVacationForLastYear" @bind-Value="@userDetails.RemainingDaysOffLastYear" class="form-control"></InputNumber>
     }
+    <p></p>
 </div>
 
 @code {
