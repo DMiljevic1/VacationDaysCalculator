@@ -108,6 +108,21 @@ namespace VacationDaysCalculatorWebAPI.Controllers
             }
         }
 
+        [HttpPut("updateRemainingVacation")]
+        [AllowAnonymous]
+        public IActionResult UpdateRemainingVacation()
+        {
+            try
+            {
+                _employeeRepository.SetRemainingVacationOnFirstDayOfYear();
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         [HttpGet]
         [Authorize]
         public IActionResult CalculateTotalVacationForGivenPeriodAsync([FromBody] List<DateTime> vacation)
