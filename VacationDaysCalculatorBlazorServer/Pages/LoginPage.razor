@@ -7,7 +7,7 @@
         <p>You are logged in.</p>
     </Authorized>
     <NotAuthorized>
-<section class="vh-100" style="margin-top:5%">
+<section class="vh-100" style="margin-top:5%" @onkeydown="LoginUsingEnter">
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-9 col-lg-6 col-xl-5">
@@ -21,7 +21,7 @@
                     <div class="form-outline mb-4">
                         <input type="email" id="form3Example3" class="form-control form-control-lg"
                                placeholder="Enter a valid email address" @bind-value="userLogin.UserName" />
-                        <label class="form-label" for="form3Example3">Email address</label>
+                        <label class="form-label" for="form3Example3">Username</label>
                     </div>
 
                     <!-- Password input -->
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="button" class="btn btn-primary btn-lg"
+                                <button id="loginButton" type="button" class="btn btn-primary btn-lg" @ref="elementReference"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;" @onclick="Login">
                             Login
                         </button>
