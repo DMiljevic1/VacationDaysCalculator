@@ -70,7 +70,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 validationErrors.Add(new ValidationError { Description = "You cannot take vacation for more then " + MAX_NUMBER_OF_MONTHS + " months in advance!" });
 
             if (currentEmployee.RemainingDaysOffLastYear + currentEmployee.RemainingDaysOffCurrentYear < vacationPlannedToSpent)
-                validationErrors.Add(new ValidationError { Description = "You don't have inaf vacation for that period!" });
+                validationErrors.Add(new ValidationError { Description = "You don't have enough vacation for that period!" });
 
             return validationErrors;
         }

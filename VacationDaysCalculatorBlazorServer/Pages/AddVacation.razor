@@ -6,8 +6,9 @@
 
 <EditForm Model="@vacation" OnValidSubmit="@AddVacation">
     <VacationFields vacationDays="@vacation"></VacationFields>
+    <p></p>
     <button type="submit" class="btn btn-success">
-        <span class="oi oi-pencil"></span>
+        <span class="oi oi-plus"></span>
         Add Vacation
     </button>
     <button type="button" class="btn btn-secondary" @onclick="Close">
