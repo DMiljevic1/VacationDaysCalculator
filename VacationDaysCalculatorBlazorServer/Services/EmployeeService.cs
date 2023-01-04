@@ -46,10 +46,17 @@ namespace VacationDaysCalculatorBlazorServer.Service
             var httpDeleteRequest = new HttpRequestMessage(HttpMethod.Delete, $"{BaseApiUrl}/{vacationId}");
             await _httpClient.SendAsync(httpDeleteRequest);
         }
-        public async Task UpdateEmployeeVacationStatusAsync(Vacation vacation)
+        public async Task ApproveVacationAsync(Vacation vacation)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl);
+            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, $"{BaseApiUrl}/approveVacation");
+            httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
+            await _httpClient.SendAsync(httpPutRequest);
+        }
+        public async Task CancelVacationAsync(Vacation vacation)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, $"{BaseApiUrl}/cancelVacation");
             httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
             await _httpClient.SendAsync(httpPutRequest);
         }

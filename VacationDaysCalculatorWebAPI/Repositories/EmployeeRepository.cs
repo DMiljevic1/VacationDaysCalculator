@@ -45,24 +45,24 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             var yesterday = currentDate.AddDays(-1);
             foreach (var vacation in vacations)
             {
-                if (vacation.VacationFrom.Equals(currentDate) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.Approved)
+                if (vacation.VacationFrom.Equals(currentDate) && vacation.Status == VacationStatus.Approved)
                 {
                     vacation.Status = VacationStatus.OnVacation;
                     UpdateEmployeeVacationStatus(vacation);
                 }
-                else if (vacation.VacationTo.Equals(yesterday.Date) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.OnVacation)
+                else if (vacation.VacationTo.Equals(yesterday.Date) && vacation.Status == VacationStatus.OnVacation)
                 {
                     vacation.Status = VacationStatus.Arhived;
                     UpdateEmployeeVacationStatus(vacation);
                 }
-                else if (vacation.VacationFrom.Equals(currentDate) && vacation.Year == currentDate.Year && vacation.Status == VacationStatus.Pending)
+                else if (vacation.VacationFrom.Equals(currentDate) && vacation.Status == VacationStatus.Pending)
                 {
                     vacation.Status = VacationStatus.Cancelled;
                     UpdateEmployeeVacationStatus(vacation);
                 }
             }
         }
-        public void UpdateEmployeeVacationStatus(Vacation vacation)
+        private void UpdateEmployeeVacationStatus(Vacation vacation)
         {
             var vacationForUpdate = GetVacationDaysByVacationId(vacation.Id);
             if (vacationForUpdate != null)
@@ -73,6 +73,29 @@ namespace VacationDaysCalculatorWebAPI.Repositories
                     int vacationDaysToRestore = CalculateTotalVacationForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
                     RestoreRemainingVacation(vacation.UserId, vacationDaysToRestore);
                 }
+
+                _vacationDbContext.SaveChanges();
+            }
+        }
+        public void ApproveVacation(Vacation vacation)
+        {
+            var vacationForUpdate = GetVacationDaysByVacationId(vacation.Id);
+            if (vacationForUpdate != null)
+            {
+                vacationForUpdate.Status = vacation.Status;
+                vacationForUpdate.ApprovedBy = vacation.ApprovedBy;
+
+                _vacationDbContext.SaveChanges();
+            }
+        }
+        public void CancelVacation(Vacation vacation)
+        {
+            var vacationForUpdate = GetVacationDaysByVacationId(vacation.Id);
+            if (vacationForUpdate != null)
+            {
+                vacationForUpdate.Status = vacation.Status;
+                int vacationDaysToRestore = CalculateTotalVacationForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
+                RestoreRemainingVacation(vacation.UserId, vacationDaysToRestore);
 
                 _vacationDbContext.SaveChanges();
             }
@@ -96,7 +119,6 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             var employeeHistory = new EmployeeHistory();
             employeeHistory.VacationFrom = vacation.VacationFrom;
             employeeHistory.VacationTo = vacation.VacationTo;
-            employeeHistory.Year = vacation.Year;
             employeeHistory.FirstName = vacation.User.FirstName;
             employeeHistory.LastName = vacation.User.LastName;
             employeeHistory.TotalVacationSpent = vacation.VacationSpent;
@@ -145,8 +167,8 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         {
             int vacationDaysSpent = CalculateTotalVacationForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
             var employee = _vacationDbContext.Users.FirstOrDefault(rv => rv.Id.Equals(vacation.UserId));
-            int remainingVacationLastYear = employee.RemainingDaysOffLastYear;
-            int remainingVacationCurrentYear = employee.RemainingDaysOffCurrentYear;
+            int? remainingVacationLastYear = employee.RemainingDaysOffLastYear;
+            int? remainingVacationCurrentYear = employee.RemainingDaysOffCurrentYear;
             if (remainingVacationLastYear > vacationDaysSpent)
             {
                 employee.RemainingDaysOffLastYear = remainingVacationLastYear - vacationDaysSpent;
@@ -183,8 +205,8 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         private void RestoreRemainingVacation(int userId, int vacationDaysToRestore)
         {
             var employee = _vacationDbContext.Users.FirstOrDefault(rv => rv.Id.Equals(userId));
-            int remainingVacationLastYear = employee.RemainingDaysOffLastYear;
-            int remainingVacationCurrentYear = employee.RemainingDaysOffCurrentYear;
+            int? remainingVacationLastYear = employee.RemainingDaysOffLastYear;
+            int? remainingVacationCurrentYear = employee.RemainingDaysOffCurrentYear;
             if(remainingVacationCurrentYear + vacationDaysToRestore <= TOTAL_GIVEN_VACATION_PER_YEAR)
             {
                 employee.RemainingDaysOffCurrentYear = remainingVacationCurrentYear + vacationDaysToRestore;

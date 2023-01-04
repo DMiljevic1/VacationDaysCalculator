@@ -24,12 +24,12 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             adminDetails.FirstName = user.FirstName;
             adminDetails.LastName = user.LastName;
             adminDetails.Email = user.Email;
-            adminDetails.EmployeeVacationDays = GetEmployeeVacation();
+            adminDetails.EmployeeVacationDays = GetEmployeeVacationByStatus(VacationStatus.Pending);
             return adminDetails;
         }
-        public List<Vacation> GetEmployeeVacation()
+        public List<Vacation> GetEmployeeVacationByStatus(VacationStatus status)
         {
-            var employeeVacation = _vacationDbContext.Vacation.Include(vd => vd.User).Where(vd => vd.Status.Equals(VacationStatus.Pending)).ToList();
+            var employeeVacation = _vacationDbContext.Vacation.Include(vd => vd.User).Where(vd => vd.Status.Equals(status)).ToList();
             return employeeVacation;
         }
         public void AddUser(UserDetails userDetails)

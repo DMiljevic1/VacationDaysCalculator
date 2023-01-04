@@ -13,8 +13,8 @@ namespace DomainModel.DtoModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int RemainingDaysOffLastYear { get; set; }
-        public int RemainingDaysOffCurrentYear { get; set; }
+        public int? RemainingDaysOffLastYear { get; set; }
+        public int? RemainingDaysOffCurrentYear { get; set; }
         public List<Vacation>? VacationDays { get; set; }
     }
 }

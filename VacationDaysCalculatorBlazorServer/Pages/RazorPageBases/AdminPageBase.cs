@@ -20,15 +20,26 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
             adminDetails = await _adminService.GetAdminDetailsAsync();
         }
-        protected async Task UpdateEmployeeVacationStatus(Vacation vacation, VacationStatus vacationStatus)
+        protected async Task ApproveVacationAsync(Vacation vacation)
         {
-            vacation.Status = vacationStatus;
-            await _employeeService.UpdateEmployeeVacationStatusAsync(vacation);
+            vacation.Status = VacationStatus.Approved;
+            vacation.ApprovedBy = adminDetails.LastName + " " + adminDetails.FirstName;
+            await _employeeService.ApproveVacationAsync(vacation);
+            adminDetails = await _adminService.GetAdminDetailsAsync();
+        }
+        protected async Task CancelVacationAsync(Vacation vacation)
+        {
+            vacation.Status = VacationStatus.Cancelled;
+            await _employeeService.CancelVacationAsync(vacation);
             adminDetails = await _adminService.GetAdminDetailsAsync();
         }
         protected async Task OpenAddUserPage()
         {
             _navigationManager.NavigateTo("/AddUser");
+        }
+        protected async Task OpenApprovedVacations()
+        {
+            _navigationManager.NavigateTo("/ApprovedVacations");
         }
     }
 }

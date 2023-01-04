@@ -47,8 +47,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             else
             {
                 var dateFrom = vacation.VacationFrom;
-                vacation.Year = dateFrom.Year;
                 vacation.Status = VacationStatus.Pending;
+                vacation.VacationRequestDate = DateTime.Now;
                 await _userService.AddVacationAsync(vacation);
                 Close();
             }
