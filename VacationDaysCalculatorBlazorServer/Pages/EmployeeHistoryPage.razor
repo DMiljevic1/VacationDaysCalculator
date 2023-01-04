@@ -20,7 +20,6 @@ else
 				    <tr>
                        <th>Last Name</th>
                        <th>First Name</th>
-					   <th>Vacation Year</th>
 					   <th>Vacation From</th>
 					   <th>Vacation To</th>
 					   <th>TotalVacationSpent</th>
@@ -38,9 +37,8 @@ else
 							<tr>
 								<td>@history.LastName</td>
 								<td>@history.FirstName</td>
-								<td>@history.Year</td>
-								<td>@history.VacationFrom.ToString("dd.MM.")</td>
-								<td>@history.VacationTo.ToString("dd.MM.")</td>
+								<td>@history.VacationFrom.ToString("dd.MM.yyyy.")</td>
+								<td>@history.VacationTo.ToString("dd.MM.yyyy.")</td>
 								<td>@history.TotalVacationSpent</td>
 							 </tr>
 						}

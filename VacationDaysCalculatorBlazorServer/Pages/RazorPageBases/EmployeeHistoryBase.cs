@@ -7,13 +7,13 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
     public class EmployeeHistoryBase : ComponentBase
     {
         [Inject]
-        protected EmployeeService _userService { get; set; }
+        protected EmployeeService _employeeService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
         protected List<EmployeeHistory> employeeHistory { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            employeeHistory = await _userService.GetEmployeeHistoryAsync();
+            employeeHistory = await _employeeService.GetEmployeeHistoryAsync();
         }
         protected void CloseEmployeeHistoryPage()
         {

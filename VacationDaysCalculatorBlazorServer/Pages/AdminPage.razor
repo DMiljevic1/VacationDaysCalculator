@@ -37,9 +37,13 @@ else
 
 	</div>
 	<div class="col">
-		<button type="button" class="btn btn-primary" style="margin-left:70%;" @onclick="OpenAddUserPage">
-			<span class="btn btn-check"></span>
+		<button type="button" class="btn btn-primary" @onclick="OpenAddUserPage">
+			<span class="oi oi-plus"></span>
 				Add User
+		</button>
+					<button type="button" class="btn btn-success" style="margin-right:5%;" @onclick="OpenApprovedVacations">
+			<span class="btn btn-check"></span>
+				Approved Vacations
 		</button>
 	</div>
 	
@@ -54,7 +58,7 @@ else
 								<tr>
 									<th>Last Name</th>
 									<th>First Name</th>
-									@*<th>Vacation Year</th>*@
+									<th>Vacation Request Date</th>
 									<th>Vacation From</th>
 									<th>Vacation To</th>
 									<th>Vacation Status</th>
@@ -74,18 +78,18 @@ else
 										<tr>
 											<td>@vacation.User.LastName</td>
 											<td>@vacation.User.FirstName</td>
-											@*<td>@vacation.Year</td>*@
+											<td>@vacation.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm")</td>
 											<td>@vacation.VacationFrom.ToString("dd.MM.yyyy")</td>
 											<td>@vacation.VacationTo.ToString("dd.MM.yyyy")</td>
 											<td>@vacation.Status</td>
 											<td>
-												<button type="button" class="btn btn-success" @onclick="() => UpdateEmployeeVacationStatus(vacation, VacationStatus.Approved)">
+												<button type="button" class="btn btn-success" @onclick="() => ApproveVacationAsync(vacation)">
 													<span class="fa fa-check"></span>
 														Approve
 												</button>
 											</td>
 											<td>
-												<button type="button" class="btn btn-warning" @onclick="() => UpdateEmployeeVacationStatus(vacation, VacationStatus.Cancelled)">
+												<button type="button" class="btn btn-warning" @onclick="() => CancelVacationAsync(vacation)">
 														Cancel
 												</button>
 											</td>

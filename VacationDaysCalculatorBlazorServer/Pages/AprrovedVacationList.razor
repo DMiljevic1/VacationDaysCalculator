@@ -1,0 +1,64 @@
+﻿@page "/ApprovedVacations"
+@inherits RazorPageBases.ApprovedVacationListBase;
+@attribute [Authorize(Roles = "Admin")]
+<h3>Approved Vacations</h3>
+
+<AuthorizeView Roles="Admin">
+	<Authorized>
+		@if (approvedVacations == null)
+{
+	<p>There is no records of vacation history.</p>
+}
+else
+{
+<div class="card w-100">
+	<div class="card-body">
+		<div>
+			<table class="table table-hover table-responsive table-light table-borderless">
+				<thead>
+				    <tr>
+                       <th>Last Name</th>
+                       <th>First Name</th>
+					   <th>Vacation Request Date</th>
+					   <th>Vacation From</th>
+					   <th>Vacation To</th>
+					   <th>TotalVacationSpent</th>
+					   <th>Approved By</th>
+                     </tr>
+				</thead>
+				<tbody>
+				@if (approvedVacations.Count.Equals(0))
+				{
+					<tr>No records found</tr>
+				}
+					else
+					{
+						@foreach (var vacation in approvedVacations)
+						{
+							<tr>
+								<td>@vacation.User.LastName</td>
+								<td>@vacation.User.FirstName</td>
+								<td>@vacation.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm")</td>
+								<td>@vacation.VacationFrom.ToString("dd.MM.yyyy.")</td>
+								<td>@vacation.VacationTo.ToString("dd.MM.yyyy.")</td>
+								<td>@vacation.VacationSpent</td>
+								<td>@vacation.ApprovedBy</td>
+							 </tr>
+						}
+					}
+				</tbody>
+			</table>
+
+		</div>
+			<button type="button" class="btn btn-secondary" @onclick="CloseApprovedVacationsPage">
+				<span class="btn btn-close"></span>
+			Close
+		</button>
+	</div>
+</div>
+}
+	</Authorized>
+	<NotAuthorized>
+		<p>You are not autorized to view this page</p>
+	</NotAuthorized>
+</AuthorizeView>

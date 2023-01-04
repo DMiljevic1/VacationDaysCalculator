@@ -12,11 +12,11 @@ namespace DomainModel.Models
         public int Id { get; set; }
         public DateTime VacationFrom { get; set; }
         public DateTime VacationTo { get; set; }
-        public int Year { get; set; }
         public VacationStatus Status { get; set; }
         public int VacationSpent { get; set; }
         public int UserId { get; set; }
         public User? User { get; set; }
-
+        public string? ApprovedBy { get; set; }
+        public DateTime VacationRequestDate { get; set; }
     }
 }

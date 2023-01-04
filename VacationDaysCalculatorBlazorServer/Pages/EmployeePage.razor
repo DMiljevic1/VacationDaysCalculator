@@ -60,7 +60,7 @@ else
 								<tr>
 									<th>Last Name</th>
 									<th>First Name</th>
-									@*<th>Vacation Year</th>*@
+									<th>Vacation Request Date</th>
 									<th>Vacation From</th>
 									<th>Vacation To</th>
 									<th>Vacation Spent</th>
@@ -80,7 +80,7 @@ else
 										<tr>
 											<td>@currentEmployee.LastName</td>
 											<td>@currentEmployee.FirstName</td>
-											@*<td>@vacation.Year</td>*@
+											<td>@vacation.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm")</td>
 											<td>@vacation.VacationFrom.ToString("dd.MM.yyyy")</td>
 											<td>@vacation.VacationTo.ToString("dd.MM.yyyy")</td>
 											<td>@vacation.VacationSpent</td>
