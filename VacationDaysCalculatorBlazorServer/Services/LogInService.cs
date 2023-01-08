@@ -44,7 +44,7 @@ namespace VacationDaysCalculatorBlazorServer.Services
                 else
                 {
                     LoginPageBase.message = "Incorrect username or password!";
-                    _navigationManager.NavigateTo("LoginPage");
+                    _navigationManager.NavigateTo("/");
                 }
             }
         }

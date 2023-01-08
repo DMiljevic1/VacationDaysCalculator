@@ -40,7 +40,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected async Task LogOut()
         {
             await _customAuthenticationStateProvider.RemoveItem("authToken");
-            _navigationManager.NavigateTo("/LoginPage");
+            _navigationManager.NavigateTo("/");
         }
         protected async Task LoginUsingEnter(KeyboardEventArgs e)
         {
