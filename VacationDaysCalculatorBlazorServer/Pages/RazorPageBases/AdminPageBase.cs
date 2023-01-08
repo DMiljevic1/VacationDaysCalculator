@@ -2,6 +2,7 @@
 using DomainModel.Enums;
 using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
+using System;
 using VacationDaysCalculatorBlazorServer.Service;
 using VacationDaysCalculatorBlazorServer.Services;
 
@@ -9,12 +10,14 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
     public class AdminPageBase : ComponentBase
     {
+        protected Vacation selectedVacation { get; set; }
         [Inject]
         protected AdminService _adminService { get; set; }
         [Inject]
         protected EmployeeService _employeeService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
+        protected ConfirmationDialog CancelConfirmationDialog { get; set; }
         protected AdminDetails adminDetails { get; set; }
         protected override async Task OnInitializedAsync()
         {
@@ -29,9 +32,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         }
         protected async Task CancelVacationAsync(Vacation vacation)
         {
-            vacation.Status = VacationStatus.Cancelled;
-            await _employeeService.CancelVacationAsync(vacation);
-            adminDetails = await _adminService.GetAdminDetailsAsync();
+            selectedVacation = vacation;
+            CancelConfirmationDialog.Show();
         }
         protected async Task OpenAddUserPage()
         {
@@ -40,6 +42,15 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected async Task OpenApprovedVacations()
         {
             _navigationManager.NavigateTo("/ApprovedVacations");
+        }
+        protected async Task OnCancelConfirmationSelected(bool isCancelConfirmed)
+        {
+            if (isCancelConfirmed)
+            {
+                selectedVacation.Status = VacationStatus.Cancelled;
+                await _employeeService.CancelVacationAsync(selectedVacation);
+                adminDetails = await _adminService.GetAdminDetailsAsync();
+            }
         }
     }
 }
