@@ -43,7 +43,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 return true;
             if (vacationRequests.User.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if ($"{vacationRequests.Status}".Contains(searchString))
+            if (vacationRequests.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }

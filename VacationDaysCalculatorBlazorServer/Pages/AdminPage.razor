@@ -10,48 +10,17 @@
 }
 else
 {
-<div class="row">
-	@*Slika profila i podaci o danima*@
-	<div class="col justify-content-between">
-		<div class="card text-bg-primary mb-3">
-			<div class="card w-25 ratio ratio-1x1  d-flex justify-content-between">
-				<div>
-					<MudAvatar Color="Color.Warning" Variant="Variant.Filled">
-						<MudIcon Color="Color.Dark" Icon="@Icons.Custom.Uncategorized.Radioactive" Size="Size.Large" />
-					</MudAvatar>
-				</div>
-			
-		
-			</div>
-			<div class="col-sm-6">
-				<label for="formFile" class="form-label"></label>
-				<input class="form-control" type="file" id="formFile"/>
+<MudGrid Justify="Justify.FlexStart" Style="margin-bottom:100px;">
+    <MudItem xs=9>
+        <MudAvatar Size="Size.Large" Style="width:150px;height:150px; margin-bottom:30px;" Color="Color.Primary">@adminDetails.LastName.Substring(0, 1)</MudAvatar>
+        <h3>@adminDetails.LastName @adminDetails.FirstName</h3>
+    </MudItem>
+    <MudItem xs=3>
+           <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddUserPage" Style="margin-right:3%">Add User</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="OpenApprovedVacations" Style="position:absolute;margin-right:5%">Approved Vacations</MudButton>
+    </MudItem>
+</MudGrid>
 
-			</div>
-			<div class="card-title">
-							<h5 style="margin-top:2%; margin-left:2%;">@adminDetails.LastName @adminDetails.FirstName</h5>
-			</div>
-			<div class="card-body">
-							<p>E-mail: @adminDetails.Email</p>
-			</div>
-		
-		</div>
-
-	</div>
-	<div class="col">
-		<button type="button" class="btn btn-primary" @onclick="OpenAddUserPage">
-			<span class="oi oi-plus"></span>
-				Add User
-		</button>
-					<button type="button" class="btn btn-success" style="margin-right:5%;" @onclick="OpenApprovedVacations">
-			<span class="btn btn-check"></span>
-				Approved Vacations
-		</button>
-	</div>
-	
-</div>
-
-@*Tablica sa poslanim zahtjevima, kalendar*@
 <MudTable Items="@vacations" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<Vacation,bool>(FilterFunction)" @bind-SelectedItem="selectedVacation">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Vacation Requests</MudText>
@@ -71,9 +40,9 @@ else
     <RowTemplate>
         <MudTd DataLabel="Last Name">@context.User.LastName</MudTd>
         <MudTd DataLabel="First Name">@context.User.FirstName</MudTd>
-        <MudTd DataLabel="Vacation Request Date">@context.VacationRequestDate</MudTd>
-        <MudTd DataLabel="Vacation From">@context.VacationFrom</MudTd>
-        <MudTd DataLabel="Vacation To">@context.VacationTo</MudTd>
+        <MudTd DataLabel="Vacation Request Date">@context.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm")</MudTd>
+        <MudTd DataLabel="Vacation From">@context.VacationFrom.ToString("dd.MM.yyyy")</MudTd>
+        <MudTd DataLabel="Vacation To">@context.VacationTo.ToString("dd.MM.yyyy")</MudTd>
 		<MudTd DataLabel="Vacation Status">@context.Status</MudTd>
 		<MudTd>
 			<MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="() => ApproveVacationAsync(context)">Approve</MudButton>
@@ -94,7 +63,7 @@ else
     <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
     <MudSpacer />
     <div style="min-width:200px;">
-		<MudText Inline="true" Class="align-self-center">Selected1: @selectedVacation?.User.LastName</MudText>
+		<MudText Inline="true" Class="align-self-center">Selected: @selectedVacation?.User.LastName</MudText>
     </div>
 </div>
 }
