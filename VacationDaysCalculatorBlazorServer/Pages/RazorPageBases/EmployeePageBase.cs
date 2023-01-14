@@ -31,5 +31,31 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             await _employeeService.DeleteVacationRequestAndRestoreVacationAsync(vacationId);
             currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
         }
+        //fields and methods for mud table
+        protected bool dense = false;
+        protected bool hover = true;
+        protected bool striped = false;
+        protected bool bordered = false;
+        protected string searchString1 = "";
+        protected Vacation selectedVacation { get; set; }
+        public bool FilterFunction(Vacation vacationRequest) => FilterFunc(vacationRequest, searchString1);
+
+        private bool FilterFunc(Vacation vacationRequest, string searchString)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (vacationRequest.User.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (vacationRequest.User.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (vacationRequest.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (vacationRequest.VacationFrom.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (vacationRequest.VacationTo.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        }
+        //end
     }
 }

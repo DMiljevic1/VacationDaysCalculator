@@ -33,21 +33,21 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             adminDetails = await _adminService.GetAdminDetailsAsync();
             vacations = adminDetails.EmployeeVacationDays;
         }
-        public bool FilterFunction(Vacation vacationRequests) => FilterFunc(vacationRequests, searchString1);
+        public bool FilterFunction(Vacation vacationRequest) => FilterFunc(vacationRequest, searchString1);
 
-        private bool FilterFunc(Vacation vacationRequests, string searchString)
+        private bool FilterFunc(Vacation vacationRequest, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (vacationRequests.User.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (vacationRequest.User.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (vacationRequests.User.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (vacationRequest.User.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (vacationRequests.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (vacationRequest.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (vacationRequests.VacationFrom.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (vacationRequest.VacationFrom.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (vacationRequests.VacationTo.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (vacationRequest.VacationTo.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }
