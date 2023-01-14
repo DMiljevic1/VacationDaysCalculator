@@ -15,5 +15,7 @@ namespace DomainModel.DtoModels
         public DateTime VacationTo { get; set; }
         public int Year { get; set; }
         public int TotalVacationSpent { get; set; }
+        public DateTime VacationRequestDate { get; set; }
+        public string ApprovedBy { get; set; }
     }
 }

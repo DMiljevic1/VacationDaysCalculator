@@ -110,11 +110,11 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             var employeeHistoryList = new List<EmployeeHistory>();
             foreach(var vacationDay in archivedVacationDays)
             {
-                employeeHistoryList.Add(ConvertVacationDaysToEmployeeHistory(vacationDay));
+                employeeHistoryList.Add(ConvertVacationToEmployeeHistory(vacationDay));
             }
             return employeeHistoryList;
         }
-        public EmployeeHistory ConvertVacationDaysToEmployeeHistory(Vacation vacation)
+        public EmployeeHistory ConvertVacationToEmployeeHistory(Vacation vacation)
         {
             var employeeHistory = new EmployeeHistory();
             employeeHistory.VacationFrom = vacation.VacationFrom;
@@ -122,6 +122,8 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             employeeHistory.FirstName = vacation.User.FirstName;
             employeeHistory.LastName = vacation.User.LastName;
             employeeHistory.TotalVacationSpent = vacation.VacationSpent;
+            employeeHistory.VacationRequestDate = vacation.VacationRequestDate;
+            employeeHistory.ApprovedBy = vacation.ApprovedBy;
             return employeeHistory;
         }
 
