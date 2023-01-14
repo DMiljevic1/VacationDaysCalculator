@@ -1,4 +1,4 @@
-﻿@page "/AddVacation"
+﻿@*@page "/AddVacation"
 @inherits RazorPageBases.AddVacationBase;
 @attribute [Authorize(Roles = "Employee")]
 
@@ -17,5 +17,5 @@
     </button>
 </EditForm>
 
-<NotificationDialog @ref="NotificationDialog" Description="@ConcatenatedValidationErrors"></NotificationDialog>
+<NotificationDialog @ref="NotificationDialog" Description="@ConcatenatedValidationErrors"></NotificationDialog>*@
 
