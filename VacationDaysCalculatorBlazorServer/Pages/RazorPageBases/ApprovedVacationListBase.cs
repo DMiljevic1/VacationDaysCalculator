@@ -8,11 +8,39 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
     public class ApprovedVacationListBase : ComponentBase
     {
+        protected bool dense = false;
+        protected bool hover = true;
+        protected bool striped = false;
+        protected bool bordered = false;
+        protected string searchString1 = "";
+        protected Vacation selectedVacation { get; set; }
         [Inject]
         protected AdminService _adminService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
         protected List<Vacation> approvedVacations { get; set; }
+        public bool FilterFunction(Vacation approvedVacation) => FilterFunc(approvedVacation, searchString1);
+
+        private bool FilterFunc(Vacation approvedVacation, string searchString)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (approvedVacation.User.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (approvedVacation.User.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (approvedVacation.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (approvedVacation.VacationFrom.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (approvedVacation.VacationTo.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (approvedVacation.ApprovedBy.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (approvedVacation.Status.ToString().Contains(searchString))
+                return true;
+            return false;
+        }
         protected override async Task OnInitializedAsync()
         {
             approvedVacations = await _adminService.GetApprovedVacations();

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
+using MudBlazor.Services;
 using VacationDaysCalculatorBlazorServer.Service;
 using VacationDaysCalculatorBlazorServer.Services;
 
@@ -15,6 +16,7 @@ builder.Services.AddScoped<AdminService>();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthenticationStateProvider>());
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 

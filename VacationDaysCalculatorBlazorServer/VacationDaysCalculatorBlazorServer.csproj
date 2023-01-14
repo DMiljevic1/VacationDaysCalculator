@@ -17,6 +17,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MudBlazor" Version="6.1.7" />
+    <PackageReference Include="MudBlazor.ThemeManager" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>
