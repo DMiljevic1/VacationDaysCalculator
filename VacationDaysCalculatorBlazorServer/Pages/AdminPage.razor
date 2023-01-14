@@ -12,11 +12,11 @@ else
 {
 <MudGrid Justify="Justify.FlexStart" Style="margin-bottom:100px;">
     <MudItem xs=9>
-        <MudAvatar Size="Size.Large" Style="width:150px;height:150px; margin-bottom:30px;" Color="Color.Primary">@adminDetails.LastName.Substring(0, 1)</MudAvatar>
+        <MudAvatar Size="Size.Large" Style="width:150px;height:150px; margin-bottom:30px;" Color="Color.Primary">@adminDetails.LastName.Substring(0, 1)@adminDetails.FirstName.Substring(0, 1)</MudAvatar>
         <h3>@adminDetails.LastName @adminDetails.FirstName</h3>
     </MudItem>
     <MudItem xs=3>
-           <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddUserPage" Style="margin-right:3%">Add User</MudButton>
+           <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddUserPage" Style="margin-right:3%" StartIcon="@Icons.Material.Filled.Add">Add User</MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="OpenApprovedVacations" Style="position:absolute;margin-right:5%">Approved Vacations</MudButton>
     </MudItem>
 </MudGrid>
