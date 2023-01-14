@@ -8,17 +8,26 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
     public class ApprovedVacationListBase : ComponentBase
     {
-        protected bool dense = false;
-        protected bool hover = true;
-        protected bool striped = false;
-        protected bool bordered = false;
-        protected string searchString1 = "";
         protected Vacation selectedVacation { get; set; }
         [Inject]
         protected AdminService _adminService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
         protected List<Vacation> approvedVacations { get; set; }
+        protected override async Task OnInitializedAsync()
+        {
+            approvedVacations = await _adminService.GetApprovedVacations();
+        }
+        protected void CloseApprovedVacationsPage()
+        {
+            _navigationManager.NavigateTo("/Admin");
+        }
+        //fields and methods for mud table - start
+        protected bool dense = false;
+        protected bool hover = true;
+        protected bool striped = false;
+        protected bool bordered = false;
+        protected string searchString1 = "";
         public bool FilterFunction(Vacation approvedVacation) => FilterFunc(approvedVacation, searchString1);
 
         private bool FilterFunc(Vacation approvedVacation, string searchString)
@@ -41,13 +50,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 return true;
             return false;
         }
-        protected override async Task OnInitializedAsync()
-        {
-            approvedVacations = await _adminService.GetApprovedVacations();
-        }
-        protected void CloseApprovedVacationsPage()
-        {
-            _navigationManager.NavigateTo("/Admin");
-        }
+        //end
     }
 }

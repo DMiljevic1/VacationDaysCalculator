@@ -1,61 +1,54 @@
 ﻿@page "/EmployeeHistory"
 @inherits RazorPageBases.EmployeeHistoryBase;
 @attribute [Authorize(Roles = "Employee")]
-<h3>Employee History</h3>
 
-<AuthorizeView Roles="Employee">
-	<Authorized>
-		@if (employeeHistory == null)
+@if (employeeHistory == null)
 {
-	<p>There is no records of vacation history.</p>
+	<p>Loading...</p>
 }
 else
 {
-@*Tablica sa poslanim zahtjevima, kalendar*@
-<div class="card w-100">
-	<div class="card-body">
-		<div>
-			<table class="table table-hover table-responsive table-light table-borderless">
-				<thead>
-				    <tr>
-                       <th>Last Name</th>
-                       <th>First Name</th>
-					   <th>Vacation From</th>
-					   <th>Vacation To</th>
-					   <th>TotalVacationSpent</th>
-                     </tr>
-				</thead>
-				<tbody>
-					@if (employeeHistory == null || employeeHistory.Count.Equals(0))
-					{
-						<tr>No records found</tr>
-					}
-					else
-					{
-						@foreach(var history in employeeHistory)
-						{
-							<tr>
-								<td>@history.LastName</td>
-								<td>@history.FirstName</td>
-								<td>@history.VacationFrom.ToString("dd.MM.yyyy.")</td>
-								<td>@history.VacationTo.ToString("dd.MM.yyyy.")</td>
-								<td>@history.TotalVacationSpent</td>
-							 </tr>
-						}
-					}
-				</tbody>
-			</table>
-
-		</div>
-			<button type="button" class="btn btn-secondary" @onclick="CloseEmployeeHistoryPage">
-			<span class="btn btn-close"></span>
-			Close
-		</button>
+<MudTable Items="@employeeHistory" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<EmployeeHistory,bool>(FilterFunction)" @bind-SelectedItem="selectedHistory">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Employee History</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Last Name</MudTh>
+        <MudTh>First Name</MudTh>
+		<MudTh>Vacation Request Date</MudTh>
+		<MudTh>Vacation From</MudTh>
+		<MudTh>Vacation To</MudTh>
+		<MudTh>Total Vacation Spent</MudTh>
+		<MudTh>Approved By</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+        <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+        <MudTd DataLabel="Vacation Request Date">@context.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm")</MudTd>
+        <MudTd DataLabel="Vacation From">@context.VacationFrom.ToString("dd.MM.yyyy")</MudTd>
+        <MudTd DataLabel="Vacation To">@context.VacationTo.ToString("dd.MM.yyyy")</MudTd>
+		<MudTd DataLabel="Total Vacation Spent">@context.TotalVacationSpent</MudTd>
+		<MudTd DataLabel="Approved By">@context.ApprovedBy</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+<div class="d-flex flex-wrap mt-4">
+	<MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+	<MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+	<MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+	<MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+	<MudSpacer />
+	<div style="min-width:200px;">
+		<MudText Inline="true" Class="align-self-center">Selected: @selectedHistory?.LastName</MudText>
 	</div>
 </div>
+<MudGrid Justify="Justify.FlexStart">
+	<MudItem>
+		<MudButton StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Default" OnClick="CloseEmployeeHistoryPage" Size="Size.Medium" Style="margin-top:30px;">Close</MudButton>
+	</MudItem>
+</MudGrid>
 }
-	</Authorized>
-	<NotAuthorized>
-		<p>You are not autorized to view this page</p>
-	</NotAuthorized>
-</AuthorizeView>
