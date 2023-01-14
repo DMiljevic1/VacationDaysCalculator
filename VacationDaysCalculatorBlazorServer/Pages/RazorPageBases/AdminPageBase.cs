@@ -45,6 +45,10 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 return true;
             if (vacationRequests.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
+            if (vacationRequests.VacationFrom.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (vacationRequests.VacationTo.ToString("dd.MM.yyyy.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
             return false;
         }
         protected async Task ApproveVacationAsync(Vacation vacation)

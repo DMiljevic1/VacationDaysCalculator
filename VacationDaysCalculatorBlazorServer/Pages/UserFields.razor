@@ -1,24 +1,24 @@
 ﻿<div class="UserFields">
     <label for="username">Username</label>
-    <InputText id="username" @bind-Value="@userDetails.Username" class="form-control"></InputText>
+    <InputText id="username" @bind-Value="@userDetails.Username" class="form-control" style="width:40%;"></InputText>
 
     <label for="password">Password</label>
-    <InputText id="password" type="password" @bind-Value="@userDetails.Password" class="form-control"></InputText>
+    <InputText id="password" type="password" @bind-Value="@userDetails.Password" class="form-control" style="width:40%;"></InputText>
 
     <label for="confirmPassword">Confirm Password</label>
-    <InputText id="confirmPassword" type="password" @bind-Value="@userDetails.ConfirmPassword" class="form-control"></InputText>
+    <InputText id="confirmPassword" type="password" @bind-Value="@userDetails.ConfirmPassword" class="form-control"style="width:40%;"></InputText>
 
     <label for="firstName">First Name</label>
-    <InputText id="firstName" @bind-Value="@userDetails.FirstName" class="form-control"></InputText>
+    <InputText id="firstName" @bind-Value="@userDetails.FirstName" class="form-control" style="width:40%;"></InputText>
 
     <label for="lastName">Last Name</label>
-    <InputText id="lastName" @bind-Value="@userDetails.LastName" class="form-control"></InputText>
+    <InputText id="lastName" @bind-Value="@userDetails.LastName" class="form-control" style="width:40%;"></InputText>
 
     <label for="email">Email</label>
-    <InputText id="email" @bind-Value="@userDetails.Email" class="form-control"></InputText>
+    <InputText id="email" @bind-Value="@userDetails.Email" class="form-control" style="width:40%;"></InputText>
 
     <label for="role">Role</label>
-    <InputSelect id="role" @bind-Value="@userDetails.Role" class="form-control">
+    <InputSelect id="role" @bind-Value="@userDetails.Role" class="form-control" style="width:40%;">
         <option value="">Select...</option>
         <option value="Admin">Admin</option>
         <option value="Employee">Employee</option>
@@ -27,10 +27,10 @@
     @if(userDetails.Role == "Employee")
     {
     <label for="remainingVacationForCurrentYear">Remaining Vacation For Current Year</label>
-    <InputNumber id="remainingVacationForCurrentYear" @bind-Value="@userDetails.RemainingDaysOffCurrentYear" class="form-control"></InputNumber>
+        <InputNumber id="remainingVacationForCurrentYear" @bind-Value="@userDetails.RemainingDaysOffCurrentYear" class="form-control" style="width:40%;"></InputNumber>
 
     <label for="remainingVacationForLastYear">Remaining Vacation For Last Year</label>
-    <InputNumber id="remainingVacationForLastYear" @bind-Value="@userDetails.RemainingDaysOffLastYear" class="form-control"></InputNumber>
+        <InputNumber id="remainingVacationForLastYear" @bind-Value="@userDetails.RemainingDaysOffLastYear" class="form-control" style="width:40%;"></InputNumber>
     }
     <p></p>
 </div>
