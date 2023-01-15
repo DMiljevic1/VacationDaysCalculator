@@ -64,7 +64,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected void OpenAddVacationDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
-            _dialogService.Show<AddVacationDialog>("Simple Dialog", options);
+            _dialogService.Show<AddVacationDialog>("Send Vacation Request", options);
         }
         protected async Task AddVacation(Vacation newVacation)
         {
