@@ -2,15 +2,15 @@
 
 <MudDialog>
     <DialogContent>
-        <MudDatePicker Label="Vacation From" DateFormat="dd/MM/yyyy" MinDate="currentDate" MaxDate="vacationTo" @bind-Date="vacationFrom" class="form-control"></MudDatePicker>
+        <MudDatePicker Label="Vacation From" DateFormat="dd/MM/yyyy" MinDate="currentDate" Required=true DisableToolbar="true" MaxDate="vacationTo" @bind-Date="vacationFrom" class="form-control"></MudDatePicker>
 
         @if(vacationFrom == null)
         {
-            <MudDatePicker Label="Vacation To" DateFormat="dd/MM/yyyy" MinDate="currentDate" @bind-Date="vacationTo" class="form-control"></MudDatePicker>
+            <MudDatePicker Label="Vacation To" DateFormat="dd/MM/yyyy" MinDate="currentDate" Required=true DisableToolbar="true" @bind-Date="vacationTo" class="form-control"></MudDatePicker>
         }
         else
         {
-            <MudDatePicker Label="Vacation To" DateFormat="dd/MM/yyyy" MinDate="vacationFrom" @bind-Date="vacationTo" class="form-control"></MudDatePicker>
+            <MudDatePicker Label="Vacation To" DateFormat="dd/MM/yyyy" MinDate="vacationFrom" Required=true DisableToolbar="true" @bind-Date="vacationTo" class="form-control"></MudDatePicker>
         }
     </DialogContent>
     <DialogActions>
