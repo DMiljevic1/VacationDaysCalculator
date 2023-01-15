@@ -15,7 +15,7 @@ else
 		<h3>@currentEmployee.LastName @currentEmployee.FirstName</h3>
 	</MudItem>
 	<MudItem xs=3>
-		<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddVacationPage" Style="margin-right:3%" StartIcon="@Icons.Material.Filled.Add">Add Vacation</MudButton>
+		<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddVacationDialog" Style="margin-right:3%" StartIcon="@Icons.Material.Filled.Add">Add Vacation</MudButton>
 		<MudButton Variant="Variant.Filled" Color="Color.Dark" OnClick="OpenEmployeeHistoryPage" Style="position:absolute;margin-right:5%">History</MudButton>
 	</MudItem>
 </MudGrid>
@@ -44,7 +44,7 @@ else
 	<RowTemplate>
 		<MudTd DataLabel="Last Name">@context.User.LastName</MudTd>
 		<MudTd DataLabel="First Name">@context.User.FirstName</MudTd>
-		<MudTd DataLabel="Vacation Request Date">@context.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm")</MudTd>
+		<MudTd DataLabel="Vacation Request Date">@context.VacationRequestDate</MudTd>
 		<MudTd DataLabel="Vacation From">@context.VacationFrom.ToString("dd.MM.yyyy")</MudTd>
 		<MudTd DataLabel="Vacation To">@context.VacationTo.ToString("dd.MM.yyyy")</MudTd>
 		<MudTd DataLabel="Vacation Status">@context.Status</MudTd>

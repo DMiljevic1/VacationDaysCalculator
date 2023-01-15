@@ -1,0 +1,39 @@
+﻿@inherits RazorPageBases.EmployeePageBase;
+
+<MudDialog>
+    <DialogContent>
+        <MudDatePicker Label="Vacation From" DateFormat="dd/MM/yyyy" MinDate="currentDate" MaxDate="vacationTo" @bind-Date="vacationFrom" class="form-control"></MudDatePicker>
+
+        @if(vacationFrom == null)
+        {
+            <MudDatePicker Label="Vacation To" DateFormat="dd/MM/yyyy" MinDate="currentDate" @bind-Date="vacationTo" class="form-control"></MudDatePicker>
+        }
+        else
+        {
+            <MudDatePicker Label="Vacation To" DateFormat="dd/MM/yyyy" MinDate="vacationFrom" @bind-Date="vacationTo" class="form-control"></MudDatePicker>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Submit</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    Vacation vacation = new Vacation();
+    DateTime? vacationFrom;
+    DateTime? vacationTo;
+    DateTime currentDate = DateTime.Today;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    async Task Submit()
+    {
+        if(vacationFrom != null && vacationTo != null)
+        {
+            vacation.VacationFrom = (DateTime)vacationFrom;
+            vacation.VacationTo = (DateTime)vacationTo;
+        }
+        await AddVacation(vacation);
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    void Cancel() => MudDialog.Cancel();
+}

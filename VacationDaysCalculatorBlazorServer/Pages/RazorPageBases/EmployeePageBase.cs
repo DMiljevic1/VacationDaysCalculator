@@ -4,11 +4,15 @@ using VacationDaysCalculatorBlazorServer.Service;
 using DomainModel.Models;
 using VacationDaysCalculatorBlazorServer.Services;
 using DomainModel.Enums;
+using MudBlazor;
+using VacationDaysCalculatorBlazorServer.ValidationModels;
 
 namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
     public class EmployeePageBase : ComponentBase
     {
+        [Inject]
+        protected IDialogService _dialogService { get; set; }
         [Inject]
         protected EmployeeService _employeeService { get; set; }
         [Inject]
@@ -57,5 +61,20 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             return false;
         }
         //end
+        protected void OpenAddVacationDialog()
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true };
+            _dialogService.Show<AddVacationDialog>("Send Vacation Request", options);
+        }
+        protected async Task AddVacation(Vacation newVacation)
+        {
+            var vacationList = new List<DateTime>();
+            vacationList.Add(newVacation.VacationFrom);
+            vacationList.Add(newVacation.VacationTo);
+            newVacation.Status = VacationStatus.Pending;
+            newVacation.VacationRequestDate = DateTime.Now;
+            await _employeeService.AddVacationAsync(newVacation);
+            _navigationManager.NavigateTo("/Employee", true);
+        }
     }
 }
