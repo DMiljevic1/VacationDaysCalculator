@@ -15,10 +15,10 @@ namespace VacationScheduler.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            await Console.Out.WriteLineAsync("Update Employee Vacation Status.");
+            await Console.Out.WriteLineAsync("Updating Employee Vacation Status...");
             var currentDate = DateTime.Today.Date;
             await SetVacationStatus(currentDate);
-            await Console.Out.WriteLineAsync("Update Completed!");
+            await Console.Out.WriteLineAsync("Employee Vacation Status Updated!");
         }
 
         public async Task SetVacationStatus(DateTime currentDate)

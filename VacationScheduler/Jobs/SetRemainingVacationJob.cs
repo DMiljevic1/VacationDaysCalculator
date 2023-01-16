@@ -17,9 +17,9 @@ namespace VacationScheduler.Jobs
             var currentDate = DateTime.Today.Date;
             if(currentDate.Day.Equals(1) && currentDate.Month.Equals(1))
             {
-                await Console.Out.WriteLineAsync("Update Employee Remaining Vacation.");
+                await Console.Out.WriteLineAsync("Updating Employee Remaining Vacation.");
                 await SetRemainingVacation();
-                await Console.Out.WriteLineAsync("Update Completed!");
+                await Console.Out.WriteLineAsync("Employee Remaining Vacation Updated!");
             }
         }
         public async Task SetRemainingVacation()
