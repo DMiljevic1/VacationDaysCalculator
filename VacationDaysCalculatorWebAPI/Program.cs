@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
 using VacationDaysCalculatorWebAPI.Repositories;
+using VacationDaysCalculatorWebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<VacationDbContext>(option => option.UseSqlServer("
 builder.Services.AddControllers();
 builder.Services.AddScoped<EmployeeRepository>();
 builder.Services.AddScoped<AdminRepository>();
+builder.Services.AddScoped<LoginService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

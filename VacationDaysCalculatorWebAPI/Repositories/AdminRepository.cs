@@ -2,6 +2,7 @@
 using DomainModel.Enums;
 using DomainModel.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using System.Text;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
 using VacationDaysCalculatorWebAPI.ValidationModels;
@@ -40,18 +41,18 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             List<ValidationError> errors = ValidateUser(userDetails);
             if(!errors.Any())
             {
-                var user = fillUserProperties(userDetails);
+                var user = FillUserProperties(userDetails);
                 _vacationDbContext.Users.Add(user);
                 _vacationDbContext.SaveChanges();
             }
 
         }
-        private User fillUserProperties(UserDetails userDetails)
+        private User FillUserProperties(UserDetails userDetails)
         {
             var user = new User();
             var currentYear = DateTime.Today.Year;
             user.UserName = userDetails.Username;
-            user.Password = userDetails.Password;
+            user.Password = HashUserPassword(userDetails.Password);
             user.Email = userDetails.Email;
             user.FirstName = userDetails.FirstName;
             user.LastName = userDetails.LastName;
@@ -60,6 +61,29 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             user.RemainingDaysOffLastYear = userDetails.RemainingDaysOffLastYear;
             user.Role = userDetails.Role;
             return user;
+        }
+        private string HashUserPassword(string plainTextPassword)
+        {
+            string hashedPassword;
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                hashedPassword = GetHash(sha256Hash, plainTextPassword);
+            }
+            return hashedPassword;
+        }
+        private static string GetHash(HashAlgorithm hashAlgorithm, string input)
+        {
+
+            byte[] data = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            var sBuilder = new StringBuilder();
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            return sBuilder.ToString();
         }
         private List<ValidationError> ValidateUser(UserDetails userDetails)
         {
