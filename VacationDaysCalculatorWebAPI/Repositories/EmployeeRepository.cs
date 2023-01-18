@@ -121,7 +121,7 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             employeeHistory.VacationTo = vacation.VacationTo;
             employeeHistory.FirstName = vacation.User.FirstName;
             employeeHistory.LastName = vacation.User.LastName;
-            employeeHistory.TotalVacationSpent = vacation.VacationSpent;
+            employeeHistory.VacationSpent = vacation.VacationSpent;
             employeeHistory.VacationRequestDate = vacation.VacationRequestDate;
             employeeHistory.ApprovedBy = vacation.ApprovedBy;
             return employeeHistory;

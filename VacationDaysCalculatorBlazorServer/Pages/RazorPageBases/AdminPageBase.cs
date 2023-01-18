@@ -11,10 +11,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
     public class AdminPageBase : ComponentBase
     {
-        protected bool dense = false;
-        protected bool hover = true;
-        protected bool striped = false;
-        protected bool bordered = false;
         protected string searchString1 = "";
 
         protected Vacation selectedVacation { get; set; }

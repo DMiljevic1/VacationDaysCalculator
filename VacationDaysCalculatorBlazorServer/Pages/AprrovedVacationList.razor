@@ -8,7 +8,7 @@
 }
 else
 {
-<MudTable Items="@approvedVacations" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<Vacation,bool>(FilterFunction)" @bind-SelectedItem="selectedVacation">
+<MudTable Items="@approvedVacations" Hover=true SortLabel="Sort By" Filter="new Func<Vacation,bool>(FilterFunction)" @bind-SelectedItem="selectedVacation">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Approved Vacations</MudText>
         <MudSpacer />
@@ -17,11 +17,11 @@ else
     <HeaderContent>
         <MudTh>Last Name</MudTh>
         <MudTh>First Name</MudTh>
-		<MudTh>Vacation Request Date</MudTh>
-		<MudTh>Vacation From</MudTh>
-		<MudTh>Vacation To</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Vacation, object>(x=>x.VacationRequestDate)">Vacation Request Date</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Vacation, object>(x=>x.VacationFrom)">Vacation From</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Vacation, object>(x=>x.VacationTo)">Vacation To</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortBy="new Func<Vacation, object>(x=>x.VacationSpent)">Vacation Spent</MudTableSortLabel></MudTh>
 		<MudTh>Vacation Status</MudTh>
-		<MudTh>Total Vacation Spent</MudTh>
 		<MudTh>Approved By</MudTh>
     </HeaderContent>
     <RowTemplate>
@@ -30,24 +30,15 @@ else
         <MudTd DataLabel="Vacation Request Date">@context.VacationRequestDate.ToString("dd.MM.yyyy.hh:mm")</MudTd>
         <MudTd DataLabel="Vacation From">@context.VacationFrom.ToString("dd.MM.yyyy")</MudTd>
         <MudTd DataLabel="Vacation To">@context.VacationTo.ToString("dd.MM.yyyy")</MudTd>
+		<MudTd DataLabel="Vacation Spent">@context.VacationSpent</MudTd>
 		<MudTd DataLabel="Vacation Status">@context.Status</MudTd>
-		<MudTd DataLabel="Total Vacation Spent">@context.VacationSpent</MudTd>
 		<MudTd DataLabel="Approved By">@context.ApprovedBy</MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager />
     </PagerContent>
 </MudTable>
-<div class="d-flex flex-wrap mt-4">
-	<MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-	<MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
-	<MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
-	<MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
-	<MudSpacer />
-	<div style="min-width:200px;">
-		<MudText Inline="true" Class="align-self-center">Selected: @selectedVacation?.User.LastName</MudText>
-	</div>
-</div>
+
 <MudGrid Justify="Justify.FlexStart">
 	<MudItem>
 		<MudButton StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Default" OnClick="CloseApprovedVacationsPage" Size="Size.Medium" Style="margin-top:30px;">Close</MudButton>

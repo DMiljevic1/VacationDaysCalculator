@@ -35,11 +35,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             await _employeeService.DeleteVacationRequestAndRestoreVacationAsync(vacationId);
             currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
         }
-        //fields and methods for mud table
-        protected bool dense = false;
-        protected bool hover = true;
-        protected bool striped = false;
-        protected bool bordered = false;
         protected string searchString1 = "";
         protected Vacation selectedVacation { get; set; }
         public bool FilterFunction(Vacation vacationRequest) => FilterFunc(vacationRequest, searchString1);
@@ -60,7 +55,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 return true;
             return false;
         }
-        //end
         protected void OpenAddVacationDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
