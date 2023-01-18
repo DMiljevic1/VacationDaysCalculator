@@ -18,9 +18,11 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
         protected EmployeeDetails currentEmployee { get; set; }
+        protected List<Vacation> approvedAndPendingVacationRequests { get; set; }
         protected override async Task OnInitializedAsync()
         {
             currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
+            approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
         }
         protected void OpenEmployeeHistoryPage()
         {
@@ -69,6 +71,18 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             newVacation.VacationRequestDate = DateTime.Now;
             await _employeeService.AddVacationAsync(newVacation);
             _navigationManager.NavigateTo("/Employee", true);
+        }
+        protected bool isCurrentUserOnVacation()
+        {
+            if(currentEmployee != null && currentEmployee.VacationDays != null && currentEmployee.VacationDays.Count > 0)
+            {
+                foreach(var vacationRequest in currentEmployee.VacationDays)
+                {
+                    if (vacationRequest.Status == VacationStatus.OnVacation)
+                        return true;
+                }
+            }
+            return false;
         }
     }
 }

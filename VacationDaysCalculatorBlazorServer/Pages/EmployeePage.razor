@@ -25,7 +25,15 @@ else
 		<MudText>Remaining vacation for current year: @currentEmployee.RemainingDaysOffCurrentYear</MudText>
 	</MudItem>
 </MudGrid>
-<MudTable Items="@currentEmployee.VacationDays" Hover=true SortLabel="Sort By" Filter="new Func<Vacation,bool>(FilterFunction)" @bind-SelectedItem="selectedVacation">
+@if(isCurrentUserOnVacation() == true)
+{
+<MudGrid Justify="Justify.Center" Style="margin-bottom:10px;">
+	<MudItem>
+		<MudText Style="color:red;" Typo="Typo.h4">You are on vacation.</MudText>
+	</MudItem>
+</MudGrid>
+}
+<MudTable Items="@approvedAndPendingVacationRequests" Hover=true SortLabel="Sort By" Filter="new Func<Vacation,bool>(FilterFunction)" @bind-SelectedItem="selectedVacation">
 	<ToolBarContent>
 		<MudText Typo="Typo.h6">Approved Vacations</MudText>
 		<MudSpacer />
