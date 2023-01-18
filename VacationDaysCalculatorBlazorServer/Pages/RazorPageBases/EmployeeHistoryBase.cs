@@ -20,11 +20,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
             _navigationManager.NavigateTo("/Employee");
         }
-        //fields and methods for mud table
-        protected bool dense = false;
-        protected bool hover = true;
-        protected bool striped = false;
-        protected bool bordered = false;
         protected string searchString1 = "";
         protected EmployeeHistory selectedHistory { get; set; }
         public bool FilterFunction(EmployeeHistory history) => FilterFunc(history, searchString1);
@@ -47,6 +42,5 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 return true;
             return false;
         }
-        //end
     }
 }

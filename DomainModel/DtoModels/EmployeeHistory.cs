@@ -13,8 +13,7 @@ namespace DomainModel.DtoModels
         public string LastName { get; set; }
         public DateTime VacationFrom { get; set; }
         public DateTime VacationTo { get; set; }
-        public int Year { get; set; }
-        public int TotalVacationSpent { get; set; }
+        public int VacationSpent { get; set; }
         public DateTime VacationRequestDate { get; set; }
         public string ApprovedBy { get; set; }
     }
