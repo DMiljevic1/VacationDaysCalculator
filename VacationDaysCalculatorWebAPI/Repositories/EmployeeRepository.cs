@@ -161,10 +161,10 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         public void InsertVacation(Vacation vacation)
         {
             var user = _vacationDbContext.Users.FirstOrDefault(u => u.Id == vacation.UserId);
-            CalculateRemainingVacation(vacation);
             vacation.VacationSpent = CalculateTotalVacationForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
             if(vacation.VacationSpent <= user.RemainingDaysOffLastYear + user.RemainingDaysOffCurrentYear)
             {
+                CalculateRemainingVacation(vacation);
                 _vacationDbContext.Vacation.Add(vacation);
                 _vacationDbContext.SaveChanges();
             }

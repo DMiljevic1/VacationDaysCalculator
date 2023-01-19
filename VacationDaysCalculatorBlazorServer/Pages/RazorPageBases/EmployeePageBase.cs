@@ -66,7 +66,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected void OpenErrorDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
-            _dialogService.Show<ErrorDialog>("Error", options);
+            _dialogService.Show<NotEnoughVacationDialog>("Error", options);
         }
         protected async Task AddVacation(Vacation newVacation)
         {
