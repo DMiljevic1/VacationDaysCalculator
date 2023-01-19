@@ -33,6 +33,7 @@ else
 	</MudItem>
 </MudGrid>
 }
+
 <MudTable Items="@approvedAndPendingVacationRequests" Hover=true SortLabel="Sort By" Filter="new Func<Vacation,bool>(FilterFunction)" @bind-SelectedItem="selectedVacation">
 	<ToolBarContent>
 		<MudText Typo="Typo.h6">Approved Vacations</MudText>
