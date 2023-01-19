@@ -30,10 +30,10 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             employeeDetails.Email = employee.Email;
             employeeDetails.RemainingDaysOffLastYear = employee.RemainingDaysOffLastYear;
             employeeDetails.RemainingDaysOffCurrentYear = employee.RemainingDaysOffCurrentYear;
-            employeeDetails.VacationDays = GetEmployeeVacation(userId);
+            employeeDetails.VacationDays = GetEmployeeVacationWithPendingOrApprovedStatus(userId);
             return employeeDetails;
         }
-        public List<Vacation> GetEmployeeVacation(int userId)
+        public List<Vacation> GetEmployeeVacationWithPendingOrApprovedStatus(int userId)
         {
             var employeeVacation = _vacationDbContext.Vacation.Include(vd => vd.User).Where(vd => vd.UserId.Equals(userId) && (vd.Status.Equals(VacationStatus.Approved) || vd.Status.Equals(VacationStatus.OnVacation) || vd.Status.Equals(VacationStatus.Pending))).ToList();
             return employeeVacation;
