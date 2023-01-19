@@ -54,7 +54,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                return Ok(_adminRepository.GetEmployeeVacationByStatus(VacationStatus.Approved));
+                return Ok(_adminRepository.GetApprovedVacations());
             }
             catch (System.Exception)
             {

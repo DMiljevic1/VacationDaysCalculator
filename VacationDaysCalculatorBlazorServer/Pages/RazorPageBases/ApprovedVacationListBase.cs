@@ -16,6 +16,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected List<Vacation> approvedVacations { get; set; }
         protected override async Task OnInitializedAsync()
         {
+            //get all approved vacations not just vacations with status approved
             approvedVacations = await _adminService.GetApprovedVacations();
         }
         protected void CloseApprovedVacationsPage()

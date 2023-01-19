@@ -36,6 +36,11 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             var employeeVacation = _vacationDbContext.Vacation.Include(vd => vd.User).Where(vd => vd.Status.Equals(status)).ToList();
             return employeeVacation;
         }
+        //get all approved vacations not just vacations with status approved
+        public List<Vacation> GetApprovedVacations()
+        {
+            return _vacationDbContext.Vacation.Include(v => v.User).Where(v => v.Status == VacationStatus.Approved || v.Status == VacationStatus.OnVacation || v.Status == VacationStatus.Arhived).ToList();
+        }
         public void AddUser(UserDetails userDetails)
         {
             List<ValidationError> errors = ValidateUser(userDetails);
