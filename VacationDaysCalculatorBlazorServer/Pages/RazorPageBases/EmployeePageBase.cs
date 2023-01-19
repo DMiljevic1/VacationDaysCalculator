@@ -36,6 +36,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
             await _employeeService.DeleteVacationRequestAndRestoreVacationAsync(vacationId);
             currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
+            approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
         }
         protected string searchString1 = "";
         protected Vacation selectedVacation { get; set; }
@@ -62,15 +63,28 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             var options = new DialogOptions { CloseOnEscapeKey = true };
             _dialogService.Show<AddVacationDialog>("Send Vacation Request", options);
         }
+        protected void OpenErrorDialog()
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true };
+            _dialogService.Show<ErrorDialog>("Error", options);
+        }
         protected async Task AddVacation(Vacation newVacation)
         {
             var vacationList = new List<DateTime>();
             vacationList.Add(newVacation.VacationFrom);
             vacationList.Add(newVacation.VacationTo);
-            newVacation.Status = VacationStatus.Pending;
-            newVacation.VacationRequestDate = DateTime.Now;
-            await _employeeService.AddVacationAsync(newVacation);
-            _navigationManager.NavigateTo("/Employee", true);
+            int daysInVacationRequest = await _employeeService.CalculateTotalVacationForGivenPeriodAsync(vacationList);
+            if (daysInVacationRequest <= currentEmployee.RemainingDaysOffCurrentYear + currentEmployee.RemainingDaysOffLastYear)
+            {
+                newVacation.Status = VacationStatus.Pending;
+                newVacation.VacationRequestDate = DateTime.Now;
+                await _employeeService.AddVacationAsync(newVacation);
+                _navigationManager.NavigateTo("/Employee", true);
+            }
+            else
+            {
+                OpenErrorDialog();
+            }
         }
         protected bool isCurrentUserOnVacation()
         {
