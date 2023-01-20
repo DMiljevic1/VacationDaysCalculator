@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Text;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
 using VacationDaysCalculatorWebAPI.Repositories;
-using VacationDaysCalculatorWebAPI.ValidationModels;
 
 namespace VacationDaysCalculatorWebAPI.Services
 {
@@ -43,8 +42,7 @@ namespace VacationDaysCalculatorWebAPI.Services
         }
         public void AddUser(UserDetails userDetails)
         {
-            List<ValidationError> errors = ValidateUser(userDetails);
-            if (!errors.Any())
+            if (IsUserValid(userDetails))
             {
                 var user = FillUserProperties(userDetails);
                 _adminRepository.AddUser(user);
@@ -89,35 +87,26 @@ namespace VacationDaysCalculatorWebAPI.Services
 
             return sBuilder.ToString();
         }
-        private List<ValidationError> ValidateUser(UserDetails userDetails)
+        private bool IsUserValid(UserDetails userDetails)
         {
-            var validationErrors = new List<ValidationError>();
-
             if (string.IsNullOrWhiteSpace(userDetails.Username))
-                validationErrors.Add(new ValidationError { Description = "Please insert username!" });
-
-            if (string.IsNullOrWhiteSpace(userDetails.Password))
-                validationErrors.Add(new ValidationError { Description = "Please insert password!" });
-
-            if (userDetails.Password != userDetails.ConfirmPassword)
-                validationErrors.Add(new ValidationError { Description = "Passwords value must match!" });
-
-            if (string.IsNullOrWhiteSpace(userDetails.FirstName))
-                validationErrors.Add(new ValidationError { Description = "Please insert first name!" });
-
-            if (string.IsNullOrWhiteSpace(userDetails.LastName))
-                validationErrors.Add(new ValidationError { Description = "Please insert last name!" });
-
-            if (userDetails.Role == null)
-                validationErrors.Add(new ValidationError { Description = "Please choose user's role!" });
-
-            if (userDetails.RemainingDaysOffCurrentYear > TOTAL_GIVEN_VACATION_PER_YEAR && userDetails.Role == "Employee")
-                validationErrors.Add(new ValidationError { Description = "User can have max " + TOTAL_GIVEN_VACATION_PER_YEAR + " days of vacation per year!" });
-
-            if (userDetails.RemainingDaysOffCurrentYear < TOTAL_GIVEN_VACATION_PER_YEAR && userDetails.RemainingDaysOffLastYear != 0 && userDetails.Role == "Employee")
-                validationErrors.Add(new ValidationError { Description = "If vacation from current year is less than " + TOTAL_GIVEN_VACATION_PER_YEAR + ", vacation from last year must be 0!" });
-
-            return validationErrors;
+                return false;
+            else if (string.IsNullOrWhiteSpace(userDetails.Password))
+                return false;
+            else if (userDetails.Password != userDetails.ConfirmPassword)
+                return false;
+            else if (string.IsNullOrWhiteSpace(userDetails.FirstName))
+                return false;
+            else if (string.IsNullOrWhiteSpace(userDetails.LastName))
+                return false;
+            else if (userDetails.Role == null)
+                return false;
+            else if (userDetails.RemainingDaysOffCurrentYear > TOTAL_GIVEN_VACATION_PER_YEAR && userDetails.Role == "Employee")
+                return false;
+            else if (userDetails.RemainingDaysOffCurrentYear < TOTAL_GIVEN_VACATION_PER_YEAR && userDetails.RemainingDaysOffLastYear != 0 && userDetails.Role == "Employee")
+                return false;
+            else
+                return true;
         }
     }
 }

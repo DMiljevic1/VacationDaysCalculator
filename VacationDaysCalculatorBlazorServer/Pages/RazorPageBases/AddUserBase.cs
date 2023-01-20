@@ -52,7 +52,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 validationErrors.Add(new ValidationError { Description = "Please insert password!" });
 
             if (userDetails.Password != userDetails.ConfirmPassword)
-                validationErrors.Add(new ValidationError { Description = "Passwords value must match!" });
+                validationErrors.Add(new ValidationError { Description = "Passwords must match!" });
 
             if (String.IsNullOrWhiteSpace(userDetails.FirstName))
                 validationErrors.Add(new ValidationError { Description = "Please insert first name!" });
