@@ -4,7 +4,7 @@ using DomainModel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using VacationDaysCalculatorWebAPI.Repositories;
+using VacationDaysCalculatorWebAPI.Services;
 
 namespace VacationDaysCalculatorWebAPI.Controllers
 {
@@ -12,8 +12,8 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly AdminRepository _adminRepository;
-        public AdminController (AdminRepository adminRepository)
+        private readonly AdminService _adminRepository;
+        public AdminController (AdminService adminRepository)
         {
             _adminRepository = adminRepository;
         }
