@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Security.Claims;
 using System.Security.Principal;
-using VacationDaysCalculatorWebAPI.Repositories;
+using VacationDaysCalculatorWebAPI.Services;
 
 namespace VacationDaysCalculatorWebAPI.Controllers
 {
@@ -13,8 +13,8 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeRepository _employeeRepository;
-        public EmployeeController(EmployeeRepository employeeRepository)
+        private readonly EmployeeService _employeeRepository;
+        public EmployeeController(EmployeeService employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }

@@ -6,7 +6,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
-using VacationDaysCalculatorWebAPI.Repositories;
 
 namespace VacationDaysCalculatorWebAPI.Services
 {
@@ -14,9 +13,9 @@ namespace VacationDaysCalculatorWebAPI.Services
     {
         private IConfiguration _config;
         private readonly VacationDbContext _VCDDbContext;
-        private readonly EmployeeRepository _userRepository;
+        private readonly EmployeeService _userRepository;
 
-        public LoginService(IConfiguration config, VacationDbContext vCDDbContext, EmployeeRepository employeeRepository)
+        public LoginService(IConfiguration config, VacationDbContext vCDDbContext, EmployeeService employeeRepository)
         {
             _config = config;
             _VCDDbContext = vCDDbContext;
