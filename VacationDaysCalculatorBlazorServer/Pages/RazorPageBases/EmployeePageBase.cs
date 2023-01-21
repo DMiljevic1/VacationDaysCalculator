@@ -66,7 +66,9 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected void OpenErrorDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
-            _dialogService.Show<NotEnoughVacationDialog>("Error", options);
+            var parameters = new DialogParameters();
+            parameters.Add("ContentText", "You don't have enough vacation for that period.");
+            _dialogService.Show<ErrorDialog>("Error",parameters, options);
         }
         protected async Task AddVacation(Vacation newVacation)
         {
