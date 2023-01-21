@@ -1,0 +1,16 @@
+﻿@inherits RazorPageBases.EmployeePageBase;
+
+<MudDialog>
+    <DialogContent>
+        @contentText
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Ok">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string contentText { get; set; }
+
+    void Ok() => MudDialog.Close(DialogResult.Ok(true));
+}

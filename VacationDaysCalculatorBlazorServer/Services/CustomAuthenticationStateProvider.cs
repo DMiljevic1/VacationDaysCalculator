@@ -54,7 +54,9 @@ namespace VacationDaysCalculatorBlazorServer.Services
         {
             var identity = await GetAuthenticationStateAsync();
             var claims = identity.User.Identities.First().Claims.ToList();
-            return int.Parse(claims[0].Value);
+            if(claims.Any())
+                return int.Parse(claims[0].Value);
+            return 0;
         }
     }
 }
