@@ -21,8 +21,22 @@ namespace VacationDaysCalculatorWebAPI.Services
         public void ChangePassword(Password password)
         {
             var user = _commonRepository.GetUser(password.UserId);
-            user.Password = HashUserPassword(password.NewPassword);
-            _commonRepository.SaveChanges();
+            if(ValidatePassword(password, user.Password))
+            {
+                user.Password = HashUserPassword(password.NewPassword);
+                _commonRepository.SaveChanges();
+            }
+        }
+        private bool ValidatePassword(Password password, string currentPassword)
+        {
+            if (String.IsNullOrWhiteSpace(password.NewPassword))
+                return false;
+            else if (currentPassword != HashUserPassword(password.OldPassword))
+                return false;
+            else if (password.NewPassword != password.ConfirmPassword)
+                return false;
+            else
+                return true;
         }
         private string HashUserPassword(string plainTextPassword)
         {
