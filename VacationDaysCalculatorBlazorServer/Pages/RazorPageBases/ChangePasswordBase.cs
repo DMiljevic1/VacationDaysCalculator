@@ -11,6 +11,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
 	public class ChangePasswordBase : ComponentBase
 	{
+        public bool showAlert { get; set; }
 		public Password password { get; set; }
         public string userPassword { get; set; }
         protected List<ValidationError> ValidationErrors { get; set; }
@@ -33,9 +34,14 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 OpenErrorDialog();
             else
             {
+                showAlert = true;
                 await _commonService.ChangePasswordAsync(password);
-                _navigationManager.NavigateTo("/ChangePassword", true);
             }
+        }
+        protected void CloseAlert(bool closeAlert)
+        {
+            if(closeAlert)
+                _navigationManager.NavigateTo("/ChangePassword", true);
         }
         protected void OpenErrorDialog()
         {
