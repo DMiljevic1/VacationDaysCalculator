@@ -24,7 +24,7 @@ namespace VacationScheduler.Jobs
         }
         public async Task SetRemainingVacation()
         {
-            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl + "/updateRemainingVacation");
+            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl + "/updateVacationStatusViaScheduler");
             await _httpClient.SendAsync(httpPutRequest);
         }
     }

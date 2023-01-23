@@ -12,10 +12,10 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly AdminService _adminRepository;
-        public AdminController (AdminService adminRepository)
+        private readonly AdminService _adminService;
+        public AdminController (AdminService adminService)
         {
-            _adminRepository = adminRepository;
+            _adminService = adminService;
         }
 
         [HttpGet("{userId:int}")]
@@ -24,7 +24,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                return Ok(_adminRepository.GetAdminDetails(userId));
+                return Ok(_adminService.GetAdminDetails(userId));
             }
             catch (System.Exception)
             {
@@ -40,7 +40,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return BadRequest();
             try
             {
-                _adminRepository.AddUser(userDetails);
+                _adminService.AddUser(userDetails);
                 return Ok();
             }
             catch (System.Exception)
@@ -54,7 +54,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                return Ok(_adminRepository.GetApprovedVacations());
+                return Ok(_adminService.GetApprovedVacations());
             }
             catch (System.Exception)
             {

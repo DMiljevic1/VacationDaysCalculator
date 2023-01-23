@@ -51,7 +51,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
             vacation.Status = VacationStatus.Approved;
             vacation.ApprovedBy = adminDetails.LastName + " " + adminDetails.FirstName;
-            await _employeeService.ApproveVacationAsync(vacation);
+            await _employeeService.UpdateVacationStatusAsync(vacation);
             adminDetails = await _adminService.GetAdminDetailsAsync();
             vacations = adminDetails.EmployeeVacationDays;
         }
@@ -73,7 +73,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             if (isCancelConfirmed)
             {
                 selectedVacation.Status = VacationStatus.Cancelled;
-                await _employeeService.CancelVacationAsync(selectedVacation);
+                await _employeeService.UpdateVacationStatusAsync(selectedVacation);
                 adminDetails = await _adminService.GetAdminDetailsAsync();
                 vacations = adminDetails.EmployeeVacationDays;
             }
