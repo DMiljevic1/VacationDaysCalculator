@@ -28,10 +28,6 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         {
             return _vacationDbContext.Vacation.ToList();
         }
-        public void SaveChanges()
-        {
-            _vacationDbContext.SaveChanges();
-        }
         public Vacation GetVacationByVacationId(int vacationId)
         {
             return _vacationDbContext.Vacation.FirstOrDefault(vd => vd.Id == vacationId);
@@ -52,6 +48,39 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         public void RemoveVacation(Vacation vacation)
         {
             _vacationDbContext.Vacation.Remove(vacation);
+            _vacationDbContext.SaveChanges();
+        }
+        public void UpdateEmployeeRemainingVacation(User user)
+        {
+            var employeeForUpdate = GetUserById(user.Id);
+            employeeForUpdate.RemainingDaysOffLastYear = user.RemainingDaysOffLastYear;
+            employeeForUpdate.RemainingDaysOffCurrentYear = user.RemainingDaysOffCurrentYear;
+
+            _vacationDbContext.SaveChanges();
+        }
+        public void UpdateEmployeeVacationStatus(Vacation vacation)
+        {
+            var vacationForUpdate = GetVacationByVacationId(vacation.Id);
+            if (vacationForUpdate != null)
+            {
+                if(vacation.Status == VacationStatus.Approved)
+                    vacationForUpdate.ApprovedBy = vacation.ApprovedBy;
+
+                vacationForUpdate.Status = vacation.Status;
+
+                _vacationDbContext.SaveChanges();
+            }
+        }
+        public void SetRemainingVacationOnFirstDayOfYear(int totalGivenVacationPerYear)
+        {
+            var currentYear = DateTime.Now.Year;
+            var users = GetUsers();
+            foreach (var user in users)
+            {
+                user.CurrentYear = currentYear;
+                user.RemainingDaysOffLastYear = user.RemainingDaysOffCurrentYear;
+                user.RemainingDaysOffCurrentYear = totalGivenVacationPerYear;
+            }
             _vacationDbContext.SaveChanges();
         }
     }

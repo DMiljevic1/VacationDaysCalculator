@@ -13,10 +13,10 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeService _employeeRepository;
-        public EmployeeController(EmployeeService employeeRepository)
+        private readonly EmployeeService _employeeService;
+        public EmployeeController(EmployeeService employeeService)
         {
-            _employeeRepository = employeeRepository;
+            _employeeService = employeeService;
         }
 
         [HttpGet("{userId:int}")]
@@ -25,7 +25,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                return Ok(_employeeRepository.GetEmployeeDetails(userId));
+                return Ok(_employeeService.GetEmployeeDetails(userId));
             }
             catch (System.Exception)
             {
@@ -39,7 +39,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                return Ok(_employeeRepository.GetEmployeeHistory(employeeId));
+                return Ok(_employeeService.GetEmployeeHistory(employeeId));
             }
             catch (System.Exception)
             {
@@ -54,7 +54,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return BadRequest();
             try
             {
-                _employeeRepository.InsertVacation(vacation);
+                _employeeService.InsertVacation(vacation);
                 return Ok();
             }
             catch (System.Exception)
@@ -69,37 +69,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                _employeeRepository.DeleteVacationRequestAndRestoreRemainingVacation(vacationId);
-                return Ok();
-            }
-            catch (System.Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-
-        [HttpPut("approveVacation")]
-        [Authorize]
-        public IActionResult ApproveVacation([FromBody] Vacation vacation)
-        {
-            try
-            {
-                _employeeRepository.ApproveVacation(vacation);
-                return Ok();
-            }
-            catch (System.Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-
-        [HttpPut("cancelVacation")]
-        [Authorize]
-        public IActionResult CancelVacation([FromBody] Vacation vacation)
-        {
-            try
-            {
-                _employeeRepository.CancelVacation(vacation);
+                _employeeService.DeleteVacationRequestAndRestoreRemainingVacation(vacationId);
                 return Ok();
             }
             catch (System.Exception)
@@ -109,12 +79,27 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         }
 
         [HttpPut("updateVacationStatus")]
+        [Authorize]
+        public IActionResult ApproveVacation([FromBody] Vacation vacation)
+        {
+            try
+            {
+                _employeeService.UpdateEmployeeVacationStatus(vacation);
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPut("updateVacationStatusViaScheduler")]
         [AllowAnonymous]
         public IActionResult UpdateEmployeeVacationStatus([FromBody] DateTime currentDate)
         {
             try
             {
-                _employeeRepository.SetVacationStatus(currentDate);
+                _employeeService.SetVacationStatus(currentDate);
                 return Ok();
             }
             catch (System.Exception)
@@ -129,7 +114,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                _employeeRepository.SetRemainingVacationOnFirstDayOfYear();
+                _employeeService.SetRemainingVacationOnFirstDayOfYear();
                 return Ok();
             }
             catch (System.Exception)
@@ -146,7 +131,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
             {
                 var vacationFrom = vacation[0];
                 var vacationTo = vacation[1];
-                return Ok(_employeeRepository.CalculateTotalVacationForGivenPeriod(vacationFrom, vacationTo));
+                return Ok(_employeeService.CalculateTotalVacationForGivenPeriod(vacationFrom, vacationTo));
             }
             catch (System.Exception)
             {

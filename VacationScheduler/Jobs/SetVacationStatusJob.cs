@@ -23,7 +23,7 @@ namespace VacationScheduler.Jobs
 
         public async Task SetVacationStatus(DateTime currentDate)
         {
-            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl + "/updateVacationStatus");
+            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, BaseApiUrl + "/updateVacationStatusViaScheduler");
             httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(currentDate), Encoding.UTF8, "application/json");
             await _httpClient.SendAsync(httpPutRequest);
         }
