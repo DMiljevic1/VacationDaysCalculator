@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.JSInterop;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace VacationDaysCalculatorBlazorServer.Services
@@ -8,10 +11,12 @@ namespace VacationDaysCalculatorBlazorServer.Services
     public class CustomAuthenticationStateProvider : ServerAuthenticationStateProvider
     {
         private readonly IJSRuntime _jsRuntime;
+        private readonly NavigationManager _navigationManager;
 
-        public CustomAuthenticationStateProvider(IJSRuntime jsRuntime)
+        public CustomAuthenticationStateProvider(IJSRuntime jsRuntime, NavigationManager navigationManager)
         {
             _jsRuntime = jsRuntime;
+            _navigationManager = navigationManager;
         }
 
         public async Task<string> GetTokenAsync()
@@ -58,5 +63,23 @@ namespace VacationDaysCalculatorBlazorServer.Services
                 return int.Parse(claims[0].Value);
             return 0;
         }
+        public async Task DeleteExpiredTokenFromLocalStorage()
+        {
+            try
+            {
+				var jwtToken = await GetTokenAsync();
+				var handler = new JwtSecurityTokenHandler();
+				var token = handler.ReadToken(jwtToken) as JwtSecurityToken;
+				if (token.ValidTo < DateTime.UtcNow)
+                {
+					await RemoveItem("authToken");
+                    _navigationManager.NavigateTo("/");
+                }
+			}
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+		}
     }
 }
