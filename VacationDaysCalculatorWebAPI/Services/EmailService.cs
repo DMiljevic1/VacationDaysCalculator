@@ -25,7 +25,7 @@ namespace VacationDaysCalculatorWebAPI.Services
                 plainTextContent = "Hello " + user.FirstName + "Your vacation request have been approved. Enjoy! Kind regards, NAIS team";
                 htmlContent = "<p>Hello " + user.FirstName + ",</p>" + "<p>Your vacation request have been approved.</p> <p>Enjoy!</p> <p>Kind regards,</p> <p>NAIS team</p>";
             }
-            else if(status == VacationStatus.Cancelled)
+            else if(status == VacationStatus.Declined)
             {
                 plainTextContent = "Hello " + user.FirstName + "We are sorry to inform you that your vacation request have been declined.Please contact system admin for more information.Kind regards, NAIS team";
                 htmlContent = "<p>Hello " + user.FirstName + ",</p>" + "<p>We are sorry to inform you that your vacation request have been declined.</p> <p>Please contact system admin for more information.</p> <p>Kind regards,</p> <p>NAIS team</p>";

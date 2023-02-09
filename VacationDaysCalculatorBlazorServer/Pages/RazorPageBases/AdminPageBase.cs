@@ -68,11 +68,11 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
             _navigationManager.NavigateTo("/ApprovedVacations");
         }
-        protected async Task OnCancelConfirmationSelected(bool isCancelConfirmed)
+        protected async Task OnCancelConfirmationSelected(bool isDeclineConfirmed)
         {
-            if (isCancelConfirmed)
+            if (isDeclineConfirmed)
             {
-                selectedVacation.Status = VacationStatus.Cancelled;
+                selectedVacation.Status = VacationStatus.Declined;
                 await _employeeService.UpdateVacationStatusAsync(selectedVacation);
                 adminDetails = await _adminService.GetAdminDetailsAsync();
                 vacations = adminDetails.EmployeeVacationDays;

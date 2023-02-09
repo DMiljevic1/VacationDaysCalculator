@@ -11,8 +11,8 @@ else
 {
 <MudGrid Justify="Justify.FlexStart" Style="margin-bottom:30px;">
 	<MudItem xs=6>
-		<MudAvatar Size="Size.Large" Style="width:150px;height:150px; margin-bottom:30px;" Color="Color.Primary">@currentEmployee.LastName.Substring(0, 1)@currentEmployee.FirstName.Substring(0, 1)</MudAvatar>
-		<h3>@currentEmployee.LastName @currentEmployee.FirstName</h3>
+		<MudAvatar Size="Size.Large" Style="width:150px;height:150px; margin-bottom:30px;" Color="Color.Primary">@currentEmployee.FirstName.Substring(0, 1)@currentEmployee.LastName.Substring(0, 1)</MudAvatar>
+		<h3>@currentEmployee.FirstName @currentEmployee.LastName</h3>
 	</MudItem>
 	<MudItem xs=6>
 		<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddVacationDialog" StartIcon="@Icons.Material.Filled.Add">Add Vacation</MudButton>
