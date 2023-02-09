@@ -21,11 +21,11 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         [Inject]
         public NavigationManager _navigationManager { get; set; }
         [Inject]
-        public CommonService _commonService { get; set; }
+        public UserService _userService { get; set; }
         protected override async Task OnInitializedAsync()
         {
             password = new Password();
-            userPassword = await _commonService.GetUserPassword();
+            userPassword = await _userService.GetUserPassword();
         }
         protected async Task ChangePasswordAsync()
         {
@@ -35,7 +35,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             else
             {
                 showAlert = true;
-                await _commonService.ChangePasswordAsync(password);
+                await _userService.ChangePasswordAsync(password);
             }
         }
         protected void CloseAlert(bool closeAlert)

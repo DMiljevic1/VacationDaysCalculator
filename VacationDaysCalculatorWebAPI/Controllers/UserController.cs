@@ -9,12 +9,12 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommonController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly CommonService _commonService;
-        public CommonController(CommonService commonService)
+        private readonly UserService _userService;
+        public UserController(UserService userService)
         {
-            _commonService = commonService;
+            _userService = userService;
         }
 
         [HttpGet("getPassword/{userId:int}")]
@@ -23,7 +23,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-                return Ok(_commonService.GetUserPassword(userId));
+                return Ok(_userService.GetUserPassword(userId));
             }
             catch (System.Exception)
             {
@@ -36,7 +36,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         {
             try
             {
-               _commonService.ChangePassword(password);
+               _userService.ChangePassword(password);
                 return Ok();
             }
             catch (System.Exception)

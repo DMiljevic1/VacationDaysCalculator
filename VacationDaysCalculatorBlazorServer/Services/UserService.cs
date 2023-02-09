@@ -6,12 +6,12 @@ using System.Text;
 
 namespace VacationDaysCalculatorBlazorServer.Services
 {
-    public class CommonService
+    public class UserService
     {
         private readonly HttpClient _httpClient;
         private readonly CustomAuthenticationStateProvider _customAuthenticationStateProvider;
-        private readonly string BaseApiUrl = "https://localhost:7058/api/Common";
-        public CommonService(HttpClient httpClient, CustomAuthenticationStateProvider customAuthenticationStateProvider)
+        private readonly string BaseApiUrl = "https://localhost:7058/api/User";
+        public UserService(HttpClient httpClient, CustomAuthenticationStateProvider customAuthenticationStateProvider)
         {
             _httpClient = httpClient;
             _customAuthenticationStateProvider = customAuthenticationStateProvider;

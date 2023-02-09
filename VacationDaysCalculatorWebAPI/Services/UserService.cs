@@ -5,26 +5,26 @@ using VacationDaysCalculatorWebAPI.Repositories;
 
 namespace VacationDaysCalculatorWebAPI.Services
 {
-    public class CommonService
+    public class UserService
     {
-        private readonly CommonRepository _commonRepository;
+        private readonly UserRepository _userRepository;
 
-        public CommonService(CommonRepository commonRepository)
+        public UserService(UserRepository userRepository)
         {
-            _commonRepository = commonRepository;
+            _userRepository = userRepository;
         }
         public string GetUserPassword(int userId)
         {
-            var user = _commonRepository.GetUser(userId);
+            var user = _userRepository.GetUser(userId);
             return user.Password;
         }
         public void ChangePassword(Password password)
         {
-            var user = _commonRepository.GetUser(password.UserId);
+            var user = _userRepository.GetUser(password.UserId);
             if(ValidatePassword(password, user.Password))
             {
                 user.Password = HashUserPassword(password.NewPassword);
-                _commonRepository.SaveChanges();
+                _userRepository.SaveChanges();
             }
         }
         private bool ValidatePassword(Password password, string currentPassword)

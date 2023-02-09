@@ -13,7 +13,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<LogInService>();
 builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<AdminService>();
-builder.Services.AddScoped<CommonService>();
+builder.Services.AddScoped<UserService>();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthenticationStateProvider>());
