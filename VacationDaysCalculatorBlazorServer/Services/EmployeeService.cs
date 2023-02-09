@@ -21,45 +21,96 @@ namespace VacationDaysCalculatorBlazorServer.Service
         }
         public async Task<EmployeeDetails> GetEmployeeDetailsAsync()
         {
-            int userId = await _customAuthenticationStateProvider.GetUserId();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            return await _httpClient.GetFromJsonAsync<EmployeeDetails>($"{BaseApiUrl}/{userId}");
+            try
+            {
+                await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+                int userId = await _customAuthenticationStateProvider.GetUserId();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+                return await _httpClient.GetFromJsonAsync<EmployeeDetails>($"{BaseApiUrl}/{userId}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
 
         public async Task<List<EmployeeHistory>> GetEmployeeHistoryAsync()
         {
-            int userId = await _customAuthenticationStateProvider.GetUserId();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            return await _httpClient.GetFromJsonAsync<List<EmployeeHistory>>($"{BaseApiUrl}/employeeHistory/{userId}");
+            try
+            {
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				int userId = await _customAuthenticationStateProvider.GetUserId();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+                return await _httpClient.GetFromJsonAsync<List<EmployeeHistory>>($"{BaseApiUrl}/employeeHistory/{userId}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
         public async Task AddVacationAsync(Vacation vacation)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            vacation.UserId = await _customAuthenticationStateProvider.GetUserId();
-            var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
-            httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
-            await _httpClient.SendAsync(httpPostRequest);
+            try
+            {
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+                vacation.UserId = await _customAuthenticationStateProvider.GetUserId();
+                var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
+                httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
+                await _httpClient.SendAsync(httpPostRequest);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
         public async Task DeleteVacationRequestAndRestoreVacationAsync(int vacationId)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            var httpDeleteRequest = new HttpRequestMessage(HttpMethod.Delete, $"{BaseApiUrl}/{vacationId}");
-            await _httpClient.SendAsync(httpDeleteRequest);
+            try
+            {
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+                var httpDeleteRequest = new HttpRequestMessage(HttpMethod.Delete, $"{BaseApiUrl}/{vacationId}");
+                await _httpClient.SendAsync(httpDeleteRequest);
+            }
+            catch (Exception e)
+            {
+				Console.WriteLine(e);
+			}
         }
         public async Task UpdateVacationStatusAsync(Vacation vacation)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, $"{BaseApiUrl}/updateVacationStatus");
-            httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
-            await _httpClient.SendAsync(httpPutRequest);
+            try
+            {
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+                var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, $"{BaseApiUrl}/updateVacationStatus");
+                httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
+                await _httpClient.SendAsync(httpPutRequest);
+            }
+            catch (Exception e)
+            {
+				Console.WriteLine(e);
+			}
         }
         public async Task<int> CalculateTotalVacationForGivenPeriodAsync (List<DateTime> vacation)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            var httpGetRequest = new HttpRequestMessage(HttpMethod.Get, BaseApiUrl);
-            httpGetRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
-            var response = await _httpClient.SendAsync(httpGetRequest);
-            return int.Parse(response.Content.ReadAsStringAsync().Result);
+            try
+            {
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+                var httpGetRequest = new HttpRequestMessage(HttpMethod.Get, BaseApiUrl);
+                httpGetRequest.Content = new StringContent(JsonSerializer.Serialize(vacation), Encoding.UTF8, "application/json");
+                var response = await _httpClient.SendAsync(httpGetRequest);
+                return int.Parse(response.Content.ReadAsStringAsync().Result);
+            }
+            catch (Exception e)
+            {
+				Console.WriteLine(e);
+                return -1;
+			}
         }
     }
 }

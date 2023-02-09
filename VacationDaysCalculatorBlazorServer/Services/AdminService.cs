@@ -18,21 +18,47 @@ namespace VacationDaysCalculatorBlazorServer.Services
         }
         public async Task<AdminDetails> GetAdminDetailsAsync()
         {
-            int userId = await _customAuthenticationStateProvider.GetUserId();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            return await _httpClient.GetFromJsonAsync<AdminDetails>($"{BaseApiUrl}/{userId}");
+            try
+            {
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				int userId = await _customAuthenticationStateProvider.GetUserId();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+				return await _httpClient.GetFromJsonAsync<AdminDetails>($"{BaseApiUrl}/{userId}");
+			}
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
         public async Task AddUserAsync(UserDetails userDetails)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
-            httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(userDetails), Encoding.UTF8, "application/json");
-            await _httpClient.SendAsync(httpPostRequest);
+            try
+            {
+			    await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+			    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+                var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, BaseApiUrl);
+                httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(userDetails), Encoding.UTF8, "application/json");
+                await _httpClient.SendAsync(httpPostRequest);
+            }
+            catch (Exception e)
+            {
+				Console.WriteLine(e);
+			}
         }
         public async Task<List<Vacation>> GetApprovedVacations()
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
-            return await _httpClient.GetFromJsonAsync<List<Vacation>>($"{BaseApiUrl}/approvedVacations");
+            try
+            {
+			    await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+			    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+                return await _httpClient.GetFromJsonAsync<List<Vacation>>($"{BaseApiUrl}/approvedVacations");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
     }
 }
