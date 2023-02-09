@@ -14,9 +14,11 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly EmployeeService _employeeService;
-        public EmployeeController(EmployeeService employeeService)
+        private readonly EmailService _emailService;
+        public EmployeeController(EmployeeService employeeService, EmailService emailService)
         {
             _employeeService = employeeService;
+            _emailService = emailService;
         }
 
         [HttpGet("{userId:int}")]
@@ -55,6 +57,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
             try
             {
                 _employeeService.InsertVacation(vacation);
+                _emailService.SendVacationRequestMail();
                 return Ok();
             }
             catch (System.Exception)
@@ -80,11 +83,12 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 
         [HttpPut("updateVacationStatus")]
         [Authorize]
-        public IActionResult ApproveVacation([FromBody] Vacation vacation)
+        public IActionResult UpdateEmployeeVacationStatus([FromBody] Vacation vacation)
         {
             try
             {
                 _employeeService.UpdateEmployeeVacationStatus(vacation);
+                _emailService.SendVacationResponseMail(vacation.UserId, vacation.Status);
                 return Ok();
             }
             catch (System.Exception)
