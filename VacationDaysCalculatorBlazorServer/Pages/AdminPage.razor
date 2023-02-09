@@ -11,8 +11,8 @@ else
 {
 <MudGrid Justify="Justify.FlexStart" Style="margin-bottom:100px;">
     <MudItem xs="6" >
-        <MudAvatar Size="Size.Large" Style="width:150px;height:150px; margin-bottom:30px;" Color="Color.Primary">@adminDetails.LastName.Substring(0, 1)@adminDetails.FirstName.Substring(0, 1)</MudAvatar>
-        <h3>@adminDetails.LastName @adminDetails.FirstName</h3>
+        <MudAvatar Size="Size.Large" Style="width:150px;height:150px; margin-bottom:30px;" Color="Color.Primary">@adminDetails.FirstName.Substring(0, 1)@adminDetails.LastName.Substring(0, 1)</MudAvatar>
+        <h3>@adminDetails.FirstName @adminDetails.LastName</h3>
     </MudItem>
     <MudItem xs="6">
            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddUserPage" StartIcon="@Icons.Material.Filled.Add">Add User</MudButton>
@@ -50,7 +50,7 @@ else
 			<MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.Check" OnClick="() => ApproveVacationAsync(context)">Approve</MudButton>
 		</MudTd>
 		<MudTd>
-			<MudButton Variant="Variant.Filled" Color="Color.Warning" StartIcon="@Icons.Material.Filled.Cancel" OnClick="() => CancelVacationAsync(context)">Cancel</MudButton>
+			<MudButton Variant="Variant.Filled" Color="Color.Warning" StartIcon="@Icons.Material.Filled.Cancel" OnClick="() => CancelVacationAsync(context)">Decline</MudButton>
 		</MudTd>
     </RowTemplate>
     <PagerContent>
@@ -59,4 +59,4 @@ else
 </MudTable>
 }
 
-<ConfirmationDialog @ref="CancelConfirmationDialog" ConfirmationChanged="@OnCancelConfirmationSelected" Question="Are you sure you want to cancel this vacation?"></ConfirmationDialog>
+<ConfirmationDialog @ref="CancelConfirmationDialog" ConfirmationChanged="@OnCancelConfirmationSelected" Question="Are you sure you want to decline this vacation request?"></ConfirmationDialog>

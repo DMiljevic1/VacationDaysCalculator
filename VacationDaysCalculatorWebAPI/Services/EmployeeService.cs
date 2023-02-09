@@ -57,14 +57,14 @@ namespace VacationDaysCalculatorWebAPI.Services
                 }
                 else if (vacation.VacationFrom.Equals(currentDate) && vacation.Status == VacationStatus.Pending)
                 {
-                    vacation.Status = VacationStatus.Cancelled;
+                    vacation.Status = VacationStatus.Declined;
                     UpdateEmployeeVacationStatus(vacation);
                 }
             }
         }
         public void UpdateEmployeeVacationStatus(Vacation vacation)
         {
-            if(vacation.Status == VacationStatus.Cancelled)
+            if(vacation.Status == VacationStatus.Declined)
             {
                 int vacationDaysToRestore = CalculateTotalVacationForGivenPeriod(vacation.VacationFrom, vacation.VacationTo);
                 RestoreRemainingVacation(vacation.UserId, vacationDaysToRestore);

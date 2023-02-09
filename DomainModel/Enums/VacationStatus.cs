@@ -8,6 +8,6 @@ namespace DomainModel.Enums
 {
     public enum VacationStatus
     {
-        Pending, Cancelled, Approved, OnVacation, Arhived
+        Pending, Declined, Approved, OnVacation, Arhived
     }
 }
