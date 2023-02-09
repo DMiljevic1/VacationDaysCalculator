@@ -3,10 +3,10 @@ using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 namespace VacationDaysCalculatorWebAPI.Repositories
 {
-    public class CommonRepository
+    public class UserRepository
     {
         private readonly VacationDbContext _vacationDbContext;
-        public CommonRepository(VacationDbContext vacationDbContext)
+        public UserRepository(VacationDbContext vacationDbContext)
         {
             _vacationDbContext = vacationDbContext;
         }

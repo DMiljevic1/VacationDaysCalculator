@@ -20,8 +20,8 @@ builder.Services.AddScoped<AdminService>();
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<AdminRepository>();
 builder.Services.AddScoped<EmployeeRepository>();
-builder.Services.AddScoped<CommonService>();
-builder.Services.AddScoped<CommonRepository>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<EmailService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
