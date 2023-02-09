@@ -22,6 +22,7 @@ builder.Services.AddScoped<AdminRepository>();
 builder.Services.AddScoped<EmployeeRepository>();
 builder.Services.AddScoped<CommonService>();
 builder.Services.AddScoped<CommonRepository>();
+builder.Services.AddScoped<EmailService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -40,7 +41,7 @@ builder.Services.AddAuthentication(options =>
         (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = false,
+        ValidateLifetime = true,
         ValidateIssuerSigningKey = true
     };
 });
