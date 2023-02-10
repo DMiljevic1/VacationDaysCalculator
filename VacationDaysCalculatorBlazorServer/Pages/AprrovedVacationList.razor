@@ -42,9 +42,10 @@ else
     </PagerContent>
 </MudTable>
 
-<MudGrid Justify="Justify.FlexStart">
-	<MudItem>
+<MudGrid Justify="Justify.FlexStart" Class="hideWhenPrint">
+	<MudItem Style="bor">
 		<MudButton StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Default" OnClick="CloseApprovedVacationsPage" Size="Size.Medium" Style="margin-top:30px;">Close</MudButton>
+        <MudButton StartIcon="@Icons.Material.Filled.Download" Variant="Variant.Filled" Color="Color.Info" OnClick="DownloadFile" Size="Size.Medium" Style="margin-top:30px;margin-left:5px;">Download</MudButton>
 	</MudItem>
 </MudGrid>
 }

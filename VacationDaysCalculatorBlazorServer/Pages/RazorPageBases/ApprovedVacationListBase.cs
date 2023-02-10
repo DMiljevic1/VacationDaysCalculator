@@ -1,6 +1,7 @@
 ﻿using DomainModel.DtoModels;
 using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using VacationDaysCalculatorBlazorServer.Service;
 using VacationDaysCalculatorBlazorServer.Services;
 
@@ -13,6 +14,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected AdminService _adminService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
+        [Inject]
+        protected IJSRuntime _jsruntime { get; set; }
         protected List<Vacation> approvedVacations { get; set; }
         protected override async Task OnInitializedAsync()
         {
@@ -45,6 +48,10 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             if (approvedVacation.Status.ToString().Contains(searchString))
                 return true;
             return false;
+        }
+        protected async Task DownloadFile()
+        {
+            await _jsruntime.InvokeVoidAsync("Print");
         }
     }
 }

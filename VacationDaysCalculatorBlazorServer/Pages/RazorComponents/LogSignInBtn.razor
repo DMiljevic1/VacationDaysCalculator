@@ -1,7 +1,7 @@
 ﻿@inject NavigationManager _navigationManager;
 @inherits RazorPageBases.LoginPageBase;
 
-<div class="row-container m-2">
+<div class="row-container m-2 hideWhenPrint">
 	<AuthorizeView>
 		<Authorized>
 			<button class="btn btn-info" @onclick="LogOut">Log Out</button>
