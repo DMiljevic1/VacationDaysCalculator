@@ -55,7 +55,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             adminDetails = await _adminService.GetAdminDetailsAsync();
             vacations = adminDetails.EmployeeVacationDays;
         }
-        protected async Task CancelVacationAsync(Vacation vacation)
+        protected async Task DeclineVacationAsync(Vacation vacation)
         {
             selectedVacation = vacation;
             CancelConfirmationDialog.Show();
@@ -68,7 +68,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
             _navigationManager.NavigateTo("/ApprovedVacations");
         }
-        protected async Task OnCancelConfirmationSelected(bool isDeclineConfirmed)
+        protected async Task OnDeclineConfirmationSelected(bool isDeclineConfirmed)
         {
             if (isDeclineConfirmed)
             {
