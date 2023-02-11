@@ -11,5 +11,6 @@ namespace DomainModel.Models
         public int Id { get; set; }
         public string HolidayName { get; set; }
         public DateTime HolidayDate { get; set; }
+        public int Year { get; set; }
     }
 }

@@ -34,8 +34,12 @@ namespace VacationScheduler
                 .WithIdentity("job2", "group2")
                 .Build();
 
-            // Trigger the job
-            ITrigger trigger = TriggerBuilder.Create()
+			IJobDetail job3 = JobBuilder.Create<FillHolidayTableJob>()
+				.WithIdentity("job3", "group3")
+				.Build();
+
+			// Trigger the job
+			ITrigger trigger = TriggerBuilder.Create()
 				.WithIdentity("trigger1", "group1")
 				.StartNow()
 				.WithSimpleSchedule(x => x
@@ -51,12 +55,21 @@ namespace VacationScheduler
                     .RepeatForever())
                 .Build();
 
-            // Tell Quartz to schedule the job using our trigger
-            await scheduler.ScheduleJob(job, trigger);
-            await scheduler.ScheduleJob(job2, trigger2);
+			ITrigger trigger3 = TriggerBuilder.Create()
+			   .WithIdentity("trigger3", "group3")
+			   .StartNow()
+			   .WithSimpleSchedule(x => x
+				   .WithIntervalInHours(24)
+				   .RepeatForever())
+			   .Build();
 
-            // some sleep
-            await Task.Delay(TimeSpan.FromSeconds(120));
+			// Tell Quartz to schedule the job using our trigger
+			await scheduler.ScheduleJob(job, trigger);
+            await scheduler.ScheduleJob(job2, trigger2);
+			await scheduler.ScheduleJob(job3, trigger3);
+
+			// some sleep
+			await Task.Delay(TimeSpan.FromSeconds(120));
 
 			Console.ReadKey();
 		}

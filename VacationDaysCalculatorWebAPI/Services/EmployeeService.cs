@@ -12,10 +12,12 @@ namespace VacationDaysCalculatorWebAPI.Services
     {
         private readonly int TOTAL_GIVEN_VACATION_PER_YEAR = 20;
         private readonly EmployeeRepository _employeeRepository;
+		private readonly HolidayRepository _holidayRepository;
 
-        public EmployeeService(EmployeeRepository employeeRepository)
+		public EmployeeService(EmployeeRepository employeeRepository, HolidayRepository holidayRepository)
         {
             _employeeRepository = employeeRepository;
+            _holidayRepository = holidayRepository;
         }
 
         public List<User> GetUsers()
@@ -101,7 +103,7 @@ namespace VacationDaysCalculatorWebAPI.Services
         public int CalculateTotalVacationForGivenPeriod(DateTime vacationFrom, DateTime vacationTo)
         {
             var dayNow = DateTime.Now;
-            var holidays = _employeeRepository.GetHolidays();
+            var holidays = _holidayRepository.GetHolidaysForCurrentYear();
             int totalVacationDaysSpent = 0;
             var oneDay = TimeSpan.FromDays(1);
 
