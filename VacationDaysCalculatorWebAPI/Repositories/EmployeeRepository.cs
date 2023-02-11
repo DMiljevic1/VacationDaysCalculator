@@ -36,10 +36,6 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         {
             return _vacationDbContext.Vacation.Include(vd => vd.User).Where(vd => vd.UserId.Equals(userId) && vd.Status.Equals(VacationStatus.Arhived)).ToList();
         }
-        public List<Holiday> GetHolidays()
-        {
-            return _vacationDbContext.Holidays.ToList();
-        }
         public void AddVacation(Vacation vacation)
         {
             _vacationDbContext.Vacation.Add(vacation);
