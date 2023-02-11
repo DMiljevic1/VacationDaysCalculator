@@ -27,7 +27,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected override async Task OnInitializedAsync()
         {
             adminDetails = await _adminService.GetAdminDetailsAsync();
-            vacations = adminDetails.EmployeeVacationDays;
+            if(adminDetails != null)
+                vacations = adminDetails.EmployeeVacationDays;
         }
         public bool FilterFunction(Vacation vacationRequest) => FilterFunc(vacationRequest, searchString1);
 

@@ -22,7 +22,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected override async Task OnInitializedAsync()
         {
             currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
-            approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
+            if(currentEmployee != null)
+                approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
         }
         protected void OpenEmployeeHistoryPage()
         {
