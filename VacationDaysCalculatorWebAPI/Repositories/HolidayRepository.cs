@@ -24,5 +24,9 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 			}
 			_vacationDbContext.SaveChanges();
 		}
+		public List<Holiday> GetHolidays()
+		{
+			return _vacationDbContext.Holidays.ToList();
+		}
 	}
 }

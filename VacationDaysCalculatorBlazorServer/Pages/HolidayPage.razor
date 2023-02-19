@@ -1,0 +1,33 @@
+﻿@page "/Holidays"
+@inherits RazorPageBases.HolidayPageBase;
+
+@if(holidays == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <MudTable Items="@holidays" Hover=true SortLabel="Sort By" Filter="new Func<Holiday,bool>(FilterFunction)" @bind-SelectedItem="selectedHoliday">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Holidays</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <NoRecordsContent>
+        No records found.
+    </NoRecordsContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortBy="new Func<Holiday, object>(x=>x.HolidayName)">Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Holiday, object>(x=>x.HolidayDate)">Date</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Holiday, object>(x=>x.Year)">Year</MudTableSortLabel></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.HolidayName</MudTd>
+        <MudTd DataLabel="Date">@context.HolidayDate.ToString("dd.MM.")</MudTd>
+		<MudTd DataLabel="Year">@context.Year</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+}
