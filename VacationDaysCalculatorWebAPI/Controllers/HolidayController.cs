@@ -1,4 +1,5 @@
 ﻿using DomainModel.DtoModels;
+using DomainModel.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VacationDaysCalculatorWebAPI.Repositories;
@@ -36,6 +37,32 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 			try
 			{
 				return Ok(_holidayRepository.GetHolidays());
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+		[HttpDelete("{holidayId:int}")]
+		public IActionResult DeleteHoliday(int holidayId)
+		{
+			try
+			{
+				_holidayRepository.DeleteHoliday(holidayId);
+				return Ok();
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+		[HttpPut("updateHoliday")]
+		public IActionResult UpdateHoliday([FromBody] Holiday holiday)
+		{
+			try
+			{
+				_holidayRepository.UpdateHoliday(holiday);
+				return Ok();
 			}
 			catch (System.Exception)
 			{

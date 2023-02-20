@@ -2,6 +2,7 @@
 using DomainModel.Enums;
 using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using VacationDaysCalculatorBlazorServer.Services;
 
 namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
@@ -9,12 +10,13 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 	public class HolidayPageBase : ComponentBase
 	{
 		[Inject]
+		protected IDialogService _dialogService { get; set; }
+		[Inject]
 		public HolidayService _holidayService { get; set; }
 		[Inject]
 		public NavigationManager _navigationManager { get; set; }
 		protected List<Holiday> holidays { get; set; }
 		protected string searchString = "";
-		protected Holiday selectedHoliday { get; set; }
 		protected override async Task OnInitializedAsync()
 		{
 			holidays = await _holidayService.GetHolidaysAsync();
@@ -32,6 +34,24 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 			if (holiday.HolidayDate.ToString("dd.MM.").Contains(searchString, StringComparison.OrdinalIgnoreCase))
 				return true;
 			return false;
+		}
+		protected async Task DeleteHolidayAsync(int holidayId)
+		{
+			await _holidayService.DeleteHolidayAsync(holidayId);
+			holidays = await _holidayService.GetHolidaysAsync();
+		}
+		protected async Task UpdateHolidayAsync(Holiday holiday)
+		{
+			await _holidayService.UpdateHolidayAsync(holiday);
+			holidays = await _holidayService.GetHolidaysAsync();
+			_navigationManager.NavigateTo("/Holidays", true);
+		}
+		protected void OpenEditHolidayDialog(Holiday holiday)
+		{
+			var options = new DialogOptions { CloseOnEscapeKey = true };
+			var parameters = new DialogParameters();
+			parameters.Add("holiday", holiday);
+			_dialogService.Show<EditHolidayDialog>("Edit Holiday", parameters, options);
 		}
 	}
 }

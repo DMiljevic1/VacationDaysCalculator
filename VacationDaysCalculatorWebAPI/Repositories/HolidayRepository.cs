@@ -28,5 +28,25 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 		{
 			return _vacationDbContext.Holidays.ToList();
 		}
+		public void DeleteHoliday(int holidayId)
+		{
+			var holidayForDelete = GetHolidayById(holidayId);
+			if (holidayForDelete != null)
+				_vacationDbContext.Holidays.Remove(holidayForDelete);
+			_vacationDbContext.SaveChanges();
+		}
+		public Holiday GetHolidayById(int holidayId)
+		{
+			return _vacationDbContext.Holidays.FirstOrDefault(h => h.Id == holidayId);
+		}
+		public void UpdateHoliday(Holiday holiday)
+		{
+			var holidayForUpdate = GetHolidayById(holiday.Id);
+			holidayForUpdate.HolidayName = holiday.HolidayName;
+			holidayForUpdate.HolidayDate = holiday.HolidayDate;
+			holidayForUpdate.Year = holiday.Year;
+			
+			_vacationDbContext.SaveChanges();
+		}
 	}
 }

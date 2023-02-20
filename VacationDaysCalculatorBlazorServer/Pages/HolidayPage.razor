@@ -7,7 +7,7 @@
 }
 else
 {
-    <MudTable Items="@holidays" Hover=true SortLabel="Sort By" Filter="new Func<Holiday,bool>(FilterFunction)" @bind-SelectedItem="selectedHoliday">
+    <MudTable Items="@holidays" Hover=true SortLabel="Sort By" Filter="new Func<Holiday,bool>(FilterFunction)">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Holidays</MudText>
         <MudSpacer />
@@ -18,13 +18,21 @@ else
     </NoRecordsContent>
     <HeaderContent>
         <MudTh><MudTableSortLabel SortBy="new Func<Holiday, object>(x=>x.HolidayName)">Name</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Holiday, object>(x=>x.HolidayDate)">Date</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Holiday, object>(x=>x.Year)">Year</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Holiday, object>(x=>x.HolidayDate)">Date</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Holiday, object>(x=>x.Year)">Year</MudTableSortLabel></MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Name">@context.HolidayName</MudTd>
         <MudTd DataLabel="Date">@context.HolidayDate.ToString("dd.MM.")</MudTd>
 		<MudTd DataLabel="Year">@context.Year</MudTd>
+        <MudTd>
+             <MudButton ButtonType="ButtonType.Button" OnClick="() => OpenEditHolidayDialog(context)" StartIcon="@Icons.Material.Filled.Edit" Style="color:cornflowerblue;"></MudButton>
+        </MudTd>
+        <MudTd>
+             <MudButton ButtonType="ButtonType.Button" OnClick="() => DeleteHolidayAsync(context.Id)" StartIcon="@Icons.Material.Filled.Delete" Style="color:red;"></MudButton>
+        </MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager />
