@@ -18,6 +18,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthenticationStateProvider>());
 builder.Services.AddMudServices();
+builder.Services.AddScoped<HolidayService>();
 
 var app = builder.Build();
 

@@ -1,0 +1,47 @@
+﻿@inherits RazorPageBases.HolidayPageBase;
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="holidayName" Label="Name" Required="true" Variant="Variant.Text" Placeholder="Holiday Name"></MudTextField>
+        <MudDatePicker Label="Date" Editable="true" Required="true" @bind-Date="holidayDate" Mask="@(new DateMask("dd.MM."))" DateFormat="dd.MM.yyyy" Placeholder="Holiday Date" />
+        <MudNumericField HideSpinButtons="true" Required="true" @bind-Value="holidayYear" Label="Year" Variant="Variant.Text" Min="2020" Placeholder="Holiday Year" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Edit</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public Holiday holiday { get; set; }
+    string holidayName;
+    DateTime? holidayDate;
+    int holidayYear;
+
+    protected override async Task OnInitializedAsync()
+    {
+        holidayName = holiday.HolidayName;
+        holidayDate = holiday.HolidayDate;
+        holidayYear = holiday.Year;
+    }
+
+    async Task Submit()
+    {
+        if(isHolidayValidated())
+        {
+            holiday.HolidayName = holidayName;
+            holiday.HolidayDate = (DateTime)holidayDate;
+            holiday.Year = holidayYear;
+            await UpdateHolidayAsync(holiday);
+        }
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    void Cancel() => MudDialog.Cancel();
+    bool isHolidayValidated()
+    {
+        if (holidayDate != null && holidayName != "")
+            return true;
+        else
+            return false;
+    }
+}
