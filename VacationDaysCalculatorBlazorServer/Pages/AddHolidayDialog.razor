@@ -1,0 +1,42 @@
+﻿@inherits RazorPageBases.HolidayPageBase;
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="holiday.HolidayName" Label="Name" Required="true" Variant="Variant.Text" Placeholder="Holiday Name"></MudTextField>
+        <MudDatePicker Label="Date" Editable="true" Required="true" @bind-Date="holidayDate" Mask="@(new DateMask("dd.MM."))" DateFormat="dd.MM." Placeholder="Holiday Date" />
+        <MudNumericField HideSpinButtons="true" Required="true" @bind-Value="holiday.Year" Label="Year" Variant="Variant.Text" Min="2020" Placeholder="Holiday Year" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Add</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    Holiday holiday = new Holiday();
+    DateTime? holidayDate;
+    //holidayDate je jedini izdvojen jer mudDatePicker ima tip DateTime? a holiday ima holidayDate tipa DateTime
+
+    protected override async Task OnInitializedAsync()
+    {
+        holiday.Year = DateTime.Now.Year;
+    }
+
+    async Task Submit()
+    {
+        if(isHolidayValidated())
+        {
+            holiday.HolidayDate = (DateTime)holidayDate;
+            await AddHolidayAsync(holiday);
+        }
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    void Cancel() => MudDialog.Cancel();
+    bool isHolidayValidated()
+    {
+        if (holidayDate != null && holiday.HolidayName != "")
+            return true;
+        else
+            return false;
+    }
+}

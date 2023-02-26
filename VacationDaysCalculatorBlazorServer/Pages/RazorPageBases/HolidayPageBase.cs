@@ -53,5 +53,16 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 			parameters.Add("holiday", holiday);
 			_dialogService.Show<EditHolidayDialog>("Edit Holiday", parameters, options);
 		}
+		protected void OpenAddHolidayDialog()
+		{
+			var options = new DialogOptions { CloseOnEscapeKey = true };
+			_dialogService.Show<AddHolidayDialog>("Add Holiday", options);
+		}
+		protected async Task AddHolidayAsync(Holiday holiday)
+		{
+			await _holidayService.AddHolidayAsync(holiday);
+			holidays = await _holidayService.GetHolidaysAsync();
+			_navigationManager.NavigateTo("/Holidays", true);
+		}
 	}
 }

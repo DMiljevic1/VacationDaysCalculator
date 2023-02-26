@@ -48,5 +48,10 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 			
 			_vacationDbContext.SaveChanges();
 		}
+		public void AddHoliday(Holiday holiday)
+		{
+			_vacationDbContext.Add(holiday);
+			_vacationDbContext.SaveChanges();
+		}
 	}
 }
