@@ -29,5 +29,9 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         {
             return _vacationDbContext.Users.FirstOrDefault(u => u.Id == userId);
         }
+        public List<User> GetUsers()
+        {
+            return _vacationDbContext.Users.ToList();
+        }
     }
 }

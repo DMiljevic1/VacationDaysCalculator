@@ -19,9 +19,11 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected NotificationDialog NotificationDialog { get; set; }
         protected List<ValidationError> ValidationErrors { get; set; }
         protected String ConcatenatedValidationErrors { get; set; }
+        protected List<string> usernames { get; set; }
         protected override async Task OnInitializedAsync()
         {
             userDetails = new UserDetails();
+            usernames = await _adminService.GetUsernamesAsync();
         }
         protected void Close()
         {
@@ -69,7 +71,10 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             if(userDetails.RemainingDaysOffCurrentYear < MAX_VACATION_DAYS_PER_YEAR && userDetails.RemainingDaysOffLastYear != 0 && userDetails.Role == "Employee")
                 validationErrors.Add(new ValidationError { Description = "If vacation from current year is less than " + MAX_VACATION_DAYS_PER_YEAR + ", vacation from last year must be 0!" });
 
-            return validationErrors;
+            if(usernames.Contains(userDetails.Username.ToLower()))
+				validationErrors.Add(new ValidationError { Description = "Username already exists!" });
+
+			return validationErrors;
         }
         private string GetConcatenatedValidationErrors(List<ValidationError> ValidationErrors)
         {

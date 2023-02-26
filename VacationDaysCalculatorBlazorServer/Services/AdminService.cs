@@ -60,5 +60,19 @@ namespace VacationDaysCalculatorBlazorServer.Services
                 return null;
             }
         }
-    }
+		public async Task<List<string>> GetUsernamesAsync()
+		{
+			try
+			{
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+				return await _httpClient.GetFromJsonAsync<List<string>>($"{BaseApiUrl}/usernames");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return null;
+			}
+		}
+	}
 }
