@@ -40,16 +40,19 @@ namespace VacationDaysCalculatorWebAPI.Services
         }
         public void SendVacationRequestMail()
         {
-            var user = _vacationDbContext.Users.FirstOrDefault(u => u.Role == "Admin");
-            var plainTextContent = "Hello " + user.FirstName + "You have new vacation request. Please go to NAIS Vacation System to approve or decline request.Kind regards, NAIS team";
-            var htmlContent = "<p>" + "Hello " + user.FirstName + ",</p>" + "<p>You have new vacation request.</p> <p>Please go to NAIS Vacation System to approve or decline request.</p> <p>Kind regards,</p> <p>NAIS team</p>";
-            var apiKey = NAIS_API_KEY_NAME;
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress(NAIS_MAIL, NAIS_USERNAME);
-            var subject = "Vacation request";
-            var to = new EmailAddress(user.Email, user.FirstName);
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = client.SendEmailAsync(msg);
+            var admins = _vacationDbContext.Users.Where(u => u.Role == "Admin").ToList();
+            foreach(var admin in admins)
+            {
+                var plainTextContent = "Hello " + admin.FirstName + "You have new vacation request. Please go to NAIS Vacation System to approve or decline request.Kind regards, NAIS team";
+                var htmlContent = "<p>" + "Hello " + admin.FirstName + ",</p>" + "<p>You have new vacation request.</p> <p>Please go to NAIS Vacation System to approve or decline request.</p> <p>Kind regards,</p> <p>NAIS team</p>";
+                var apiKey = NAIS_API_KEY_NAME;
+                var client = new SendGridClient(apiKey);
+                var from = new EmailAddress(NAIS_MAIL, NAIS_USERNAME);
+                var subject = "Vacation request";
+                var to = new EmailAddress(admin.Email, admin.FirstName);
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                var response = client.SendEmailAsync(msg);
+            }
         }
     }
 }
