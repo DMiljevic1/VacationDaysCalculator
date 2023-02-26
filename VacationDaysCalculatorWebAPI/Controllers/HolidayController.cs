@@ -34,7 +34,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 			}
 		}
 		[HttpGet]
-		[Authorize]
+		[AllowAnonymous]
 		public IActionResult GetHolidays()
 		{
 			try
