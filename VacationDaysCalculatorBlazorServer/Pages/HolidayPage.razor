@@ -7,6 +7,11 @@
 }
 else
 {
+    <MudGrid Justify="Justify.FlexStart">
+        <MudItem>
+            <MudButton StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddHolidayDialog" Size="Size.Medium" Style="margin-bottom:20px;">Add Holiday</MudButton>
+        </MudItem>
+    </MudGrid>
     <MudTable Items="@holidays" Hover=true SortLabel="Sort By" Filter="new Func<Holiday,bool>(FilterFunction)">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Holidays</MudText>

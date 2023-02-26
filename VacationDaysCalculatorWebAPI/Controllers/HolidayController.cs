@@ -1,5 +1,6 @@
 ﻿using DomainModel.DtoModels;
 using DomainModel.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VacationDaysCalculatorWebAPI.Repositories;
@@ -19,6 +20,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 			_holidayRepository = holidayRepository;
 		}
 		[HttpPost]
+		[AllowAnonymous]
 		public IActionResult AddHolidays([FromBody] List<HolidayDetails> holidaysDetails)
 		{
 			try
@@ -32,6 +34,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 			}
 		}
 		[HttpGet]
+		[Authorize]
 		public IActionResult GetHolidays()
 		{
 			try
@@ -44,6 +47,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 			}
 		}
 		[HttpDelete("{holidayId:int}")]
+		[Authorize]
 		public IActionResult DeleteHoliday(int holidayId)
 		{
 			try
@@ -57,11 +61,26 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 			}
 		}
 		[HttpPut("updateHoliday")]
+		[Authorize]
 		public IActionResult UpdateHoliday([FromBody] Holiday holiday)
 		{
 			try
 			{
-				_holidayRepository.UpdateHoliday(holiday);
+				_holidayService.UpdateHoliday(holiday);
+				return Ok();
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+		[HttpPost("addHoliday")]
+		[Authorize]
+		public IActionResult AddHoliday([FromBody] Holiday holiday)
+		{
+			try
+			{
+				_holidayService.AddHoliday(holiday);
 				return Ok();
 			}
 			catch (System.Exception)

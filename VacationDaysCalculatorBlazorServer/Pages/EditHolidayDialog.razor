@@ -3,7 +3,7 @@
 <MudDialog>
     <DialogContent>
         <MudTextField @bind-Value="holidayName" Label="Name" Required="true" Variant="Variant.Text" Placeholder="Holiday Name"></MudTextField>
-        <MudDatePicker Label="Date" Editable="true" Required="true" @bind-Date="holidayDate" Mask="@(new DateMask("dd.MM."))" DateFormat="dd.MM.yyyy" Placeholder="Holiday Date" />
+        <MudDatePicker Label="Date" Required="true" Editable="true" @bind-Date="holidayDate" Mask="@(new DateMask("dd.MM."))" DateFormat="dd.MM." Placeholder="Holiday Date" />
         <MudNumericField HideSpinButtons="true" Required="true" @bind-Value="holidayYear" Label="Year" Variant="Variant.Text" Min="2020" Placeholder="Holiday Year" />
     </DialogContent>
     <DialogActions>

@@ -59,5 +59,20 @@ namespace VacationDaysCalculatorBlazorServer.Services
 				Console.WriteLine(e);
 			}
 		}
+		public async Task AddHolidayAsync(Holiday holiday)
+		{
+			try
+			{
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+				var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, $"{BaseApiUrl}/addHoliday");
+				httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(holiday), Encoding.UTF8, "application/json");
+				await _httpClient.SendAsync(httpPostRequest);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+		}
 	}
 }

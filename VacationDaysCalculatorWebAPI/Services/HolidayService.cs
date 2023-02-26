@@ -30,5 +30,15 @@ namespace VacationDaysCalculatorWebAPI.Services
 			}
 			return holidays;
 		}
+		public void AddHoliday(Holiday holiday)
+		{
+			if(holiday != null && holiday.HolidayDate != null && holiday.HolidayName != "")
+				_holidayRepository.AddHoliday(holiday);
+		}
+		public void UpdateHoliday(Holiday holiday)
+		{
+			if (holiday != null && holiday.HolidayDate != null && holiday.HolidayName != "")
+				_holidayRepository.UpdateHoliday(holiday);
+		}
 	}
 }
