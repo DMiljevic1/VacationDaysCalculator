@@ -1,0 +1,23 @@
+﻿@inherits RazorPageBases.HolidayPageBase;
+
+<MudDialog>
+    <DialogContent>
+        @contentText
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Style="color:red" OnClick="Submit">Delete</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string contentText { get; set; }
+    [Parameter] public int holidayId { get; set; }
+    async Task Submit()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+        DeleteHolidayAsync(holidayId);
+    }
+    void Cancel() => MudDialog.Cancel();
+}

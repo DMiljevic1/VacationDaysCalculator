@@ -38,7 +38,15 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 		protected async Task DeleteHolidayAsync(int holidayId)
 		{
 			await _holidayService.DeleteHolidayAsync(holidayId);
-			holidays = await _holidayService.GetHolidaysAsync();
+			_navigationManager.NavigateTo("/Holidays", true);
+		}
+		protected async Task OpenDeleteHolidayConfirmationDialog(int holidayId)
+		{
+			var options = new DialogOptions { CloseOnEscapeKey = true };
+			var parameters = new DialogParameters();
+			parameters.Add("contentText", "Are you sure you want to delete this holiday?");
+			parameters.Add("holidayId", holidayId);
+			_dialogService.Show<DeleteHolidayConfirmationDialog>("Delete Holiday", parameters, options);
 		}
 		protected async Task UpdateHolidayAsync(Holiday holiday)
 		{

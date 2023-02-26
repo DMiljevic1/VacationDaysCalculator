@@ -36,7 +36,7 @@ else
              <MudButton ButtonType="ButtonType.Button" OnClick="() => OpenEditHolidayDialog(context)" StartIcon="@Icons.Material.Filled.Edit" Style="color:cornflowerblue;"></MudButton>
         </MudTd>
         <MudTd>
-             <MudButton ButtonType="ButtonType.Button" OnClick="() => DeleteHolidayAsync(context.Id)" StartIcon="@Icons.Material.Filled.Delete" Style="color:red;"></MudButton>
+             <MudButton ButtonType="ButtonType.Button" OnClick="() => OpenDeleteHolidayConfirmationDialog(context.Id)" StartIcon="@Icons.Material.Filled.Delete" Style="color:red;"></MudButton>
         </MudTd>
     </RowTemplate>
     <PagerContent>
