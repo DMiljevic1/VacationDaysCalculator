@@ -1,6 +1,7 @@
 ﻿using DomainModel.DtoModels;
 using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using System.Text;
 using VacationDaysCalculatorBlazorServer.Service;
 using VacationDaysCalculatorBlazorServer.Services;
@@ -11,7 +12,9 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 	public class AddUserBase : ComponentBase
 	{
         private int MAX_VACATION_DAYS_PER_YEAR = 20;
-        public UserDetails userDetails { get; set; }
+		[Inject]
+		protected IDialogService _dialogService { get; set; }
+		public UserDetails userDetails { get; set; }
         [Inject]
         public NavigationManager _navigationManager { get; set; }
         [Inject]
@@ -34,8 +37,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             ValidationErrors = ValidateUser();
             if (ValidationErrors.Any())
             {
-                ConcatenatedValidationErrors = GetConcatenatedValidationErrors(ValidationErrors);
-                NotificationDialog.Show();
+                string errors = GetConcatenatedValidationErrors(ValidationErrors);
+                OpenErrorDialog(errors);
             }
             else
             {
@@ -43,7 +46,14 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 Close();
             }
         }
-        private List<ValidationError> ValidateUser()
+		private void OpenErrorDialog(string errors)
+		{
+			var options = new DialogOptions { CloseOnEscapeKey = true };
+			var parameters = new DialogParameters();
+			parameters.Add("contentText", errors);
+			_dialogService.Show<ErrorDialog>("Error", parameters, options);
+		}
+		private List<ValidationError> ValidateUser()
         {
             var validationErrors = new List<ValidationError>();
 
@@ -71,7 +81,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             if(userDetails.RemainingDaysOffCurrentYear < MAX_VACATION_DAYS_PER_YEAR && userDetails.RemainingDaysOffLastYear != 0 && userDetails.Role == "Employee")
                 validationErrors.Add(new ValidationError { Description = "If vacation from current year is less than " + MAX_VACATION_DAYS_PER_YEAR + ", vacation from last year must be 0!" });
 
-            if(usernames.Contains(userDetails.Username.ToLower()))
+            if(!String.IsNullOrWhiteSpace(userDetails.Username) && usernames.Contains(userDetails.Username.ToLower()))
 				validationErrors.Add(new ValidationError { Description = "Username already exists!" });
 
 			return validationErrors;
