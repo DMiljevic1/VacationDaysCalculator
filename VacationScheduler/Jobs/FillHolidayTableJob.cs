@@ -27,7 +27,7 @@ namespace VacationScheduler.Jobs
 				await InsertHolidaysInDatabase(await GetHolidays(currentYear));
 				await Console.Out.WriteLineAsync("Holiday Table Updated!");
 			}
-			if (currentDate.Day.Equals(26) && currentDate.Month.Equals(2))
+			if (currentDate.Day.Equals(1) && currentDate.Month.Equals(7))
 			{
 				await Console.Out.WriteLineAsync("Updating Holiday Table.");
 				await InsertHolidaysInDatabase(await GetHolidays(nextYear));

@@ -11,10 +11,11 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 		{
 			_vacationDbContext = vacationDbContext;
 		}
-		public List<Holiday> GetHolidaysForCurrentYear()
+		public List<Holiday> GetHolidaysForCurrentAndNextYear()
 		{
 			int currentYear = DateTime.Now.Year;
-			return _vacationDbContext.Holidays.Where(h => h.Year.Equals(currentYear)).ToList();
+			int nextYear = currentYear + 1;
+			return _vacationDbContext.Holidays.Where(h => h.Year.Equals(currentYear) || h.Year.Equals(nextYear)).ToList();
 		}
 		public void AddHolidays(List<Holiday> holidays)
 		{

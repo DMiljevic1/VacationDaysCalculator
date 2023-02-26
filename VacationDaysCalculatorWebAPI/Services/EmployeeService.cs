@@ -103,7 +103,7 @@ namespace VacationDaysCalculatorWebAPI.Services
         public int CalculateTotalVacationForGivenPeriod(DateTime vacationFrom, DateTime vacationTo)
         {
             var dayNow = DateTime.Now;
-            var holidays = _holidayRepository.GetHolidaysForCurrentYear();
+            var holidays = _holidayRepository.GetHolidaysForCurrentAndNextYear();
             int totalVacationDaysSpent = 0;
             var oneDay = TimeSpan.FromDays(1);
 

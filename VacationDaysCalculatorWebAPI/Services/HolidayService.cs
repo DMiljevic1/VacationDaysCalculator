@@ -19,11 +19,10 @@ namespace VacationDaysCalculatorWebAPI.Services
 		private List<Holiday> ConvertHolidayDetailsToHoliday(List<HolidayDetails> holidaysDetails)
 		{
 			var holidays = new List<Holiday>();
-			int currentYear = DateTime.Now.Year;
 			foreach (var holidayDetails in holidaysDetails)
 			{
 				var holiday = new Holiday();
-				holiday.Year = currentYear;
+				holiday.Year = holidayDetails.Date.Year;
 				holiday.HolidayDate = holidayDetails.Date;
 				holiday.HolidayName = holidayDetails.LocalName;
 				holidays.Add(holiday);
