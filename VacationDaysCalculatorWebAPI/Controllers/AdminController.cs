@@ -61,5 +61,18 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-    }
+		[HttpGet("usernames")]
+		[Authorize]
+		public IActionResult GetUsernames()
+		{
+			try
+			{
+				return Ok(_adminService.GetUsernames());
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+	}
 }

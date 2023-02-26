@@ -108,5 +108,15 @@ namespace VacationDaysCalculatorWebAPI.Services
             else
                 return true;
         }
-    }
+		public List<string> GetUsernames()
+		{
+            var users = _adminRepository.GetUsers();
+			List<string> usernames = new List<string>();
+			foreach (var user in users)
+			{
+				usernames.Add(user.UserName.ToLower());
+			}
+			return usernames;
+		}
+	}
 }
