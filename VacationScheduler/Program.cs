@@ -38,6 +38,10 @@ namespace VacationScheduler
 				.WithIdentity("job3", "group3")
 				.Build();
 
+			IJobDetail job4 = JobBuilder.Create<CreateFirstUser>()
+				.WithIdentity("job4", "group4")
+				.Build();
+
 			// Trigger the job
 			ITrigger trigger = TriggerBuilder.Create()
 				.WithIdentity("trigger1", "group1")
@@ -63,10 +67,16 @@ namespace VacationScheduler
 				   .RepeatForever())
 			   .Build();
 
+			ITrigger trigger4 = TriggerBuilder.Create()
+				.WithIdentity("trigger4", "group4")
+				.StartNow()
+				.Build();
+
 			// Tell Quartz to schedule the job using our trigger
 			await scheduler.ScheduleJob(job, trigger);
             await scheduler.ScheduleJob(job2, trigger2);
 			await scheduler.ScheduleJob(job3, trigger3);
+			await scheduler.ScheduleJob(job4, trigger4);
 
 			// some sleep
 			await Task.Delay(TimeSpan.FromSeconds(120));
