@@ -1,4 +1,5 @@
 ﻿using DomainModel.DtoModels;
+using DomainModel.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,11 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
-        public UserController(UserService userService)
+		private readonly UserRepository _userRepository;
+		public UserController(UserService userService, UserRepository userRepository)
         {
             _userService = userService;
+            _userRepository = userRepository;
         }
 
         [HttpGet("getPassword/{userId:int}")]
@@ -44,5 +47,32 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        [HttpGet("getUsersViaScheduler")]
+        [AllowAnonymous]
+        public IActionResult GetUsers()
+        {
+			try
+			{
+				return Ok(_userRepository.GetUsers());
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+        [HttpPost("addUserViaScheduler")]
+        [AllowAnonymous]
+        public IActionResult AddUser([FromBody] User user)
+        {
+			try
+			{
+                _userRepository.AddUser(user);
+                return Ok();
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
     }
 }

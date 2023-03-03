@@ -18,5 +18,14 @@ namespace VacationDaysCalculatorWebAPI.Repositories
         {
             _vacationDbContext.SaveChanges();  
         }
+        public List<User> GetUsers()
+        {
+            return _vacationDbContext.Users.ToList();
+        }
+        public void AddUser(User user)
+        {
+            _vacationDbContext.Users.Add(user);
+            _vacationDbContext.SaveChanges();
+        }
     }
 }
