@@ -7,7 +7,7 @@ namespace VacationDaysCalculatorWebAPI.Services
 {
     public class EmailService
     {
-        private readonly string NAIS_API_KEY_NAME = "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";
+        private readonly string NAIS_API_KEY_NAME = File.ReadAllText("C:\\Users\\dmiljevic\\Desktop\\ApiKey\\ApiMailKey.txt");
         private readonly string NAIS_MAIL = "duje.miljevic@gmail.com";
         private readonly string NAIS_USERNAME = "NAIS Vacation System";
         private readonly VacationDbContext _vacationDbContext;
