@@ -7,7 +7,7 @@ namespace VacationDaysCalculatorWebAPI.Services
 {
     public class EmailService
     {
-        private readonly string NAIS_API_KEY_NAME = File.ReadAllText("C:\\Users\\dmiljevic\\Desktop\\ApiKey\\ApiMailKey.txt");
+        private string NAIS_API_KEY_NAME = "";
         private readonly string NAIS_MAIL = "Duje.Miljevic@nais.hr";
         private readonly string NAIS_USERNAME = "NAIS Vacation System";
         private readonly VacationDbContext _vacationDbContext;
@@ -17,8 +17,9 @@ namespace VacationDaysCalculatorWebAPI.Services
         }
         public void SendVacationResponseMail(int userId, VacationStatus status)
         {
-            var user = _vacationDbContext.Users.FirstOrDefault(u => u.Id == userId);
-            var plainTextContent = "";
+            NAIS_API_KEY_NAME = GetApiKeyName();
+			var user = _vacationDbContext.Users.FirstOrDefault(u => u.Id == userId);
+			var plainTextContent = "";
             var htmlContent = "";
             if (status == VacationStatus.Approved)
             {
@@ -40,7 +41,8 @@ namespace VacationDaysCalculatorWebAPI.Services
         }
         public void SendVacationRequestMail()
         {
-            var admins = _vacationDbContext.Users.Where(u => u.Role == "Admin").ToList();
+			NAIS_API_KEY_NAME = GetApiKeyName();
+			var admins = _vacationDbContext.Users.Where(u => u.Role == "Admin").ToList();
             foreach(var admin in admins)
             {
                 var plainTextContent = "Hello " + admin.FirstName + "You have new vacation request. Please go to NAIS Vacation System to approve or decline request.Kind regards, NAIS team";
@@ -53,6 +55,20 @@ namespace VacationDaysCalculatorWebAPI.Services
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
                 var response = client.SendEmailAsync(msg);
             }
+        }
+
+        public string GetApiKeyName()
+        {
+            string apiKey = "";
+            try
+            {
+                apiKey = File.ReadAllText("C:\\Users\\dmiljevic\\Desktop\\ApiKey\\ApiMailKey.txt");
+			}
+            catch (Exception e)
+            {
+				Console.WriteLine("Path does not exist.");
+			}
+            return apiKey;
         }
     }
 }
