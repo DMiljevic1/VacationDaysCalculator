@@ -16,12 +16,10 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     {
         private readonly EmployeeService _employeeService;
         private readonly EmailService _emailService;
-		private readonly EmployeeRepository _employeeRepository;
-		public EmployeeController(EmployeeService employeeService, EmailService emailService, EmployeeRepository employeeRepository)
+		public EmployeeController(EmployeeService employeeService, EmailService emailService)
         {
             _employeeService = employeeService;
             _emailService = emailService;
-            _employeeRepository = employeeRepository;
         }
 
         [HttpGet("{userId:int}")]
@@ -145,19 +143,5 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
-		[HttpGet("employeeSickLeave/{userId:int}")]
-		[Authorize]
-		public IActionResult GetSickLeaveByUserId(int userId)
-		{
-			try
-			{
-				return Ok(_employeeRepository.GetSickLeaveByUserId(userId));
-			}
-			catch (System.Exception)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError);
-			}
-		}
 	}
 }
