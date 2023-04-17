@@ -10,8 +10,9 @@ namespace DomainModel.Models
 	{
 		public int Id { get; set; }
 		public DateTime SickLeaveFrom { get; set; }
-		public DateTime SickLeaveTo { get; set; }
+		public DateTime? SickLeaveTo { get; set; }
 		public int UserId { get; set; }
 		public User? User { get; set; }
+		public bool IsClosed { get; set; }
 	}
 }

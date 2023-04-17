@@ -79,5 +79,9 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             }
             _vacationDbContext.SaveChanges();
         }
-    }
+		public SickLeave GetSickLeaveByUserId(int userId)
+		{
+            return _vacationDbContext.SickLeave.FirstOrDefault(s => s.IsClosed == false && s.UserId == userId);
+		}
+	}
 }
