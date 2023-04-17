@@ -10,8 +10,8 @@ namespace DomainModel.Models
 	{
 		public int Id { get; set; }
 		public DateTime MedicalCertificateDate { get; set; }
-		public byte Attachment { get; set; }
+		public byte[]? Attachment { get; set; }
 		public int SickLeaveId { get; set; }
-		public SickLeave SickLeave { get; set; }
+		public SickLeave? SickLeave { get; set; }
 	}
 }

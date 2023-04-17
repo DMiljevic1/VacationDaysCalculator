@@ -16,5 +16,6 @@ namespace DomainModel.DtoModels
         public int? RemainingDaysOffLastYear { get; set; }
         public int? RemainingDaysOffCurrentYear { get; set; }
         public List<Vacation>? VacationDays { get; set; }
+        public List<SickLeave>? SickLeave { get; set; }
     }
 }

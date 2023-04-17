@@ -34,6 +34,7 @@ namespace VacationDaysCalculatorWebAPI.Services
             employeeDetails.RemainingDaysOffLastYear = employee.RemainingDaysOffLastYear;
             employeeDetails.RemainingDaysOffCurrentYear = employee.RemainingDaysOffCurrentYear;
             employeeDetails.VacationDays = GetVacationRequestsWithPendingOrApprovedStatus(userId);
+            employeeDetails.SickLeave = _employeeRepository.GetSickLeaveByUserId(userId);
             return employeeDetails;
         }
         public List<Vacation> GetVacationRequestsWithPendingOrApprovedStatus(int userId)

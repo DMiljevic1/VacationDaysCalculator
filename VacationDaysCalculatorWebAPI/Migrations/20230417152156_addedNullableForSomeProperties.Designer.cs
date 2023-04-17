@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
 
@@ -11,9 +12,10 @@ using VacationDaysCalculatorWebAPI.DatabaseContext;
 namespace VacationDaysCalculatorWebAPI.Migrations
 {
     [DbContext(typeof(VacationDbContext))]
-    partial class VCDDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230417152156_addedNullableForSomeProperties")]
+    partial class addedNullableForSomeProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,9 +78,6 @@ namespace VacationDaysCalculatorWebAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("IsClosed")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("SickLeaveFrom")
                         .HasColumnType("datetime2");

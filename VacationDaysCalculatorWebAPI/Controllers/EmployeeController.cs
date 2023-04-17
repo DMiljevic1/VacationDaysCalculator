@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Security.Claims;
 using System.Security.Principal;
+using VacationDaysCalculatorWebAPI.Repositories;
 using VacationDaysCalculatorWebAPI.Services;
 
 namespace VacationDaysCalculatorWebAPI.Controllers
@@ -15,7 +16,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
     {
         private readonly EmployeeService _employeeService;
         private readonly EmailService _emailService;
-        public EmployeeController(EmployeeService employeeService, EmailService emailService)
+		public EmployeeController(EmployeeService employeeService, EmailService emailService)
         {
             _employeeService = employeeService;
             _emailService = emailService;
@@ -142,5 +143,5 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-    }
+	}
 }
