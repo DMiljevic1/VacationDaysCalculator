@@ -19,6 +19,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected NavigationManager _navigationManager { get; set; }
         protected EmployeeDetails currentEmployee { get; set; }
         protected List<Vacation> approvedAndPendingVacationRequests { get; set; }
+        protected string vacationOrSickLeave { get; set; }
         protected override async Task OnInitializedAsync()
         {
             currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
