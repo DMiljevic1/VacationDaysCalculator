@@ -45,7 +45,7 @@ else
 
 @if (vacationOrSickLeave == "Sick Leave")
 {
-	<MudTable Items="@currentEmployee.SickLeave" Hover=true SortLabel="Sort By">
+		<MudTable Items="@currentEmployee.SickLeave" Hover=true SortLabel="Sort By" Filter="new Func<SickLeave,bool>(FilterSickLeaveDelegate)">
 		<ToolBarContent>
 			<MudText Typo="Typo.h6">Sick Leave</MudText>
 			<MudSpacer />
@@ -58,21 +58,13 @@ else
 			<MudTh>Last Name</MudTh>
 			<MudTh>First Name</MudTh>
 			<MudTh><MudTableSortLabel SortBy="new Func<SickLeave, object>(x=>x.SickLeaveFrom)">Sick Leave From</MudTableSortLabel></MudTh>
-			<MudTh><MudTableSortLabel SortBy="new Func<SickLeave, object>(x=>x.SickLeaveTo)">Sick Leave To</MudTableSortLabel></MudTh>
-			<MudTh></MudTh>
+			<MudTh><MudTableSortLabel SortBy="new Func<SickLeave, object>(x=>x.IsClosed)">Closed</MudTableSortLabel></MudTh>
 		</HeaderContent>
 		<RowTemplate>
 			<MudTd DataLabel="Last Name">@context.User.LastName</MudTd>
 			<MudTd DataLabel="First Name">@context.User.FirstName</MudTd>
 			<MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy")</MudTd>
-			@if (context.SickLeaveTo == null)
-			{
-				<MudTd DataLabel="Sick Leave From">/</MudTd>
-			}
-			else
-			{
-				<MudTd DataLabel="Sick Leave From">@context.SickLeaveTo.ToString()</MudTd>
-			}
+			<MudTd DataLabel="Closed">@context.IsClosed</MudTd>
 		</RowTemplate>
 		<PagerContent>
 			<MudTablePager />
