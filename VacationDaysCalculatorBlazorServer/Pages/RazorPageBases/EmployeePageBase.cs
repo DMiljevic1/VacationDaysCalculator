@@ -60,7 +60,22 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 return true;
             return false;
         }
-        protected void OpenAddVacationDialog()
+		public bool FilterSickLeaveDelegate(SickLeave sickLeave) => FilterSickLeaveFunction(sickLeave, searchString1);
+		private bool FilterSickLeaveFunction(SickLeave sickLeave, string searchString)
+		{
+			if (string.IsNullOrWhiteSpace(searchString))
+				return true;
+			if (sickLeave.User.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+				return true;
+			if (sickLeave.User.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+				return true;
+			if (sickLeave.SickLeaveFrom.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+				return true;
+			if (sickLeave.IsClosed.ToString().Contains(searchString))
+				return true;
+			return false;
+		}
+		protected void OpenAddVacationDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
             _dialogService.Show<AddVacationDialog>("Send Vacation Request", options);
