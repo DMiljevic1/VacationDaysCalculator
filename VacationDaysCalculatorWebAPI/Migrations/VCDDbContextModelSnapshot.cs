@@ -77,11 +77,11 @@ namespace VacationDaysCalculatorWebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("IsClosed")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("SickLeaveFrom")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("SickLeaveStatus")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("SickLeaveTo")
                         .HasColumnType("datetime2");
