@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DomainModel.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,6 @@ namespace DomainModel.Models
 		public DateTime? SickLeaveTo { get; set; }
 		public int UserId { get; set; }
 		public User? User { get; set; }
-		public bool IsClosed { get; set; }
+		public SickLeaveStatus SickLeaveStatus { get; set; }
 	}
 }

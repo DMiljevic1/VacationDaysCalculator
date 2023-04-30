@@ -71,7 +71,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 				return true;
 			if (sickLeave.SickLeaveFrom.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
 				return true;
-			if (sickLeave.IsClosed.ToString().Contains(searchString))
+			if (sickLeave.SickLeaveStatus.ToString().Contains(searchString))
 				return true;
 			return false;
 		}
@@ -116,6 +116,17 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 }
             }
             return false;
+        }
+        protected async Task CloseSickLeave(SickLeave sickLeave)
+        {
+            await _employeeService.CloseSickLeaveStatusAsync(sickLeave);
+			currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
+			if (currentEmployee != null)
+				approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
+		}
+        protected void OpenSickLeaveDetailsPage(int sickLeaveId)
+        {
+
         }
     }
 }

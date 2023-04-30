@@ -192,5 +192,10 @@ namespace VacationDaysCalculatorWebAPI.Services
         {
             _employeeRepository.SetRemainingVacationOnFirstDayOfYear(TOTAL_GIVEN_VACATION_PER_YEAR);
         }
+        public void CloseSickLeave(SickLeave sickLeave)
+        {
+            sickLeave.SickLeaveStatus = SickLeaveStatus.Closed;
+            _employeeRepository.UpdateSickLeave(sickLeave);
+        }
     }
 }
