@@ -117,10 +117,13 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             }
             return false;
         }
-        protected void CloseSickLeave(int sickLeaveId)
+        protected async Task CloseSickLeave(SickLeave sickLeave)
         {
-            
-        }
+            await _employeeService.CloseSickLeaveStatusAsync(sickLeave);
+			currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
+			if (currentEmployee != null)
+				approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
+		}
         protected void OpenSickLeaveDetailsPage(int sickLeaveId)
         {
 
