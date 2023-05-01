@@ -73,11 +73,18 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 				return true;
 			return false;
 		}
-		protected void OpenAddVacationDialog()
+		protected async Task OpenAddVacationDialogAsync()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
-            _dialogService.Show<AddVacationDialog>("Send Vacation Request", options);
-        }
+            var dialog = _dialogService.Show<AddVacationDialog>("Send Vacation Request", options);
+			var result = await dialog.Result;
+			if (!result.Cancelled)
+			{
+				currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
+				if (currentEmployee != null)
+					approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
+			}
+		}
         protected void OpenErrorDialog()
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
@@ -96,7 +103,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 newVacation.Status = VacationStatus.Pending;
                 newVacation.VacationRequestDate = DateTime.Now;
                 await _employeeService.AddVacationAsync(newVacation);
-                _navigationManager.NavigateTo("/Employee", true);
             }
             else
             {
