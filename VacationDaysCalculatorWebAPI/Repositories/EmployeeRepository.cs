@@ -93,6 +93,8 @@ namespace VacationDaysCalculatorWebAPI.Repositories
             var sickLeaveForUpdate = GetSickLeaveById(sickLeave.Id);
 			if (sickLeaveForUpdate != null)
             {
+                if(sickLeave.SickLeaveStatus == SickLeaveStatus.Closed)
+                    sickLeaveForUpdate.SickLeaveTo = sickLeave.SickLeaveTo;
                 sickLeaveForUpdate.SickLeaveStatus = sickLeave.SickLeaveStatus;
 				_vacationDbContext.SaveChanges();
 			}
