@@ -15,7 +15,7 @@ else
 		<h3>@currentEmployee.FirstName @currentEmployee.LastName</h3>
 	</MudItem>
 	<MudItem xs=6>
-		<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddVacationDialog" StartIcon="@Icons.Material.Filled.Add">Add Vacation</MudButton>
+		<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddVacationDialogAsync" StartIcon="@Icons.Material.Filled.Add">Add Vacation</MudButton>
 		<MudButton Variant="Variant.Filled" Color="Color.Dark" OnClick="OpenEmployeeHistoryPage" StartIcon="@Icons.Material.Filled.List">History</MudButton>
 	</MudItem>
 </MudGrid>
@@ -58,7 +58,7 @@ else
 			<MudTh>Last Name</MudTh>
 			<MudTh>First Name</MudTh>
 			<MudTh><MudTableSortLabel SortBy="new Func<SickLeave, object>(x=>x.SickLeaveFrom)">Sick Leave From</MudTableSortLabel></MudTh>
-			<MudTh>Sick Leave To</MudTh>
+			<MudTh><MudTableSortLabel SortBy="new Func<SickLeave, object>(x=>x.SickLeaveTo)">Sick Leave To</MudTableSortLabel></MudTh>
 			<MudTh></MudTh>
 			<MudTh></MudTh>
 		</HeaderContent>
@@ -66,7 +66,7 @@ else
 			<MudTd DataLabel="Last Name">@context.User.LastName</MudTd>
 			<MudTd DataLabel="First Name">@context.User.FirstName</MudTd>
 			<MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy")</MudTd>
-			<MudTd DataLabel="Sick Leave To">/</MudTd>
+			<MudTd DataLabel="Sick Leave To">@context.SickLeaveTo</MudTd>
 			<MudTd>
 				<MudButton ButtonType="ButtonType.Button" OnClick="() => OpenSickLeaveDetailsPage(context.Id)" StartIcon="@Icons.Material.Filled.List" Style="color:deepskyblue">Med. Cert.</MudButton>
 			</MudTd>
