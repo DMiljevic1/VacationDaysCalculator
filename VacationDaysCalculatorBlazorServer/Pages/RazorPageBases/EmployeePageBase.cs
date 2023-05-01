@@ -71,8 +71,6 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 				return true;
 			if (sickLeave.SickLeaveFrom.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
 				return true;
-			if (sickLeave.SickLeaveStatus.ToString().Contains(searchString))
-				return true;
 			return false;
 		}
 		protected void OpenAddVacationDialog()

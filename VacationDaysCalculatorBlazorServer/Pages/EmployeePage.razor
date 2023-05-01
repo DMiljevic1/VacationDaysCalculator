@@ -59,7 +59,7 @@ else
 			<MudTh>First Name</MudTh>
 			<MudTh><MudTableSortLabel SortBy="new Func<SickLeave, object>(x=>x.SickLeaveFrom)">Sick Leave From</MudTableSortLabel></MudTh>
 			<MudTh>Sick Leave To</MudTh>
-			<MudTh><MudTableSortLabel SortBy="new Func<SickLeave, object>(x=>x.SickLeaveStatus)">Sick Leave Status</MudTableSortLabel></MudTh>
+			<MudTh></MudTh>
 			<MudTh></MudTh>
 		</HeaderContent>
 		<RowTemplate>
@@ -67,13 +67,19 @@ else
 			<MudTd DataLabel="First Name">@context.User.FirstName</MudTd>
 			<MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy")</MudTd>
 			<MudTd DataLabel="Sick Leave To">/</MudTd>
-			<MudTd DataLabel="Sick Leave Status">@context.SickLeaveStatus</MudTd>
 			<MudTd>
 				<MudButton ButtonType="ButtonType.Button" OnClick="() => OpenSickLeaveDetailsPage(context.Id)" StartIcon="@Icons.Material.Filled.List" Style="color:deepskyblue">Med. Cert.</MudButton>
 			</MudTd>
-			<MudTd>
-					<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Done" OnClick="() => CloseSickLeave(context)">Close</MudButton>
-			</MudTd>
+			@if(context.SickLeaveStatus == SickLeaveStatus.Opened)
+			{
+				<MudTd>
+						<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Done" OnClick="() => CloseSickLeave(context)">Close</MudButton>
+				</MudTd>
+			}
+			else
+			{
+				<MudTd DataLabel="Sick Leave Status">Closed</MudTd>
+			}
 		</RowTemplate>
 		<PagerContent>
 			<MudTablePager />
