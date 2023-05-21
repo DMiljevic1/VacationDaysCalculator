@@ -25,6 +25,8 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<HolidayRepository>();
 builder.Services.AddScoped<HolidayService>();
+builder.Services.AddScoped<SickLeaveRepository>();
+builder.Services.AddScoped<SickLeaveService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
