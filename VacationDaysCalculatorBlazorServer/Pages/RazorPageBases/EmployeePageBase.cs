@@ -12,6 +12,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
     public class EmployeePageBase : ComponentBase
     {
         [Inject]
+        protected SickLeaveService _sickLeaveService { get; set; }
+        [Inject]
         protected IDialogService _dialogService { get; set; }
         [Inject]
         protected EmployeeService _employeeService { get; set; }
@@ -123,7 +125,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         }
         protected async Task CloseSickLeave(SickLeave sickLeave)
         {
-            await _employeeService.CloseSickLeaveStatusAsync(sickLeave);
+            await _sickLeaveService.CloseSickLeaveStatusAsync(sickLeave);
 			currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
 			if (currentEmployee != null)
 				approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
