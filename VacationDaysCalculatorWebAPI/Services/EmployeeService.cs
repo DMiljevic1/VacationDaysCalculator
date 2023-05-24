@@ -13,11 +13,13 @@ namespace VacationDaysCalculatorWebAPI.Services
         private readonly int TOTAL_GIVEN_VACATION_PER_YEAR = 20;
         private readonly EmployeeRepository _employeeRepository;
 		private readonly HolidayRepository _holidayRepository;
+        private readonly SickLeaveRepository _sickLeaveRepository;
 
-		public EmployeeService(EmployeeRepository employeeRepository, HolidayRepository holidayRepository)
+		public EmployeeService(EmployeeRepository employeeRepository, HolidayRepository holidayRepository, SickLeaveRepository sickLeaveRepository)
         {
             _employeeRepository = employeeRepository;
             _holidayRepository = holidayRepository;
+            _sickLeaveRepository = sickLeaveRepository;
         }
 
         public List<User> GetUsers()
@@ -34,7 +36,7 @@ namespace VacationDaysCalculatorWebAPI.Services
             employeeDetails.RemainingDaysOffLastYear = employee.RemainingDaysOffLastYear;
             employeeDetails.RemainingDaysOffCurrentYear = employee.RemainingDaysOffCurrentYear;
             employeeDetails.VacationDays = GetVacationRequestsWithPendingOrApprovedStatus(userId);
-            employeeDetails.SickLeave = _employeeRepository.GetSickLeaveByUserId(userId);
+            employeeDetails.SickLeave = _sickLeaveRepository.GetSickLeaveByUserId(userId);
             return employeeDetails;
         }
         public List<Vacation> GetVacationRequestsWithPendingOrApprovedStatus(int userId)
@@ -191,12 +193,6 @@ namespace VacationDaysCalculatorWebAPI.Services
         public void SetRemainingVacationOnFirstDayOfYear()
         {
             _employeeRepository.SetRemainingVacationOnFirstDayOfYear(TOTAL_GIVEN_VACATION_PER_YEAR);
-        }
-        public void CloseSickLeave(SickLeave sickLeave)
-        {
-            sickLeave.SickLeaveStatus = SickLeaveStatus.Closed;
-            sickLeave.SickLeaveTo = DateTime.Today;
-            _employeeRepository.UpdateSickLeave(sickLeave);
         }
     }
 }
