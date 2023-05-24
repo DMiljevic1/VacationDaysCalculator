@@ -1,2 +1,30 @@
-﻿@page "/MedicalCertificate"
+﻿@page "/MedicalCertificate/{sickLeaveId}"
 @inherits RazorPageBases.MedicalCertificatePageBase;
+
+
+<MudTable Items="@medicalCertificates" Hover=true SortLabel="Sort By" >
+	<ToolBarContent>
+		<MudText Typo="Typo.h6">Medical Certificates</MudText>
+		<MudSpacer />
+	</ToolBarContent>
+	<NoRecordsContent>
+		No records found.
+	</NoRecordsContent>
+	<HeaderContent>
+		<MudTh><MudTableSortLabel SortBy="new Func<MedicalCertificate, object>(x=>x.MedicalCertificateDate)">Medical Certificate Date</MudTableSortLabel></MudTh>
+		<MudTh>Attachment</MudTh>
+		<MudTh></MudTh>
+	</HeaderContent>
+	<RowTemplate>
+		<MudTd DataLabel="Medical Certificate Date">@context.MedicalCertificateDate.ToString("MM/yyyy")</MudTd>
+		<MudTd DataLabel="Attachment">@context.Attachment</MudTd>
+	</RowTemplate>
+	<PagerContent>
+		<MudTablePager />
+	</PagerContent>
+</MudTable>
+<MudGrid Justify="Justify.FlexStart">
+	<MudItem>
+		<MudButton StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Default" OnClick="Close" Size="Size.Medium" Style="margin-top:30px;">Close</MudButton>
+	</MudItem>
+</MudGrid>

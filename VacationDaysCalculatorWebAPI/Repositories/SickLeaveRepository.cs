@@ -30,5 +30,10 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 				_vacationDbContext.SaveChanges();
 			}
 		}
+		
+		public List<MedicalCertificate> GetMedicalCertificates(int sickLeaveId)
+		{
+			return _vacationDbContext.MedicalCertificates.Where(s => s.SickLeaveId == sickLeaveId).ToList();
+		}
 	}
 }

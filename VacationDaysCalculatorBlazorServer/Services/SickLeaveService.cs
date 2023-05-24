@@ -2,6 +2,7 @@
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text;
+using DomainModel.DtoModels;
 
 namespace VacationDaysCalculatorBlazorServer.Services
 {
@@ -29,6 +30,21 @@ namespace VacationDaysCalculatorBlazorServer.Services
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
+			}
+		}
+
+		public async Task<List<MedicalCertificate>> GetMedicalCertificatesAsync(int sickLeaveId)
+		{
+			try
+			{
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+				return await _httpClient.GetFromJsonAsync<List<MedicalCertificate>>($"{BaseApiUrl}/getMedicalCertificates/{sickLeaveId}");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return null;
 			}
 		}
 	}

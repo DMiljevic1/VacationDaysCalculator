@@ -68,7 +68,7 @@ else
 			<MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy")</MudTd>
 			<MudTd DataLabel="Sick Leave To">@context.SickLeaveTo</MudTd>
 			<MudTd>
-				<MudButton ButtonType="ButtonType.Button" OnClick="() => OpenSickLeaveDetailsPage(context.Id)" StartIcon="@Icons.Material.Filled.List" Style="color:deepskyblue">Med. Cert.</MudButton>
+				<MudButton ButtonType="ButtonType.Button" OnClick="() => OpenMedicalCertificatePage(context.Id)" StartIcon="@Icons.Material.Filled.List" Style="color:deepskyblue">Med. Cert.</MudButton>
 			</MudTd>
 			@if(context.SickLeaveStatus == SickLeaveStatus.Opened)
 			{
