@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VacationDaysCalculatorWebAPI.Repositories;
 using VacationDaysCalculatorWebAPI.Services;
 
 namespace VacationDaysCalculatorWebAPI.Controllers
@@ -11,9 +12,11 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 	public class SickLeaveController : ControllerBase
 	{
 		private readonly SickLeaveService _sickLeaveService;
-		public SickLeaveController(SickLeaveService sickLeaveService)
+		private readonly SickLeaveRepository _sickLeaveRepository;
+		public SickLeaveController(SickLeaveService sickLeaveService, SickLeaveRepository sickLeaveRepository)
 		{
 			_sickLeaveService = sickLeaveService;
+			_sickLeaveRepository = sickLeaveRepository;
 		}
 
 		[HttpPut("closeSickLeave")]
@@ -24,6 +27,20 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 			{
 				_sickLeaveService.CloseSickLeave(sickLeave);
 				return Ok();
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+
+		[HttpGet("getMedicalCertificates/{sickLeaveId:int}")]
+		[Authorize]
+		public IActionResult GetMedicalCertificates(int sickLeaveId)
+		{
+			try
+			{
+				return Ok(_sickLeaveRepository.GetMedicalCertificates(sickLeaveId));
 			}
 			catch (System.Exception)
 			{

@@ -130,9 +130,9 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 			if (currentEmployee != null)
 				approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
 		}
-        protected void OpenSickLeaveDetailsPage(int sickLeaveId)
+        protected void OpenMedicalCertificatePage(int sickLeaveId)
         {
-
+            _navigationManager.NavigateTo("MedicalCertificate/" + sickLeaveId);
         }
     }
 }
