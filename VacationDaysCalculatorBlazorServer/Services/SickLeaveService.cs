@@ -63,5 +63,20 @@ namespace VacationDaysCalculatorBlazorServer.Services
 				Console.WriteLine(e);
 			}
 		}
+		public async Task UploadMedicialCertificate(MedicalCertificate medicalCertificate)
+		{
+			try
+			{
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+				var httpPostRequest = new HttpRequestMessage(HttpMethod.Post, $"{BaseApiUrl}/uploadMedicalCertificate");
+				httpPostRequest.Content = new StringContent(JsonSerializer.Serialize(medicalCertificate), Encoding.UTF8, "application/json");
+				await _httpClient.SendAsync(httpPostRequest);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+		}
 	}
 }
