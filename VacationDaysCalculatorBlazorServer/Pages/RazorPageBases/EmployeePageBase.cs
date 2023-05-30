@@ -134,5 +134,21 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         {
             _navigationManager.NavigateTo("MedicalCertificate/" + sickLeaveId);
         }
+
+        protected async Task OpenAddSickLeaveDialog()
+        {
+			var options = new DialogOptions { CloseOnEscapeKey = true };
+			var dialog = _dialogService.Show<AddSickLeave>("Open Sick Leave", options);
+			var result = await dialog.Result;
+			if (!result.Cancelled)
+			{
+				currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
+			}
+		}
+
+        protected async Task AddSickLeaveAsync(SickLeave sickLeave)
+        {
+            await _sickLeaveService.AddSickLeave(sickLeave);
+        }
     }
 }

@@ -17,5 +17,13 @@ namespace VacationDaysCalculatorWebAPI.Services
 			sickLeave.SickLeaveTo = DateTime.Today;
 			_sickLeaveRepository.UpdateSickLeave(sickLeave);
 		}
+		public void AddSickLeave(SickLeave sickLeave)
+		{
+			if(sickLeave != null)
+			{
+				sickLeave.SickLeaveStatus = SickLeaveStatus.Opened;
+				_sickLeaveRepository.AddSickLeave(sickLeave);
+			}
+		}
 	}
 }

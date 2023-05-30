@@ -47,5 +47,19 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError);
 			}
 		}
+		[HttpPost("addSickLeave")]
+		[Authorize]
+		public IActionResult AddSickLeave(SickLeave sickLeave)
+		{
+			try
+			{
+				_sickLeaveRepository.AddSickLeave(sickLeave);
+				return Ok();
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
 	}
 }
