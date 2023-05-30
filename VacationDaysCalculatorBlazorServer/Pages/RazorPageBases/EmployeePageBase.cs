@@ -125,14 +125,36 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         }
         protected async Task CloseSickLeave(SickLeave sickLeave)
         {
-            await _sickLeaveService.CloseSickLeaveStatusAsync(sickLeave);
-			currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
-			if (currentEmployee != null)
-				approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
+			var options = new DialogOptions { CloseOnEscapeKey = true };
+			var dialog = _dialogService.Show<MudConfirmationDialog>("Are you sure you want to close sick leave?", options);
+			var result = await dialog.Result;
+            if(!result.Cancelled)
+            {
+			    await _sickLeaveService.CloseSickLeaveStatusAsync(sickLeave);
+			    currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
+			    if (currentEmployee != null)
+				    approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
+            }
 		}
         protected void OpenMedicalCertificatePage(int sickLeaveId)
         {
             _navigationManager.NavigateTo("MedicalCertificate/" + sickLeaveId);
+        }
+
+        protected async Task OpenAddSickLeaveDialog()
+        {
+			var options = new DialogOptions { CloseOnEscapeKey = true };
+			var dialog = _dialogService.Show<AddSickLeave>("Open Sick Leave", options);
+			var result = await dialog.Result;
+			if (!result.Cancelled)
+			{
+				currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
+			}
+		}
+
+        protected async Task AddSickLeaveAsync(SickLeave sickLeave)
+        {
+            await _sickLeaveService.AddSickLeave(sickLeave);
         }
     }
 }

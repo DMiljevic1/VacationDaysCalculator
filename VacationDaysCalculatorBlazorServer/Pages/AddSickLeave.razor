@@ -1,0 +1,27 @@
+﻿@inherits RazorPageBases.EmployeePageBase;
+
+<MudDialog>
+    <DialogContent>
+        <MudDatePicker Label="Sick Leave From" DateFormat="dd/MM/yyyy" Required=true DisableToolbar="true" @bind-Date="sickLeaveFrom" class="form-control"></MudDatePicker>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Submit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    DateTime? sickLeaveFrom;
+    SickLeave sickLeave = new SickLeave();
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    async Task Submit()
+    {
+        if(sickLeaveFrom != null)
+        {
+            sickLeave.SickLeaveFrom = (DateTime)sickLeaveFrom;
+            await AddSickLeaveAsync(sickLeave);
+        }
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    void Cancel() => MudDialog.Cancel();
+}
