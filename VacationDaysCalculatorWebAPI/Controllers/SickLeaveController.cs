@@ -47,6 +47,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError);
 			}
 		}
+
 		[HttpPost("addSickLeave")]
 		[Authorize]
 		public IActionResult AddSickLeave(SickLeave sickLeave)
@@ -55,6 +56,36 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 			{
 				_sickLeaveRepository.AddSickLeave(sickLeave);
 				return Ok();
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+
+
+		[HttpPost("uploadMedicalCertificate")]
+		[Authorize]
+		public IActionResult UploadMedicalCertificate([FromBody] MedicalCertificate medicalCertificate)
+		{
+			try
+			{
+				_sickLeaveRepository.UploadMedicalCertificate(medicalCertificate);
+			return Ok();
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+
+		[HttpGet("getMedicalCertificate/{medicalCertificateId:int}")]
+		[Authorize]
+		public IActionResult GetMedicalCertificate(int medicalCertificateId)
+		{
+			try
+			{
+				return Ok(_sickLeaveRepository.GetMedicalCertificate(medicalCertificateId));
 			}
 			catch (System.Exception)
 			{

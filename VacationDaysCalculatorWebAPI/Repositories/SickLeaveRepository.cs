@@ -41,5 +41,20 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 			_vacationDbContext.SickLeave.Add(sickLeave);
 			_vacationDbContext.SaveChanges();
 		}
+
+		public MedicalCertificate GetMedicalCertificate(int medicalCertificateId)
+		{
+			return _vacationDbContext.MedicalCertificates.FirstOrDefault(m => m.Id == medicalCertificateId);
+		}
+
+		public void UploadMedicalCertificate(MedicalCertificate medicalCertificate)
+		{
+			var medicalCertificateForUpdate = GetMedicalCertificate(medicalCertificate.Id);
+			if (medicalCertificate != null && medicalCertificate.Attachment != null && medicalCertificate.Attachment.Length > 0)
+			{
+				medicalCertificateForUpdate.Attachment = medicalCertificate.Attachment;
+				_vacationDbContext.SaveChanges();
+			}
+		}
 	}
 }
