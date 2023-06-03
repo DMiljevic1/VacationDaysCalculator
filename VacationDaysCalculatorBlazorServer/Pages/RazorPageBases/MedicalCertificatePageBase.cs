@@ -1,6 +1,7 @@
 ﻿using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using System.Text;
 using VacationDaysCalculatorBlazorServer.Services;
 
@@ -10,6 +11,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 	{
 		[Parameter]
 		public string sickLeaveId { get; set; }
+		[Inject]
+		protected IJSRuntime _jsruntime { get; set; }
 		[Inject]
 		protected SickLeaveService _sickLeaveService { get; set; }
 		[Inject]
@@ -33,6 +36,12 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 			string file = string.Join(", ", e.GetMultipleFiles().Select(f => f.Name));
 			medicalCertificate.Attachment = Encoding.ASCII.GetBytes(file);
 			await _sickLeaveService.UploadMedicialCertificate(medicalCertificate);
+		}
+
+		protected async Task DownloadMedicalCertificate(MedicalCertificate medicalCertificate)
+		{
+			await _jsruntime.InvokeVoidAsync("download", "Proba1", medicalCertificate.Attachment);
+			medicalCertificates = await _sickLeaveService.GetMedicalCertificatesAsync(int.Parse(sickLeaveId));
 		}
 	}
 }

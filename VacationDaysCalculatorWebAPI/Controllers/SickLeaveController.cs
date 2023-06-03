@@ -78,5 +78,19 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError);
 			}
 		}
+
+		[HttpGet("getMedicalCertificate/{medicalCertificateId:int}")]
+		[Authorize]
+		public IActionResult GetMedicalCertificate(int medicalCertificateId)
+		{
+			try
+			{
+				return Ok(_sickLeaveRepository.GetMedicalCertificate(medicalCertificateId));
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
 	}
 }

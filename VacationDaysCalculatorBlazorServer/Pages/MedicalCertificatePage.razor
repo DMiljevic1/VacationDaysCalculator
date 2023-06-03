@@ -30,7 +30,12 @@
 						Size="@Size.Small"
 						for="@($"file-{context.Id}")" />
 		</MudTd>
-		<MudTd></MudTd>
+		<MudTd>
+			@if(context.Attachment != null)
+			{
+				<MudButton StartIcon="@Icons.Material.Filled.Download" Variant="Variant.Filled" Color="Color.Secondary" OnClick="()=>DownloadMedicalCertificate(context)" Size="Size.Medium">Download</MudButton>
+			}
+		</MudTd>
 	</RowTemplate>
 	<PagerContent>
 		<MudTablePager />
