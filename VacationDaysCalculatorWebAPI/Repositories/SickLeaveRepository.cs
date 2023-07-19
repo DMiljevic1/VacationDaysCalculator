@@ -47,7 +47,7 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 			return _vacationDbContext.MedicalCertificates.FirstOrDefault(m => m.Id == medicalCertificateId);
 		}
 
-		public void UploadMedicalCertificate(MedicalCertificate medicalCertificate)
+		public void UploadMedicalCertificateFile(MedicalCertificate medicalCertificate)
 		{
 			var medicalCertificateForUpdate = GetMedicalCertificate(medicalCertificate.Id);
 			if (medicalCertificate != null && medicalCertificate.Attachment != null && medicalCertificate.Attachment.Length > 0)
@@ -56,5 +56,11 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 				_vacationDbContext.SaveChanges();
 			}
 		}
+
+		public void AddMedicalCertificate(MedicalCertificate medicalCertificate)
+		{
+            _vacationDbContext.MedicalCertificates.Add(medicalCertificate);
+            _vacationDbContext.SaveChanges();
+        }
 	}
 }
