@@ -54,7 +54,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 		{
 			try
 			{
-				_sickLeaveRepository.AddSickLeave(sickLeave);
+				_sickLeaveService.AddSickLeave(sickLeave);
 				return Ok();
 			}
 			catch (System.Exception)
@@ -70,7 +70,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 		{
 			try
 			{
-				_sickLeaveRepository.UploadMedicalCertificate(medicalCertificate);
+				_sickLeaveRepository.UploadMedicalCertificateFile(medicalCertificate);
 			return Ok();
 			}
 			catch (System.Exception)
