@@ -23,16 +23,25 @@ namespace VacationDaysCalculatorWebAPI.Services
 			{
 				sickLeave.SickLeaveStatus = SickLeaveStatus.Opened;
 				_sickLeaveRepository.AddSickLeave(sickLeave);
-				AddMedicalCertificate(sickLeave.Id);
+				AddMedicalCertificate(sickLeave.Id, DateTime.Now);
 			}
 		}
 
-		public void AddMedicalCertificate(int sickLeaveId)
+		private void AddMedicalCertificate(int sickLeaveId, DateTime date)
 		{
             MedicalCertificate medicalCertificate = new MedicalCertificate();
-            medicalCertificate.MedicalCertificateDate = DateTime.Now;
+            medicalCertificate.MedicalCertificateDate = date;
             medicalCertificate.SickLeaveId = sickLeaveId;
 			_sickLeaveRepository.AddMedicalCertificate(medicalCertificate);
         }
+
+		public void AddMedCertForEveryOpenedSickLeave(DateTime date)
+		{
+			var openedSickLeaves = _sickLeaveRepository.GetOpenedSickLeaves();
+			foreach(SickLeave openedSickLeave in openedSickLeaves)
+			{
+				AddMedicalCertificate(openedSickLeave.Id, date);
+			}
+		}
 	}
 }

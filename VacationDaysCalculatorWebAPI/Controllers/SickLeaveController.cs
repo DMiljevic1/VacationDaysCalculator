@@ -92,5 +92,20 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError);
 			}
 		}
+
+		[HttpPost("addMedCertViaScheduler")]
+		[AllowAnonymous]
+		public IActionResult AddMedicalCertificateViaScheduler([FromBody] DateTime date)
+		{
+            try
+            {
+				_sickLeaveService.AddMedCertForEveryOpenedSickLeave(date);
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
 	}
 }
