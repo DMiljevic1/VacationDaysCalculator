@@ -23,7 +23,7 @@ namespace VacationDaysCalculatorWebAPI.Services
 			{
 				sickLeave.SickLeaveStatus = SickLeaveStatus.Opened;
 				_sickLeaveRepository.AddSickLeave(sickLeave);
-				AddMedicalCertificate(sickLeave.Id, DateTime.Now);
+				AddMedicalCertificate(sickLeave.Id, sickLeave.SickLeaveFrom);
 			}
 		}
 
