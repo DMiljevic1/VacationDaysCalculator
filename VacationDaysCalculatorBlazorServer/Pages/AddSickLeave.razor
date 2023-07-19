@@ -2,7 +2,7 @@
 
 <MudDialog>
     <DialogContent>
-        <MudDatePicker Label="Sick Leave From" DateFormat="dd/MM/yyyy" Required=true DisableToolbar="true" @bind-Date="sickLeaveFrom" class="form-control"></MudDatePicker>
+        <MudDatePicker Label="Sick Leave From" MinDate="minDate" DateFormat="dd/MM/yyyy" Required=true DisableToolbar="true" @bind-Date="sickLeaveFrom" class="form-control"></MudDatePicker>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
@@ -12,6 +12,7 @@
 
 @code {
     DateTime? sickLeaveFrom;
+    DateTime minDate = DateTime.Today.AddDays(-30);
     SickLeave sickLeave = new SickLeave();
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     async Task Submit()
