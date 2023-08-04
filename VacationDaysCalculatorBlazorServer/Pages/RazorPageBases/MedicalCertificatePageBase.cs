@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
+using MudBlazor.Interfaces;
 using System.Text;
 using VacationDaysCalculatorBlazorServer.Services;
 
@@ -20,6 +21,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 		protected List<MedicalCertificate> medicalCertificates { get; set; }
 
 		protected IList<IBrowserFile> files = new List<IBrowserFile>();
+		protected IFormFile file { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
@@ -33,8 +35,12 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 
 		protected async Task UploadMedicalCertificate(InputFileChangeEventArgs e, MedicalCertificate medicalCertificate)
 		{
-			string file = string.Join(", ", e.GetMultipleFiles().Select(f => f.Name));
-			medicalCertificate.Attachment = Encoding.ASCII.GetBytes(file);
+            foreach (var file in e.GetMultipleFiles())
+			{
+                var buffer = new byte[file.Size];
+				await file.OpenReadStream().ReadAsync(buffer);
+				medicalCertificate.Attachment= buffer;
+            }
 			await _sickLeaveService.UploadMedicialCertificate(medicalCertificate);
 		}
 
