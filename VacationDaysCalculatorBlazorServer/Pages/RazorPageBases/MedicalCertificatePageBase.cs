@@ -1,8 +1,12 @@
 ﻿using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.JSInterop;
 using MudBlazor.Interfaces;
+using System;
+using System.IO;
 using System.Text;
 using VacationDaysCalculatorBlazorServer.Services;
 
@@ -35,18 +39,19 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 
 		protected async Task UploadMedicalCertificate(InputFileChangeEventArgs e, MedicalCertificate medicalCertificate)
 		{
-            foreach (var file in e.GetMultipleFiles())
+			foreach (var file in e.GetMultipleFiles(1))
 			{
-                var buffer = new byte[file.Size];
-				await file.OpenReadStream().ReadAsync(buffer);
-				medicalCertificate.Attachment= buffer;
-            }
-			await _sickLeaveService.UploadMedicialCertificate(medicalCertificate);
+				await using var memoryStream = new MemoryStream();
+				await file.OpenReadStream().CopyToAsync(memoryStream);
+				medicalCertificate.Attachment = memoryStream.ToArray();
+			}
+            await _sickLeaveService.UploadMedicialCertificate(medicalCertificate);
+			medicalCertificates = await _sickLeaveService.GetMedicalCertificatesAsync(int.Parse(sickLeaveId));
 		}
 
 		protected async Task DownloadMedicalCertificate(MedicalCertificate medicalCertificate)
 		{
-			await _jsruntime.InvokeVoidAsync("download", "Proba1", medicalCertificate.Attachment);
+			await _jsruntime.InvokeVoidAsync("download", medicalCertificate.Attachment);
 			medicalCertificates = await _sickLeaveService.GetMedicalCertificatesAsync(int.Parse(sickLeaveId));
 		}
 	}
