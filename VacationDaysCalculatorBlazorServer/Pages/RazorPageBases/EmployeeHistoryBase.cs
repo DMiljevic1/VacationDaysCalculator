@@ -2,6 +2,7 @@
 using DomainModel.Models;
 using Microsoft.AspNetCore.Components;
 using VacationDaysCalculatorBlazorServer.Service;
+using VacationDaysCalculatorBlazorServer.Services;
 
 namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 {
@@ -11,10 +12,14 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected EmployeeService _employeeService { get; set; }
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
+        [Inject]
+        protected SickLeaveService _sickLeaveService { get; set; }
         protected List<EmployeeHistory> employeeHistory { get; set; }
+        protected List<SickLeave> arhivedSickLeaves { get; set; }
         protected override async Task OnInitializedAsync()
         {
             employeeHistory = await _employeeService.GetEmployeeHistoryAsync();
+            arhivedSickLeaves = await _sickLeaveService.GetArchivedSickLeavesAsync();
         }
         protected void CloseEmployeeHistoryPage()
         {
@@ -23,8 +28,9 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected string searchString1 = "";
         protected EmployeeHistory selectedHistory { get; set; }
         public bool FilterFunction(EmployeeHistory history) => FilterFunc(history, searchString1);
+		protected string vacationOrSickLeave { get; set; }
 
-        private bool FilterFunc(EmployeeHistory history, string searchString)
+		private bool FilterFunc(EmployeeHistory history, string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
@@ -42,5 +48,18 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 return true;
             return false;
         }
-    }
+		public bool FilterSickLeaveDelegate(SickLeave sickLeave) => FilterSickLeaveFunction(sickLeave, searchString1);
+		private bool FilterSickLeaveFunction(SickLeave sickLeave, string searchString)
+		{
+			if (string.IsNullOrWhiteSpace(searchString))
+				return true;
+			if (sickLeave.User.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+				return true;
+			if (sickLeave.User.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+				return true;
+			if (sickLeave.SickLeaveFrom.ToString("dd.MM.yyyy.hh:mm").Contains(searchString, StringComparison.OrdinalIgnoreCase))
+				return true;
+			return false;
+		}
+	}
 }
