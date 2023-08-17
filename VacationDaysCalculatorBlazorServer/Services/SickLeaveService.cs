@@ -93,5 +93,21 @@ namespace VacationDaysCalculatorBlazorServer.Services
 				return null;
 			}
 		}
+
+		public async Task<List<SickLeave>> GetArchivedSickLeavesAsync()
+		{
+			try
+			{
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+				int userId = await _customAuthenticationStateProvider.GetUserId();
+				return await _httpClient.GetFromJsonAsync<List<SickLeave>>($"{BaseApiUrl}/getArchivedSickLeaves/{userId}");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return null;
+			}
+		}
 	}
 }

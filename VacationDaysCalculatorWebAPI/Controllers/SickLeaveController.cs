@@ -107,5 +107,18 @@ namespace VacationDaysCalculatorWebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+		[HttpGet("getArchivedSickLeaves/{userId:int}")]
+		public IActionResult GetArchivedSickLeaves(int userId)
+		{
+			try
+			{
+				return Ok(_sickLeaveRepository.GetArhivedSickLeaves(userId));
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
 	}
 }

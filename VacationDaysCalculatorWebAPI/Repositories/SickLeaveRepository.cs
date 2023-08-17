@@ -1,5 +1,6 @@
 ﻿using DomainModel.Enums;
 using DomainModel.Models;
+using Microsoft.EntityFrameworkCore;
 using VacationDaysCalculatorWebAPI.DatabaseContext;
 
 namespace VacationDaysCalculatorWebAPI.Repositories
@@ -66,6 +67,11 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 		public List<SickLeave> GetOpenedSickLeaves()
 		{
 			return _vacationDbContext.SickLeave.Where(s => s.SickLeaveStatus == SickLeaveStatus.Opened).ToList();
+		}
+
+		public List<SickLeave> GetArhivedSickLeaves(int userId)
+		{
+			return _vacationDbContext.SickLeave.Include(sl => sl.User).Where(sl => sl.UserId == userId && sl.SickLeaveStatus == SickLeaveStatus.Archived).ToList();
 		}
 	}
 }
