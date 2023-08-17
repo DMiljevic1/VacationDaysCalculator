@@ -44,6 +44,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 				await using var memoryStream = new MemoryStream();
 				await file.OpenReadStream().CopyToAsync(memoryStream);
 				medicalCertificate.Attachment = memoryStream.ToArray();
+				medicalCertificate.FileSize = file.Size / 1000;  //divide by 1000 to get size from bytes to kb
+				medicalCertificate.FileName = file.Name;
 			}
             await _sickLeaveService.UploadMedicialCertificate(medicalCertificate);
 			medicalCertificates = await _sickLeaveService.GetMedicalCertificatesAsync(int.Parse(sickLeaveId));
@@ -51,7 +53,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 
 		protected async Task DownloadMedicalCertificate(MedicalCertificate medicalCertificate)
 		{
-			await _jsruntime.InvokeVoidAsync("download", medicalCertificate.Attachment);
+			await _jsruntime.InvokeVoidAsync("download", medicalCertificate.Attachment, medicalCertificate.FileName);
 			medicalCertificates = await _sickLeaveService.GetMedicalCertificatesAsync(int.Parse(sickLeaveId));
 		}
 	}
