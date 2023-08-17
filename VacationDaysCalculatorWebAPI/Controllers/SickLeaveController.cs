@@ -135,5 +135,20 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError);
 			}
 		}
+
+		[HttpPut("archiveSickLeave")]
+		[Authorize]
+		public IActionResult ArchiveSickLeave([FromBody] SickLeave sickLeave)
+		{
+			try
+			{
+				_sickLeaveService.ArchiveSickLeave(sickLeave);
+				return Ok();
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
 	}
 }

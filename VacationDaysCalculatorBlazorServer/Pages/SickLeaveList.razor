@@ -38,7 +38,7 @@ else
             <MudTd>
             @if(context.SickLeaveStatus == SickLeaveStatus.Closed)
             {
-                <MudButton ButtonType="ButtonType.Button" OnClick="() => OpenMedicalCertificatePage(context.Id)" StartIcon="@Icons.Material.Filled.Check" Color="Color.Success"></MudButton>
+                <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" OnClick="() => ArchiveSickLeave(context)" StartIcon="@Icons.Material.Filled.Check" Color="Color.Success"></MudButton>
             }
             </MudTd>
             

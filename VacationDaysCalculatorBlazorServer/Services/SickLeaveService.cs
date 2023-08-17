@@ -124,5 +124,21 @@ namespace VacationDaysCalculatorBlazorServer.Services
 				return null;
 			}
 		}
+
+		public async Task ArchiveSickLeaveAsync(SickLeave sickLeave)
+		{
+			try
+			{
+				await _customAuthenticationStateProvider.DeleteExpiredTokenFromLocalStorage();
+				_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _customAuthenticationStateProvider.GetTokenAsync());
+				var httpPutRequest = new HttpRequestMessage(HttpMethod.Put, $"{BaseApiUrl}/archiveSickLeave");
+				httpPutRequest.Content = new StringContent(JsonSerializer.Serialize(sickLeave), Encoding.UTF8, "application/json");
+				await _httpClient.SendAsync(httpPutRequest);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+		}
 	}
 }

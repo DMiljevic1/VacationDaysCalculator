@@ -80,5 +80,15 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 		{
 			return _vacationDbContext.SickLeave.Include(sl => sl.User).ToList();
 		}
+
+		public void UpdateSickLeaveStatus(int sickLeaveId, SickLeaveStatus status)
+		{
+			var sickLeaveForUpdate = GetSickLeaveById(sickLeaveId);
+			if(sickLeaveForUpdate != null)
+			{
+				sickLeaveForUpdate.SickLeaveStatus = status;
+				_vacationDbContext.SaveChanges();
+			}
+		}
 	}
 }
