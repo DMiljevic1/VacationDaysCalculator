@@ -109,11 +109,26 @@ namespace VacationDaysCalculatorWebAPI.Controllers
         }
 
 		[HttpGet("getArchivedSickLeaves/{userId:int}")]
+		[Authorize]
 		public IActionResult GetArchivedSickLeaves(int userId)
 		{
 			try
 			{
 				return Ok(_sickLeaveRepository.GetArhivedSickLeaves(userId));
+			}
+			catch (System.Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+
+		[HttpGet("getSickLeaves")]
+		[Authorize]
+		public IActionResult GetSickLeaves()
+		{
+			try
+			{
+				return Ok(_sickLeaveRepository.GetSickLeaves());
 			}
 			catch (System.Exception)
 			{

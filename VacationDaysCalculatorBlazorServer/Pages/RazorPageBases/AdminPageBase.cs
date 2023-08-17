@@ -79,5 +79,11 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
                 vacations = adminDetails.EmployeeVacationDays;
             }
         }
-    }
+
+        protected void OpenSickLeaveList()
+        {
+            _navigationManager.NavigateTo("/SickLeaveList");
+        }
+
+	}
 }
