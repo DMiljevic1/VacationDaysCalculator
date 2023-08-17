@@ -2,7 +2,7 @@
 @inherits RazorPageBases.MedicalCertificatePageBase;
 
 
-<MudTable Items="@medicalCertificates" Hover=true SortLabel="Sort By" Style="width:75%">
+<MudTable Items="@medicalCertificates" Hover=true SortLabel="Sort By">
 	<ToolBarContent>
 		<MudText Typo="Typo.h6">Medical Certificates</MudText>
 		<MudSpacer />
@@ -12,13 +12,15 @@
 	</NoRecordsContent>
 	<HeaderContent>
 		<MudTh><MudTableSortLabel SortBy="new Func<MedicalCertificate, object>(x=>x.MedicalCertificateDate)">Medical Certificate Date</MudTableSortLabel></MudTh>
-		<MudTh>Attachment</MudTh>
+		<MudTh><MudTableSortLabel SortBy="new Func<MedicalCertificate, object>(x=>x.FileName)">File Name</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortBy="new Func<MedicalCertificate, object>(x=>x.FileSize)">File Size</MudTableSortLabel></MudTh>
 		<MudTh></MudTh>
 		<MudTh></MudTh>
 	</HeaderContent>
 	<RowTemplate>
 		<MudTd DataLabel="Medical Certificate Date">@context.MedicalCertificateDate.ToString("MM/yyyy")</MudTd>
-		<MudTd DataLabel="Attachment">@context.Attachment</MudTd>
+		<MudTd DataLabel="File Name">@context.FileName</MudTd>
+		<MudTd DataLabel="File Size">@context.FileSize</MudTd>
 		<MudTd DataLabel="Image">
 				<InputFile id="@($"file-{context.Id}")"
 					   OnChange="@(e => this.UploadMedicalCertificate(e, context))"
@@ -33,7 +35,7 @@
 		<MudTd>
 			@if(context.Attachment != null)
 			{
-				<MudButton StartIcon="@Icons.Material.Filled.Download" Variant="Variant.Filled" Color="Color.Secondary" OnClick="()=>DownloadMedicalCertificate(context)" Size="Size.Medium">Download</MudButton>
+				<MudButton StartIcon="@Icons.Material.Filled.Download" Variant="Variant.Filled" Color="Color.Info" OnClick="()=>DownloadMedicalCertificate(context)" Size="Size.Small">Download</MudButton>
 			}
 		</MudTd>
 	</RowTemplate>

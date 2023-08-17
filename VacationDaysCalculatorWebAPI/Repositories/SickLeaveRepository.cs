@@ -54,6 +54,8 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 			if (medicalCertificate != null && medicalCertificate.Attachment != null && medicalCertificate.Attachment.Length > 0)
 			{
 				medicalCertificateForUpdate.Attachment = medicalCertificate.Attachment;
+				medicalCertificateForUpdate.FileSize = medicalCertificate.FileSize;
+				medicalCertificateForUpdate.FileName = medicalCertificate.FileName;
 				_vacationDbContext.SaveChanges();
 			}
 		}
