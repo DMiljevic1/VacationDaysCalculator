@@ -28,8 +28,8 @@ else
         <RowTemplate>
             <MudTd DataLabel="Last Name">@context.User.LastName</MudTd>
             <MudTd DataLabel="First Name">@context.User.FirstName</MudTd>
-            <MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy")</MudTd>
-            <MudTd DataLabel="Sick Leave To">@context.SickLeaveTo</MudTd>
+            <MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy.")</MudTd>
+            <MudTd DataLabel="Sick Leave To">@(@context.SickLeaveTo == null ? "/" : (context.SickLeaveTo.Value.Day + "." + context.SickLeaveTo.Value.Month + "." + context.SickLeaveTo.Value.Year + "."))</MudTd>
             <MudTd>
                 <MudButton ButtonType="ButtonType.Button" OnClick="() => OpenMedicalCertificatePage(context.Id)" StartIcon="@Icons.Material.Filled.List" Style="color:deepskyblue">Med. Cert.</MudButton>
             </MudTd>

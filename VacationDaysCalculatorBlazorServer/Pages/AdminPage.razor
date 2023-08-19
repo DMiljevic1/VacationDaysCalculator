@@ -52,8 +52,8 @@ else
             <RowTemplate>
                 <MudTd DataLabel="Last Name">@context.User.LastName</MudTd>
                 <MudTd DataLabel="First Name">@context.User.FirstName</MudTd>
-                <MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy")</MudTd>
-                <MudTd DataLabel="Sick Leave To">@context.SickLeaveTo</MudTd>
+                <MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy.")</MudTd>
+                <MudTd DataLabel="Sick Leave To">@(@context.SickLeaveTo == null ? "/" : (context.SickLeaveTo.Value.Day + "." + context.SickLeaveTo.Value.Month + "." + context.SickLeaveTo.Value.Year + "."))</MudTd>
                 <MudTd>
                     <MudButton ButtonType="ButtonType.Button" OnClick="() => OpenMedicalCertificatePage(context.Id)" StartIcon="@Icons.Material.Filled.List" Style="color:deepskyblue">Med. Cert.</MudButton>
                 </MudTd>
@@ -94,8 +94,8 @@ else
 		    <MudTd DataLabel="Last Name">@context.User.LastName</MudTd>
 		    <MudTd DataLabel="First Name">@context.User.FirstName</MudTd>
 		    <MudTd DataLabel="Vacation Request Date">@context.VacationRequestDate</MudTd>
-		    <MudTd DataLabel="Vacation From">@context.VacationFrom.ToString("dd.MM.yyyy")</MudTd>
-		    <MudTd DataLabel="Vacation To">@context.VacationTo.ToString("dd.MM.yyyy")</MudTd>
+		    <MudTd DataLabel="Vacation From">@context.VacationFrom.ToString("dd.MM.yyyy.")</MudTd>
+		    <MudTd DataLabel="Vacation To">@context.VacationTo.ToString("dd.MM.yyyy.")</MudTd>
 			<MudTd DataLabel="Vacation Status">@context.Status</MudTd>
 			<MudTd>
 				<MudButton Variant="Variant.Filled" Color="Color.Success" StartIcon="@Icons.Material.Filled.Check" OnClick="() => ApproveVacationAsync(context)">Approve</MudButton>
