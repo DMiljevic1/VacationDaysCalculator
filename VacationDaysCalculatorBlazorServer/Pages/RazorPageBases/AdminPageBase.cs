@@ -114,12 +114,12 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
             _navigationManager.NavigateTo("/SickLeaveList");
         }
 
-        protected void OpenMedicalCertificatePage(int sickLeaveId)
-        {
+		protected void OpenMedicalCertificatePage(int sickLeaveId)
+		{
+			_navigationManager.NavigateTo("/MedicalCertificate/" + sickLeaveId);
+		}
 
-        }
-
-        protected async Task ArchiveSickLeave(SickLeave sickLeave)
+		protected async Task ArchiveSickLeave(SickLeave sickLeave)
         {
             await _sickLeaveService.ArchiveSickLeaveAsync(sickLeave);
             closedSickLeaves = await _sickLeaveService.GetSickLeavesAsync();
