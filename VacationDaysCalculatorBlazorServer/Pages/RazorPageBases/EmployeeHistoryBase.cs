@@ -19,7 +19,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
         protected override async Task OnInitializedAsync()
         {
             employeeHistory = await _employeeService.GetEmployeeHistoryAsync();
-            arhivedSickLeaves = await _sickLeaveService.GetArchivedSickLeavesAsync();
+            arhivedSickLeaves = await _sickLeaveService.GetArchivedSickLeavesByUserIdAsync();
         }
         protected void CloseEmployeeHistoryPage()
         {

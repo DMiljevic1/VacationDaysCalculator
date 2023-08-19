@@ -20,7 +20,7 @@
 	<RowTemplate>
 		<MudTd DataLabel="Medical Certificate Date">@context.MedicalCertificateDate.ToString("MM/yyyy")</MudTd>
 		<MudTd DataLabel="File Name">@context.FileName</MudTd>
-		<MudTd DataLabel="File Size">@context.FileSize</MudTd>
+		<MudTd DataLabel="File Size[kb]">@context.FileSize</MudTd>
 		<MudTd DataLabel="Image">
 				<InputFile id="@($"file-{context.Id}")"
 					   OnChange="@(e => this.UploadMedicalCertificate(e, context))"

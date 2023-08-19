@@ -49,11 +49,5 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 		{
 
 		}
-
-		protected async Task ArchiveSickLeave(SickLeave sickLeave)
-		{
-			await _sickLeaveService.ArchiveSickLeaveAsync(sickLeave);
-			sickLeaveList = await _sickLeaveService.GetSickLeavesAsync();
-		}
 	}
 }

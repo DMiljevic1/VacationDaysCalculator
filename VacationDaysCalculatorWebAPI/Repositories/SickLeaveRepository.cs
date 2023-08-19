@@ -71,10 +71,15 @@ namespace VacationDaysCalculatorWebAPI.Repositories
 			return _vacationDbContext.SickLeave.Where(s => s.SickLeaveStatus == SickLeaveStatus.Opened).ToList();
 		}
 
-		public List<SickLeave> GetArhivedSickLeaves(int userId)
+		public List<SickLeave> GetSickLeavesByUserIdAndStatus(int userId, SickLeaveStatus status)
 		{
-			return _vacationDbContext.SickLeave.Include(sl => sl.User).Where(sl => sl.UserId == userId && sl.SickLeaveStatus == SickLeaveStatus.Archived).ToList();
+			return _vacationDbContext.SickLeave.Include(sl => sl.User).Where(sl => sl.UserId == userId && sl.SickLeaveStatus == status).ToList();
 		}
+
+		public List<SickLeave> GetSickLeavesByStatus(SickLeaveStatus status)
+		{
+            return _vacationDbContext.SickLeave.Include(sl => sl.User).Where(s => s.SickLeaveStatus == status).ToList();
+        }
 
 		public List<SickLeave> GetSickLeaves()
 		{

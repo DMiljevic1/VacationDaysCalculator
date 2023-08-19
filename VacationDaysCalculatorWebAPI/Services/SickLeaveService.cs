@@ -49,5 +49,15 @@ namespace VacationDaysCalculatorWebAPI.Services
 			if (sickLeave != null)
 				_sickLeaveRepository.UpdateSickLeaveStatus(sickLeave.Id, SickLeaveStatus.Archived);
 		}
+
+		public List<SickLeave> GetArchivedSickLeavesByUserId(int userId)
+		{
+			return _sickLeaveRepository.GetSickLeavesByUserIdAndStatus(userId, SickLeaveStatus.Archived);
+		}
+
+		public List<SickLeave> GetClosedSickLeaves()
+		{
+			return _sickLeaveRepository.GetSickLeavesByStatus(SickLeaveStatus.Closed);
+		}
 	}
 }
