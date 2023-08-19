@@ -32,9 +32,19 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 			medicalCertificates = await _sickLeaveService.GetMedicalCertificatesAsync(int.Parse(sickLeaveId));
 		}
 
-		protected void Close()
+		protected void NavigateToEmployeePage()
 		{
 			_navigationManager.NavigateTo("/Employee");
+		}
+
+		protected void NavigateToSickLeaveList()
+		{
+			_navigationManager.NavigateTo("/SickLeaveList");
+		}
+
+		protected void NavigateToAdminPage()
+		{
+			_navigationManager.NavigateTo("/Admin");
 		}
 
 		protected async Task UploadMedicalCertificate(InputFileChangeEventArgs e, MedicalCertificate medicalCertificate)
