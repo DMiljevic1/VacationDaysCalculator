@@ -36,8 +36,8 @@ else
 			<RowTemplate>
 				<MudTd DataLabel="Last Name">@context.User.LastName</MudTd>
 				<MudTd DataLabel="First Name">@context.User.FirstName</MudTd>
-				<MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy")</MudTd>
-				<MudTd DataLabel="Sick Leave To">@context.SickLeaveTo</MudTd>
+				<MudTd DataLabel="Sick Leave From">@context.SickLeaveFrom.ToString("dd.MM.yyyy.")</MudTd>
+				<MudTd DataLabel="Sick Leave To">@(@context.SickLeaveTo == null ? "/" : (context.SickLeaveTo.Value.Day + "." + context.SickLeaveTo.Value.Month + "." + context.SickLeaveTo.Value.Year + "."))</MudTd>
 				</RowTemplate>
 			<PagerContent>
 				<MudTablePager />
@@ -69,8 +69,8 @@ else
 	        <MudTd DataLabel="Last Name">@context.LastName</MudTd>
 	        <MudTd DataLabel="First Name">@context.FirstName</MudTd>
 	        <MudTd DataLabel="Vacation Request Date">@context.VacationRequestDate</MudTd>
-	        <MudTd DataLabel="Vacation From">@context.VacationFrom.ToString("dd.MM.yyyy")</MudTd>
-	        <MudTd DataLabel="Vacation To">@context.VacationTo.ToString("dd.MM.yyyy")</MudTd>
+	        <MudTd DataLabel="Vacation From">@context.VacationFrom.ToString("dd.MM.yyyy.")</MudTd>
+	        <MudTd DataLabel="Vacation To">@context.VacationTo.ToString("dd.MM.yyyy.")</MudTd>
 			<MudTd DataLabel="Vacation Spent">@context.VacationSpent</MudTd>
 			<MudTd DataLabel="Approved By">@context.ApprovedBy</MudTd>
 	    </RowTemplate>
@@ -78,11 +78,10 @@ else
 	        <MudTablePager />
 	    </PagerContent>
 	</MudTable>
-	
+	}
 	<MudGrid Justify="Justify.FlexStart">
 		<MudItem>
 			<MudButton StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Default" OnClick="CloseEmployeeHistoryPage" Size="Size.Medium" Style="margin-top:30px;">Close</MudButton>
 		</MudItem>
 	</MudGrid>
-	}
 }
