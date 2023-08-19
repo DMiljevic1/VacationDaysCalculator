@@ -24,7 +24,6 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<SickLeave, object>(x=>x.SickLeaveTo)">Sick Leave To</MudTableSortLabel></MudTh>
             <MudTh>Medical Certificates</MudTh>
             <MudTh>Sick Leave Status</MudTh>
-            <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Last Name">@context.User.LastName</MudTd>
@@ -35,12 +34,6 @@ else
                 <MudButton ButtonType="ButtonType.Button" OnClick="() => OpenMedicalCertificatePage(context.Id)" StartIcon="@Icons.Material.Filled.List" Style="color:deepskyblue">Med. Cert.</MudButton>
             </MudTd>
             <MudTd DataLabel="Vacation Status">@context.SickLeaveStatus</MudTd>
-            <MudTd>
-            @if(context.SickLeaveStatus == SickLeaveStatus.Closed)
-            {
-                <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Button" OnClick="() => ArchiveSickLeave(context)" StartIcon="@Icons.Material.Filled.Check" Color="Color.Success"></MudButton>
-            }
-            </MudTd>
             
         </RowTemplate>
         <PagerContent>
