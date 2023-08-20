@@ -130,7 +130,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 			var result = await dialog.Result;
             if(!result.Cancelled)
             {
-			    await _sickLeaveService.CloseSickLeaveStatusAsync(sickLeave);
+			    await _sickLeaveService.CloseSickLeaveAsync(sickLeave);
 			    currentEmployee = await _employeeService.GetEmployeeDetailsAsync();
 			    if (currentEmployee != null)
 				    approvedAndPendingVacationRequests = currentEmployee.VacationDays.Where(v => v.Status == VacationStatus.Pending || v.Status == VacationStatus.Approved).ToList();
