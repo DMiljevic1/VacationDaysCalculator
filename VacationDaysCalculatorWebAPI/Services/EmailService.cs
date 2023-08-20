@@ -11,7 +11,7 @@ namespace VacationDaysCalculatorWebAPI.Services
     {
         private string NAIS_API_KEY_NAME = "";
         private readonly string NAIS_MAIL = "Duje.Miljevic@nais.hr";
-        private readonly string NAIS_USERNAME = "NAIS Vacation System";
+        private readonly string NAIS_USERNAME = "NAIS System";
         private readonly VacationDbContext _vacationDbContext;
         public EmailService(VacationDbContext vacationDbContext)
         {
@@ -47,8 +47,8 @@ namespace VacationDaysCalculatorWebAPI.Services
 			var admins = _vacationDbContext.Users.Where(u => u.Role == "Admin").ToList();
             foreach(var admin in admins)
             {
-                var plainTextContent = StringConstants.GREETINGS + " ," + admin.FirstName + StringConstants.NEW_VACATION_REQUEST_MESSAGE;
-                var htmlContent = StringConstants.P_TAG + StringConstants.GREETINGS + " ," + admin.FirstName + "," + StringConstants.CLOSED_P_TAG + StringConstants.NEW_VACATION_REQUEST_MESSAGE_P_TAG;
+                var plainTextContent = StringConstants.GREETINGS + " " + admin.FirstName + StringConstants.NEW_VACATION_REQUEST_MESSAGE;
+                var htmlContent = StringConstants.P_TAG + StringConstants.GREETINGS + " " + admin.FirstName + "," + StringConstants.CLOSED_P_TAG + StringConstants.NEW_VACATION_REQUEST_MESSAGE_P_TAG;
                 SendMail(plainTextContent, htmlContent, StringConstants.VACATION_REQUEST, admin);
             }
         }
@@ -59,8 +59,8 @@ namespace VacationDaysCalculatorWebAPI.Services
 			var admins = _vacationDbContext.Users.Where(u => u.Role == "Admin").ToList();
 			foreach (var admin in admins)
 			{
-				var plainTextContent = StringConstants.GREETINGS + " ," + admin.FirstName + StringConstants.SICK_LEAVE_CLOSED_MESSAGE;
-				var htmlContent = StringConstants.P_TAG + StringConstants.GREETINGS + " ," + admin.FirstName + "," + StringConstants.CLOSED_P_TAG + StringConstants.CLOSED_SICK_LEAVE_MESSAGE_P_TAG;
+				var plainTextContent = StringConstants.GREETINGS + " " + admin.FirstName + StringConstants.SICK_LEAVE_CLOSED_MESSAGE;
+				var htmlContent = StringConstants.P_TAG + StringConstants.GREETINGS + " " + admin.FirstName + "," + StringConstants.CLOSED_P_TAG + StringConstants.CLOSED_SICK_LEAVE_MESSAGE_P_TAG;
 				SendMail(plainTextContent, htmlContent, StringConstants.SICK_LEAVE_CLOSED, admin);
 			}
 		}
@@ -83,7 +83,7 @@ namespace VacationDaysCalculatorWebAPI.Services
             string apiKey = "";
             try
             {
-                apiKey = File.ReadAllText("C:\\Users\\dmiljevic\\Desktop\\ApiKey\\ApiMailKey.txt");
+                apiKey = File.ReadAllText("C:\\Users\\Duje\\Desktop\\ApiKey\\ApiMailKey.txt");
 			}
             catch (Exception e)
             {
