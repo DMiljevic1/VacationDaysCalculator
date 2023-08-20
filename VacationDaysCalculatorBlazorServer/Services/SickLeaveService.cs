@@ -17,7 +17,7 @@ namespace VacationDaysCalculatorBlazorServer.Services
 			_httpClient = httpClient;
 			_customAuthenticationStateProvider = customAuthenticationStateProvider;
 		}
-		public async Task CloseSickLeaveStatusAsync(SickLeave sickLeave)
+		public async Task CloseSickLeaveAsync(SickLeave sickLeave)
 		{
 			try
 			{

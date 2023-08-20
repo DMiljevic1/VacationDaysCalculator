@@ -13,10 +13,12 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 	{
 		private readonly SickLeaveService _sickLeaveService;
 		private readonly SickLeaveRepository _sickLeaveRepository;
-		public SickLeaveController(SickLeaveService sickLeaveService, SickLeaveRepository sickLeaveRepository)
+		private readonly EmailService _emailService;
+		public SickLeaveController(SickLeaveService sickLeaveService, SickLeaveRepository sickLeaveRepository, EmailService emailService)
 		{
 			_sickLeaveService = sickLeaveService;
 			_sickLeaveRepository = sickLeaveRepository;
+			_emailService = emailService;
 		}
 
 		[HttpPut("closeSickLeave")]
@@ -26,6 +28,7 @@ namespace VacationDaysCalculatorWebAPI.Controllers
 			try
 			{
 				_sickLeaveService.CloseSickLeave(sickLeave);
+				_emailService.SendSickLeaveClosedMail();
 				return Ok();
 			}
 			catch (System.Exception)
