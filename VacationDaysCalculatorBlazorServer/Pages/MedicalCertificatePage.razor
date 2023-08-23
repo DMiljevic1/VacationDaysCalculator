@@ -1,4 +1,4 @@
-﻿@page "/MedicalCertificate/{sickLeaveId}"
+﻿@page "/{previousPage}/MedicalCertificate/{sickLeaveId}"
 @inherits RazorPageBases.MedicalCertificatePageBase;
 
 <AuthorizeView Roles="Admin" Context="cont">
@@ -39,7 +39,7 @@
 </MudTable>
 <MudGrid Justify="Justify.FlexStart">
 	<MudItem>
-				<MudButton StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Default" OnClick="NavigateToSickLeaveList" Size="Size.Medium" Style="margin-top:30px;">Close</MudButton>
+				<MudButton StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Default" OnClick="Close" Size="Size.Medium" Style="margin-top:30px;">Close</MudButton>
 	</MudItem>
 </MudGrid>
 	}
@@ -66,23 +66,29 @@ else
 		<MudTh><MudTableSortLabel SortBy="new Func<MedicalCertificate, object>(x=>x.FileName)">File Name</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortBy="new Func<MedicalCertificate, object>(x=>x.FileSize)">File Size[kb]</MudTableSortLabel></MudTh>
 		<MudTh></MudTh>
-		<MudTh></MudTh>
+		@if (previousPage == "Employee")
+		{
+			<MudTh></MudTh>
+		}
 	</HeaderContent>
 	<RowTemplate>
 		<MudTd DataLabel="Medical Certificate Date">@context.MedicalCertificateDate.ToString("MM/yyyy")</MudTd>
 		<MudTd DataLabel="File Name">@context.FileName</MudTd>
 		<MudTd DataLabel="File Size[kb]">@context.FileSize</MudTd>
-		<MudTd DataLabel="Image">
-				<InputFile id="@($"file-{context.Id}")"
-					   OnChange="@(e => this.UploadMedicalCertificate(e, context))"
-					   hidden
-					   multiple />
-				<MudFab HtmlTag="label"
-						Color="@Color.Success"
-						Icon="@Icons.Filled.AttachFile"
-						Size="@Size.Small"
-						for="@($"file-{context.Id}")" />
-		</MudTd>
+		@if(previousPage == "Employee")
+		{
+			<MudTd DataLabel="Image">
+					<InputFile id="@($"file-{context.Id}")"
+						   OnChange="@(e => this.UploadMedicalCertificate(e, context))"
+						   hidden
+						   multiple />
+					<MudFab HtmlTag="label"
+							Color="@Color.Success"
+							Icon="@Icons.Filled.AttachFile"
+							Size="@Size.Small"
+							for="@($"file-{context.Id}")" />
+			</MudTd>
+		}
 		<MudTd>
 			@if(context.Attachment != null)
 			{
@@ -96,7 +102,7 @@ else
 </MudTable>
 <MudGrid Justify="Justify.FlexStart">
 	<MudItem>
-				<MudButton StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Default" OnClick="NavigateToEmployeePage" Size="Size.Medium" Style="margin-top:30px;">Close</MudButton>
+				<MudButton StartIcon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Default" OnClick="Close" Size="Size.Medium" Style="margin-top:30px;">Close</MudButton>
 	</MudItem>
 </MudGrid>
 }

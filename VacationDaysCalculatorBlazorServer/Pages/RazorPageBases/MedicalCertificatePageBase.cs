@@ -15,6 +15,8 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 	public class MedicalCertificatePageBase : ComponentBase
 	{
 		[Parameter]
+		public string previousPage { get; set; }
+		[Parameter]
 		public string sickLeaveId { get; set; }
 		[Inject]
 		protected IJSRuntime _jsruntime { get; set; }
@@ -32,19 +34,16 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 			medicalCertificates = await _sickLeaveService.GetMedicalCertificatesAsync(int.Parse(sickLeaveId));
 		}
 
-		protected void NavigateToEmployeePage()
+		public void Close()
 		{
-			_navigationManager.NavigateTo("/Employee");
-		}
-
-		protected void NavigateToSickLeaveList()
-		{
-			_navigationManager.NavigateTo("/SickLeaveList");
-		}
-
-		protected void NavigateToAdminPage()
-		{
-			_navigationManager.NavigateTo("/Admin");
+			if(previousPage == "Employee")
+				_navigationManager.NavigateTo("/Employee");
+			else if(previousPage == "Admin")
+				_navigationManager.NavigateTo("/Admin");
+			else if(previousPage == "SickLeaveList")
+				_navigationManager.NavigateTo("/SickLeaveList");
+			else if(previousPage == "EmployeeHistory")
+				_navigationManager.NavigateTo("/EmployeeHistory");
 		}
 
 		protected async Task UploadMedicalCertificate(InputFileChangeEventArgs e, MedicalCertificate medicalCertificate)
