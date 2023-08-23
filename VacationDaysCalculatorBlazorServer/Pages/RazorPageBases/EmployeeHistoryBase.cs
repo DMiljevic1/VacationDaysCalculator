@@ -61,5 +61,9 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 				return true;
 			return false;
 		}
+		protected void OpenMedicalCertificatePage(int sickLeaveId)
+		{
+			_navigationManager.NavigateTo("EmployeeHistory/MedicalCertificate/" + sickLeaveId);
+		}
 	}
 }

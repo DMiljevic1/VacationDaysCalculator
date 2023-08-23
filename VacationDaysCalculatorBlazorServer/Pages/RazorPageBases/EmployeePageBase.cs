@@ -138,7 +138,7 @@ namespace VacationDaysCalculatorBlazorServer.Pages.RazorPageBases
 		}
         protected void OpenMedicalCertificatePage(int sickLeaveId)
         {
-            _navigationManager.NavigateTo("MedicalCertificate/" + sickLeaveId);
+            _navigationManager.NavigateTo("Employee/MedicalCertificate/" + sickLeaveId);
         }
 
         protected async Task OpenAddSickLeaveDialog()
