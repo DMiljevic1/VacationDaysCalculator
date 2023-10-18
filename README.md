@@ -1,8 +1,6 @@
 This is Vacation Managment Project. 
 What you need is : -visual studio 2019 or higher
                    -MSSQL (prefer 2018)
-When you open visual studio you need to open PM(package manager) and write Update-Database so database can be created.
-After that you are ready to go.
 Initial admin will be created if database is empty
 Username = "Admin"
 Password = "admin"
