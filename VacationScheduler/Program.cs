@@ -51,7 +51,7 @@ namespace VacationScheduler
 				.WithIdentity("trigger1", "group1")
 				.StartNow()
 				.WithSimpleSchedule(x => x
-					.WithIntervalInHours(24)
+					.WithIntervalInMinutes(2)
 					.RepeatForever())
 				.Build();
 

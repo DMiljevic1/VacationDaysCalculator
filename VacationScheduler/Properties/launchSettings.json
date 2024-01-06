@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "VacationScheduler": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
